@@ -16,12 +16,12 @@ Afonar els 9 vaixells que hi ha en el tauler. Existeixen 4 tipus:
 Els vaixells estaran col·locats en vertical o horitzontal, mai en diagonal.
 
 ### Simbologia per pantalla:
-'''
+```
 · Casella oculta
 * Aigua
 + Vaixell tocat
 X Vaixell enfonsat
-'''
+```
 ### Condició de victòria
 El joc finalitza una vegada el jugador a trobat tots els vaixells.
 El joc mostrara la seua puntuació d'acord amb els torns que han transcorregut fins a arribar a la victòria.
