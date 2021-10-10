@@ -7,7 +7,7 @@ Una vegada el tauler està generat, l'usuari hi ha d'introduir coordenada i el j
 El tauler és una graella de 10x10 amb els números (1-10) a la primera fila i lletres (A-J) a la primera columna per a identificar les caselles, sent A1 la casella a la cantonada superior esquerra i J10 la casella a la cantonada inferior dreta.
 
 ### Objectiu del joc
-Afonar els 5 vaixells que hi ha en el tauler. Existeixen 4 tipus:
+Afonar els 5 vaixells que hi ha en el tauler.
 - **Portaavions**: ocupa 5 caselles
 - **Blindat**: ocupa 4 caselles
 - **Creuer**: ocupa 3 caselles
@@ -23,10 +23,11 @@ X Vaixell enfonsat
 ```
 ### Condició de victòria
 El joc finalitza una vegada el jugador a trobat tots els vaixells.
-El joc mostrara la seua puntuació d'acord amb els torns que han transcorregut fins a arribar a la victòria.
+El joc mostrarà la seua puntuació d'acord amb els torns que han transcorregut fins a arribar a la victòria.
 
 ### Condició de derrota
 Al ser d'un jugador normes, no hi haurà condició de derrota.
+
 
 
 ## Disseny
@@ -37,7 +38,7 @@ El joc a l'iniciar-se ha de mostrar un menú principal amb les opcions:
 - Exit Game: tanca el programa.
 
 ### Start Game:
-El joc ha de crear un taulell de 10x10 e introduir aleatòriament 9 tipus de vaixells diferents:
+El joc ha de crear un taulell de 10x10 e introduir aleatòriament 5 tipus de vaixells diferents:
 - 1 Portaavions de 4 caselles cada un.
 - 2 Cuirassats de 2 caselles cada un.
 - 3 Destructors de 2 caselles cada un.
@@ -95,3 +96,13 @@ Submarine, which has 1 holes
 
 Press any key to back main menu
 ```
+
+
+
+## Funcionalitats
+- El programa ha de mostrar el menú en iniciar-se.
+- L'usuari podrà elegir iniciar el joc, mostrar regles o eixir del joc.
+- El joc sempre mostrara el torn, l'estat actual del taulell i esperarà que l'usuari introduïsca coordenada.
+A l'introduir coordenada, incrementarà torn, actualitzarà el taulell i esperarà següent coordenada.
+Si la coordenada introduïda és incorrecta el programa llançarà una excepció i preguntara de nou.
+- El joc finalitza quan el jugador introduïsca totes les coordenades on hi ha un vaixell.
