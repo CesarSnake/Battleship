@@ -26,7 +26,7 @@ El joc finalitza una vegada el jugador a trobat tots els vaixells.
 El joc mostrarà la seua puntuació d'acord amb els torns que han transcorregut fins a arribar a la victòria.
 
 ### Condició de derrota
-Al ser d'un jugador normes, no hi haurà condició de derrota.
+Al ser d'un jugador sol, no hi haurà condició de derrota.
 
 
 
@@ -37,12 +37,22 @@ El joc a l'iniciar-se ha de mostrar un menú principal amb les opcions:
 - How to play: mostra una pantalla amb les regles del joc
 - Exit Game: tanca el programa.
 
+```
+-------------------------
+BattleShip single player
+-------------------------
+1. Start Game.
+2. How to Play.
+3. Exit Game.
+```
+
 ### Start Game:
-El joc ha de crear un taulell de 10x10 e introduir aleatòriament 5 tipus de vaixells diferents:
-- 1 Portaavions de 4 caselles cada un.
-- 2 Cuirassats de 2 caselles cada un.
-- 3 Destructors de 2 caselles cada un.
-- 4 Submarins d'1 casella cada un.
+El joc ha de crear un taulell de 10x10 e introduir **aleatòriament** els 5 tipus de vaixells diferents:
+- **Portaavions** de 5 caselles
+- **Blindat** de 4 caselles
+- **Creuer** de 3 caselles
+- **Destructors** de  2 caselles
+- **Submarins** de 1 casella
 
 En la pantalla de joc, apareixerà el torn actual i el taulell amb totes les caselles ocultes amb el símbol '·', baix del taulell apareixerà el missatge "Attack to coordinate".
 L'usuari haurà d'introduir coordenada i polsar enter.
@@ -54,7 +64,7 @@ La coordenada introduïda modificara la casella amb el símbol:
 X Si el vaixell ha sigut tocat i enfonsat (coordenada amb una part d'un vaixell amb les altres parts tocades, aquestes es modificaran també amb aquest símbol)
 ```
 
-El joc acaba quan el jugador enfonsa tots els vaixells, el programa mostrara una pantalla amb el missatge "you won in XX turns".
+El joc acaba quan el jugador enfonsa tots els vaixells, el programa mostrara una pantalla amb el missatge "You won in XX turns".
 
 #### Game Screen:
 ```
@@ -103,6 +113,5 @@ Press any key to back main menu
 - El programa ha de mostrar el menú en iniciar-se.
 - L'usuari podrà elegir iniciar el joc, mostrar regles o eixir del joc.
 - El joc sempre mostrara el torn, l'estat actual del taulell i esperarà que l'usuari introduïsca coordenada.
-A l'introduir coordenada, incrementarà torn, actualitzarà el taulell i esperarà següent coordenada.
-Si la coordenada introduïda és incorrecta el programa llançarà una excepció i preguntara de nou.
+- A l'introduir coordenada, incrementarà torn, actualitzarà el taulell i esperarà següent coordenada. Si la coordenada introduïda és incorrecta el programa llançarà una excepció i preguntara de nou.
 - El joc finalitza quan el jugador introduïsca totes les coordenades on hi ha un vaixell.
