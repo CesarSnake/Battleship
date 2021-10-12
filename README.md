@@ -92,9 +92,9 @@ You must atack the ships and sink all of them to win.
 To atack a ship you must insert a coordinate and pres enter.
 
 Simbols:
-· unknown place, not discovered.
+· unknown, place not discovered.
 ~ water, you miss your shot.
-/ beat, you beat one ship but it is not sink
+/ hit, you hit one ship but it is not sink
 X sink, you sink the ship.
 
 Ships in the game:
