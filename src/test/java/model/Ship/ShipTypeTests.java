@@ -1,4 +1,4 @@
-package model.Ship;
+package model.ship;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
