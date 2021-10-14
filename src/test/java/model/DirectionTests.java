@@ -14,7 +14,7 @@ public class DirectionTests {
     Direction west;
 
     @BeforeAll
-    void InitOnce(){
+    void InitOnce() {
         north = Direction.North;
         south = Direction.South;
         east = Direction.East;
@@ -23,25 +23,25 @@ public class DirectionTests {
 
 
     @Test
-    void DirectionNorthTest(){
+    void DirectionNorthTest() {
         assertEquals(Direction.North, north);
         assertEquals("North", north.toString());
         assertEquals(Direction.North.toString(), north.toString());
     }
     @Test
-    void DirectionSouthTest(){
+    void DirectionSouthTest() {
         assertEquals(Direction.South, south);
         assertEquals("South", south.toString());
         assertEquals(Direction.South.toString(), south.toString());
     }
     @Test
-    void DirectionEastTest(){
+    void DirectionEastTest() {
         assertEquals(Direction.East, east);
         assertEquals("East", east.toString());
         assertEquals(Direction.East.toString(), east.toString());
     }
     @Test
-    void DirectionWestTest(){
+    void DirectionWestTest() {
         assertEquals(Direction.West, west);
         assertEquals("West", west.toString());
         assertEquals(Direction.West.toString(), west.toString());

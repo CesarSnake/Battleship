@@ -115,3 +115,9 @@ Press any key to back main menu
 - El joc sempre mostrara el torn, l'estat actual del taulell i esperarà que l'usuari introduïsca coordenada.
 - A l'introduir coordenada, incrementarà torn, actualitzarà el taulell i esperarà següent coordenada. Si la coordenada introduïda és incorrecta el programa llançarà una excepció i preguntara de nou.
 - El joc finalitza quan el jugador introduïsca totes les coordenades on hi ha un vaixell.
+
+### Classes
+
+#### Coordinates
+- La Coordenada estarà formada per una lletra majúscula de l'A fins a la J i un número de l'1 al 10.
+- Altre tipus de símbol, llançarà una excepció.

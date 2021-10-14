@@ -9,12 +9,12 @@ public class CoordinateTests {
     Coordinate c;
 
     @BeforeEach
-    void SetUp(){
+    void SetUp() {
         c = new Coordinate("F", 5);
     }
 
     @Test
-    void GettersTest(){
+    void GettersTest() {
         assertEquals("F", c.Letter());
         assertEquals(5, c.Number());
     }
@@ -37,70 +37,93 @@ public class CoordinateTests {
     void ConstructorInvalid() {
         String letter = "AA";
         assertThrowsExactly(ExceptionInInitializerError.class,
-                ()->{ Coordinate c3 = new Coordinate(letter, 1); },
+                () -> { Coordinate c3 = new Coordinate(letter, 1); },
                 String.join("", "Invalid Coordinate: ", letter, Integer.toString(1)));
 
         String sentence = "this is a test";
         assertThrowsExactly(ExceptionInInitializerError.class,
-                ()->{ Coordinate c3 = new Coordinate(letter, 1); },
+                () -> { Coordinate c3 = new Coordinate(letter, 1); },
                 String.join("", "Invalid Coordinate: ", letter, Integer.toString(1)));
 
         // test numbers
         for (int i = 11; i < 100; i++) {
             int number = i;
             assertThrowsExactly(ExceptionInInitializerError.class,
-                ()->{ Coordinate c3 = new Coordinate(letter, number); },
+                () -> { Coordinate c3 = new Coordinate(letter, number); },
                 String.join("", "Invalid Coordinate: ", letter, Integer.toString(number)));
         }
     }
 
     @Test
-    void ConstructorInvalidLetterTest(){
+    void ConstructorInvalidLetterTest() {
         for (char i = 'K'; i < 'Z'; i++) {
             String letter = String.valueOf(i);
             int number = 1;
 
             assertThrowsExactly(ExceptionInInitializerError.class,
-                ()->{ Coordinate c3 = new Coordinate(letter, number); },
+                () -> { Coordinate c3 = new Coordinate(letter, number); },
                 String.join("", "Invalid Coordinate: ", letter, Integer.toString(number)));
         }
     }
 
     @Test
-    void ConstructorInvalidSymbolTest(){
+    void ConstructorInvalidSymbolTest() {
         String symbols = "!·$%&/()=?¿|@#~€¡^+*[]¨Ç{},;.:-_<>ºª\\";
-        for(char symbol : symbols.toCharArray()) {
+        for (char symbol : symbols.toCharArray()) {
             String letter = String.valueOf(symbol);
             int number = 2;
 
             assertThrowsExactly(ExceptionInInitializerError.class,
-                ()->{ Coordinate c3 = new Coordinate(letter, number); },
+                () -> { Coordinate c3 = new Coordinate(letter, number); },
                 String.join("", "Invalid Coordinate: ", letter, Integer.toString(number)));
         }
     }
 
     @Test
-    void ConstructorInvalidNumberAsLetterTest(){
+    void ConstructorInvalidNumberAsLetterTest() {
         for (int i = 0; i < 10; i++) {
             String letter = String.valueOf(i);
             int number = 3;
 
             assertThrowsExactly(ExceptionInInitializerError.class,
-                ()->{ Coordinate c3 = new Coordinate(letter, number); },
+                () -> { Coordinate c3 = new Coordinate(letter, number); },
                 String.join("", "Invalid Coordinate: ", letter, Integer.toString(number)));
         }
     }
 
+    @Test
+    void ConstructorInvalidLowerLetterTest() {
+        for (char i = 'a'; i < 'z'; i++) {
+            String letter = String.valueOf(i);
+            int number = 1;
+
+            assertThrowsExactly(ExceptionInInitializerError.class,
+                    () -> { Coordinate c3 = new Coordinate(letter, number); },
+                    String.join("", "Invalid Coordinate: ", letter, Integer.toString(number)));
+        }
+    }
 
     @Test
-    void ConstructorLimitLetterTest(){
+    void ConstructorInvalidNegativeNumberTest() {
+        for (int i = 0; i > -50; i--) {
+            String letter = "B";
+            int number = i;
+
+            assertThrowsExactly(ExceptionInInitializerError.class,
+                () -> { Coordinate c3 = new Coordinate(letter, number); },
+                String.join("", "Invalid Coordinate: ", letter, Integer.toString(number)));
+        }
+    }
+
+    @Test
+    void ConstructorLimitLetterTest() {
         //Letters must be between A and J
 
         // limit left A
         for (int i = ('A'-25); i > ('A'-1); i++) {
             String letter = String.valueOf(i);
             assertThrowsExactly(ExceptionInInitializerError.class,
-                    ()->{ Coordinate c3 = new Coordinate(letter, 1); },
+                    () -> { Coordinate c3 = new Coordinate(letter, 1); },
                     String.join("", "Invalid Coordinate: ", letter, Integer.toString(1)));
         }
 
@@ -112,7 +135,7 @@ public class CoordinateTests {
             int number = 1;
 
             assertThrowsExactly(ExceptionInInitializerError.class,
-                    ()->{ Coordinate c3 = new Coordinate(letter, number); },
+                    () -> { Coordinate c3 = new Coordinate(letter, number); },
                     String.join("", "Invalid Coordinate: ", letter, Integer.toString(number)));
         }
     }
@@ -125,7 +148,7 @@ public class CoordinateTests {
         for (int i = -50; i > 0; i++) {
             int number = i;
             assertThrowsExactly(ExceptionInInitializerError.class,
-                ()->{ Coordinate c3 = new Coordinate("A", number); },
+                () -> { Coordinate c3 = new Coordinate("A", number); },
                 String.join("", "Invalid Coordinate: ", "A", Integer.toString(number)));
         }
 
@@ -135,7 +158,7 @@ public class CoordinateTests {
         for (int i = 11; i < 50; i++) {
             int number = i;
             assertThrowsExactly(ExceptionInInitializerError.class,
-                ()->{ Coordinate c3 = new Coordinate("A", number); },
+                () -> { Coordinate c3 = new Coordinate("A", number); },
                 String.join("", "Invalid Coordinate: ", "A", Integer.toString(number)));
         }
     }

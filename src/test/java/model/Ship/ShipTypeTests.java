@@ -15,7 +15,7 @@ public class ShipTypeTests{
     ShipType shipSubmarine;
 
     @BeforeAll
-    void InitOnce(){
+    void InitOnce() {
         shipCarrier = ShipType.Carrier;
         shipBattleship = ShipType.Battleship;
         shipCruiser = ShipType.Cruiser;
@@ -25,35 +25,35 @@ public class ShipTypeTests{
 
 
     @Test
-    void ShipCarrierTest(){
+    void ShipCarrierTest() {
         assertEquals(ShipType.Carrier, shipCarrier);
         assertEquals("Carrier", shipCarrier.toString());
         assertEquals(ShipType.Carrier.toString(), shipCarrier.toString());
     }
 
     @Test
-    void ShipBattleshipTest(){
+    void ShipBattleshipTest() {
         assertEquals(ShipType.Battleship, shipBattleship);
         assertEquals("Battleship", shipBattleship.toString());
         assertEquals(ShipType.Battleship.toString(), shipBattleship.toString());
     }
 
     @Test
-    void ShipCruiserTest(){
+    void ShipCruiserTest() {
         assertEquals(ShipType.Cruiser, shipCruiser);
         assertEquals("Cruiser", shipCruiser.toString());
         assertEquals(ShipType.Cruiser.toString(), shipCruiser.toString());
     }
 
     @Test
-    void ShipDestroyerTest(){
+    void ShipDestroyerTest() {
         assertEquals(ShipType.Destroyer, shipDestroyer);
         assertEquals("Destroyer", shipDestroyer.toString());
         assertEquals(ShipType.Destroyer.toString(), shipDestroyer.toString());
     }
 
     @Test
-    void ShipSubmarineTest(){
+    void ShipSubmarineTest() {
         assertEquals(ShipType.Submarine, shipSubmarine);
         assertEquals("Submarine", shipSubmarine.toString());
         assertEquals(ShipType.Submarine.toString(), shipSubmarine.toString());
