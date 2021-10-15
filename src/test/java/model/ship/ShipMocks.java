@@ -60,3 +60,59 @@ class ShipG4G6Mock extends Ship {
         _hits = new ArrayList<>();
     }
 }
+
+class CarrierMock extends Carrier {
+    CarrierMock() {
+        _coordinates = List.of(
+            new Coordinate("C",1),
+            new Coordinate("C",2),
+            new Coordinate("C",3),
+            new Coordinate("C",4),
+            new Coordinate("C",5)
+        );
+        _length = 5;
+        _hits = new ArrayList<>();
+    }
+}
+class BattleShipMock extends BattleShip {
+    BattleShipMock() {
+        _coordinates = List.of(
+            new Coordinate("B",5),
+            new Coordinate("B",6),
+            new Coordinate("B",7),
+            new Coordinate("B",8)
+        );
+        _length = 4;
+        _hits = new ArrayList<>();
+    }
+}
+class CruiserMock extends Cruiser {
+    CruiserMock() {
+        _coordinates = List.of(
+            new Coordinate("C",8),
+            new Coordinate("C",9),
+            new Coordinate("C",10)
+        );
+        _length = 3;
+        _hits = new ArrayList<>();
+    }
+}
+class DestroyerMock extends Destroyer {
+    DestroyerMock() {
+        _coordinates = List.of(
+            new Coordinate("D",1),
+            new Coordinate("D",2)
+        );
+        _length = 2;
+        _hits = new ArrayList<>();
+    }
+}
+class SubmarineMock extends Submarine {
+    SubmarineMock() {
+        _coordinates = List.of(
+            new Coordinate("H",8)
+        );
+        _length = 1;
+        _hits = new ArrayList<>();
+    }
+}

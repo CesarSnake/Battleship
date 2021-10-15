@@ -10,7 +10,7 @@ public class Ship {
     Integer _length;
     ArrayList<Coordinate> _hits;
 
-    Ship() { /* Ship itself is empty, acts as an interface for the ship types */  }
+    Ship() { /* Ship itself is empty, acts as an interface for the ship types */ }
     public List<Coordinate> Coordinates() { return _coordinates; }
     public Integer Length() { return _length; }
     public List<Coordinate> Hits() { return _hits; }
@@ -22,7 +22,7 @@ public class Ship {
         }
         if (_hits.contains(coordinate)) {
             throw new UnsupportedOperationException(
-                    String.join("", "Coordinate: ", coordinate.toString(), " already hit"));
+                String.join("", "Coordinate: ", coordinate.toString(), " already hit"));
         }
 
         _hits.add(coordinate);
