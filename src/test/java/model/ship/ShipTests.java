@@ -31,11 +31,11 @@ public class ShipTests {
         shipB8E8Mock = new ShipB8E8Mock();
         shipG4G6Mock = new ShipG4G6Mock();
 
-        carrierMock = new CarrierMock();
-        battleShipMock = new BattleShipMock();
-        cruiserMock = new CruiserMock();
-        destroyerMock = new DestroyerMock();
-        submarineMock = new SubmarineMock();
+        carrierMock = new CarrierMock(null, null);
+        battleShipMock = new BattleShipMock(null, null);
+        cruiserMock = new CruiserMock(null, null);
+        destroyerMock = new DestroyerMock(null, null);
+        submarineMock = new SubmarineMock(null, null);
     }
 
     @Test

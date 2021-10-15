@@ -1,6 +1,7 @@
 package model.ship;
 
 import model.Coordinate;
+import model.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,8 @@ class ShipG4G6Mock extends Ship {
 }
 
 class CarrierMock extends Carrier {
-    CarrierMock() {
+    CarrierMock(Coordinate cd, Direction d) {
+        // As we are using a mock to testing, it doesn't matter the value or cd and (inherited from parent constructor)
         _coordinates = List.of(
             new Coordinate("C",1),
             new Coordinate("C",2),
@@ -75,7 +77,8 @@ class CarrierMock extends Carrier {
     }
 }
 class BattleShipMock extends BattleShip {
-    BattleShipMock() {
+    BattleShipMock(Coordinate cd, Direction d) {
+        // As we are using a mock to testing, it doesn't matter the value or cd and (inherited from parent constructor)
         _coordinates = List.of(
             new Coordinate("B",5),
             new Coordinate("B",6),
@@ -87,7 +90,8 @@ class BattleShipMock extends BattleShip {
     }
 }
 class CruiserMock extends Cruiser {
-    CruiserMock() {
+    CruiserMock(Coordinate cd, Direction d) {
+        // As we are using a mock to testing, it doesn't matter the value or cd and (inherited from parent constructor)
         _coordinates = List.of(
             new Coordinate("C",8),
             new Coordinate("C",9),
@@ -98,7 +102,8 @@ class CruiserMock extends Cruiser {
     }
 }
 class DestroyerMock extends Destroyer {
-    DestroyerMock() {
+    DestroyerMock(Coordinate cd, Direction d) {
+        // As we are using a mock to testing, it doesn't matter the value or cd and (inherited from parent constructor)
         _coordinates = List.of(
             new Coordinate("D",1),
             new Coordinate("D",2)
@@ -108,7 +113,8 @@ class DestroyerMock extends Destroyer {
     }
 }
 class SubmarineMock extends Submarine {
-    SubmarineMock() {
+    SubmarineMock(Coordinate cd, Direction d) {
+        // As we are using a mock to testing, it doesn't matter the value or cd and (inherited from parent constructor)
         _coordinates = List.of(
             new Coordinate("H",8)
         );
