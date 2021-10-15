@@ -16,11 +16,19 @@ public class Ship {
     public List<Coordinate> Hits() { return _hits; }
 
     public void Hit(Coordinate coordinate) {
-        // TODO
+        if (!_coordinates.contains(coordinate)) {
+            throw new UnsupportedOperationException(
+                String.join("",getClass().getName(), " is not positioned on the coordinate: ", coordinate.toString()));
+        }
+        if (_hits.contains(coordinate)) {
+            throw new UnsupportedOperationException(
+                    String.join("", "Coordinate: ", coordinate.toString(), " already hit"));
+        }
+
+        _hits.add(coordinate);
     }
 
     public Boolean IsSunk() {
-        // TODO
-        return false;
+        return _hits.size() == _length;
     }
 }

@@ -157,22 +157,15 @@ public class ShipTests {
     }
 
     @Test
-    void InvalidCoordinatesAttackTest() {
-        // test with vertical ship and horizontal ship sunk
+    void InvalidCoordinatesHorizontalShipAttackTest() {
+        // test horizontal ship sunk
         Ship shipHorizontal = shipG4G6Mock;
-        Ship shipVertical = shipB8E8Mock;
 
-        // Sink ships
+        // Sink ship
         shipHorizontal.Hit(new Coordinate("G",4));
         shipHorizontal.Hit(new Coordinate("G",5));
         shipHorizontal.Hit(new Coordinate("G",6));
         assertTrue(shipHorizontal.IsSunk());
-
-        shipVertical.Hit(new Coordinate("B",8));
-        shipVertical.Hit(new Coordinate("C",8));
-        shipVertical.Hit(new Coordinate("D",8));
-        shipVertical.Hit(new Coordinate("E",8));
-        assertTrue(shipVertical.IsSunk());
 
         for (char i = 'A'; i <= 'J'; i++) {
             for (int j = 1; j <= 10; j++) {
@@ -187,11 +180,30 @@ public class ShipTests {
                         () -> shipHorizontal.Hit(cd),
                         String.join("",shipHorizontal.getClass().getName(), " is not positioned on the coordinate: ", cd.toString()));
                 }
+            }
+        }
+    }
+
+    @Test
+    void InvalidCoordinatesVerticalShipAttackTest() {
+        // test horizontal ship sunk
+        Ship shipVertical = shipB8E8Mock;
+
+        // Sink ship
+        shipVertical.Hit(new Coordinate("B",8));
+        shipVertical.Hit(new Coordinate("C",8));
+        shipVertical.Hit(new Coordinate("D",8));
+        shipVertical.Hit(new Coordinate("E",8));
+        assertTrue(shipVertical.IsSunk());
+
+        for (char i = 'A'; i <= 'J'; i++) {
+            for (int j = 1; j <= 10; j++) {
+                Coordinate cd = new Coordinate(String.valueOf(i), j);
 
                 if (shipVertical.Hits().contains(cd)) {
                     assertThrowsExactly(UnsupportedOperationException.class,
-                            () -> shipVertical.Hit(cd),
-                            String.join("", "Coordinate: ", cd.toString(), " already hit"));
+                        () -> shipVertical.Hit(cd),
+                        String.join("", "Coordinate: ", cd.toString(), " already hit"));
                 } else {
                     assertThrowsExactly(UnsupportedOperationException.class,
                         () -> shipVertical.Hit(cd),
