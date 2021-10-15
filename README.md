@@ -121,3 +121,9 @@ Press any key to back main menu
 #### Coordinates
 - La Coordenada estarà formada per una lletra majúscula de l'A fins a la J i un número de l'1 al 10.
 - Altre tipus de símbol, llançarà una excepció.
+
+#### Ship & sons (Carrier, Battleship, Cruiser, Destroyer, Submarine)
+- Ship actua com a classe pare per als tipus de vaixells del joc, per si mateixa es buida i no jugable al taulell
+- Un vaixell pot rebre tants atacs com tantes coordenades ocupe, si rep un atac en una coordenada lliure, aquesta passa a ser atacada.
+- Si un vaixell rep un altre atac a una coordenada que ja ha sigut atacada, llançarà una excepció.
+- El vaixell és enfonsat quan totes les coordenades reben un atac.

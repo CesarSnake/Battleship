@@ -13,7 +13,7 @@ public class Ship {
     Ship() { /* Ship itself is empty, acts as an interface for the ship types */  }
     public List<Coordinate> Coordinates() { return _coordinates; }
     public Integer Length() { return _length; }
-    public List<Coordinate> Hits() { return _hits;}
+    public List<Coordinate> Hits() { return _hits; }
 
     public void Hit(Coordinate coordinate) {
         // TODO
