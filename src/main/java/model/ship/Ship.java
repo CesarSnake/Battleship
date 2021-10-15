@@ -1,6 +1,7 @@
 package model.ship;
 
 import model.Coordinate;
+import model.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,5 +31,11 @@ public class Ship {
 
     public Boolean IsSunk() {
         return _hits.size() == _length;
+    }
+
+    protected void ThrowInitException(ShipType type, Coordinate coordinate, Direction direction) {
+        throw new ExceptionInInitializerError(String.join("",
+            "Cannot set a ", type.toString(),
+            " Direction ", direction.toString(), " at Coordinate ", coordinate.toString()));
     }
 }

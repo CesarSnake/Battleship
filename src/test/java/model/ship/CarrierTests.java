@@ -15,7 +15,7 @@ public class CarrierTests {
         // Invalid positions
         for (char i = 'A'; i <= 'D'; i++) {
             for (int j = 1; j <= 10; j++) {
-                Coordinate c = new Coordinate(String.valueOf(i), j);
+                Coordinate c = new Coordinate(i, j);
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                         () -> new Carrier(c, dir),
@@ -28,7 +28,7 @@ public class CarrierTests {
         // Valid positions
         for (char i = 'E'; i <= 'J'; i++) {
             for (int j = 1; j <= 10; j++) {
-                Coordinate c = new Coordinate(String.valueOf(i), j);
+                Coordinate c = new Coordinate(i, j);
                 Carrier carrier = new Carrier(c, dir);
 
                 assertNotNull(carrier);
@@ -46,7 +46,7 @@ public class CarrierTests {
         // Valid positions
         for (char i = 'A'; i <= 'F'; i++) {
             for (int j = 1; j <= 10; j++) {
-                Coordinate c = new Coordinate(String.valueOf(i), j);
+                Coordinate c = new Coordinate(i, j);
                 Carrier carrier = new Carrier(c, dir);
 
                 assertNotNull(carrier);
@@ -59,7 +59,7 @@ public class CarrierTests {
         // Invalid positions
         for (char i = 'G'; i <= 'J'; i++) {
             for (int j = 1; j <= 10; j++) {
-                Coordinate c = new Coordinate(String.valueOf(i), j);
+                Coordinate c = new Coordinate(i, j);
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                         () -> new Carrier(c, dir),
@@ -77,7 +77,7 @@ public class CarrierTests {
         // Valid positions
         for (char i = 'A'; i <= 'J'; i++) {
             for (int j = 1; j <= 6; j++) {
-                Coordinate c = new Coordinate(String.valueOf(i), j);
+                Coordinate c = new Coordinate(i, j);
                 Carrier carrier = new Carrier(c, dir);
 
                 assertNotNull(carrier);
@@ -90,7 +90,7 @@ public class CarrierTests {
         // Invalid positions
         for (char i = 'A'; i <= 'J'; i++) {
             for (int j = 7; j <= 10; j++) {
-                Coordinate c = new Coordinate(String.valueOf(i), j);
+                Coordinate c = new Coordinate(i, j);
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                         () -> new Carrier(c, dir),
@@ -108,7 +108,7 @@ public class CarrierTests {
         // Valid positions
         for (char i = 'A'; i <= 'J'; i++) {
             for (int j = 5; j <= 10; j++) {
-                Coordinate c = new Coordinate(String.valueOf(i), j);
+                Coordinate c = new Coordinate(i, j);
                 Carrier carrier = new Carrier(c, dir);
 
                 assertNotNull(carrier);
@@ -121,7 +121,7 @@ public class CarrierTests {
         // Invalid positions
         for (char i = 'A'; i <= 'J'; i++) {
             for (int j = 1; j <= 4; j++) {
-                Coordinate c = new Coordinate(String.valueOf(i), j);
+                Coordinate c = new Coordinate(i, j);
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                         () -> new Carrier(c, dir),
@@ -134,13 +134,13 @@ public class CarrierTests {
 
     @Test
     void SinkCarrierTest() {
-        Carrier carrier = new Carrier(new Coordinate("A", 1), Direction.East);
+        Carrier carrier = new Carrier(new Coordinate('A', 1), Direction.East);
 
         assertTrue(carrier.Hits().isEmpty());
         assertFalse(carrier.IsSunk());
 
         for (int i = 1; i <= 5; i++) {
-            Coordinate c = new Coordinate("A",i);
+            Coordinate c = new Coordinate('A',i);
             carrier.Hit(c);
             assertFalse(carrier.IsSunk());
             assertTrue(carrier.Hits().contains(c));

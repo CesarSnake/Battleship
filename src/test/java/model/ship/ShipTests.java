@@ -1,6 +1,7 @@
 package model.ship;
 
 import model.Coordinate;
+import model.Direction;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,11 +24,12 @@ public class ShipTests {
     @BeforeAll
     void InitOnce() {
         emptyShip = new ShipEmptyMock();
-        shipC2C6HitMock = new ShipC2C6HitMock();
+
     }
 
     @BeforeEach
     void SetUp() {
+        shipC2C6HitMock = new ShipC2C6HitMock();
         shipB8E8Mock = new ShipB8E8Mock();
         shipG4G6Mock = new ShipG4G6Mock();
 
@@ -46,8 +48,8 @@ public class ShipTests {
         assertNull(emptyShip.Hits());
 
         // Hit is not implemented on the mock, it must do nothing
-        emptyShip.Hit(new Coordinate("A",1));
-        emptyShip.Hit(new Coordinate("A", 2));
+        emptyShip.Hit(new Coordinate('A',1));
+        emptyShip.Hit(new Coordinate('A', 2));
         assertNull(emptyShip.Hits());
 
         assertNull(emptyShip.IsSunk());
@@ -57,10 +59,10 @@ public class ShipTests {
     void ShipC2C6withHitTest() {
         Ship shipMock = shipC2C6HitMock;
         // coordinate already hit
-        Coordinate c3 = new Coordinate("C",3);
+        Coordinate c3 = new Coordinate('C',3);
 
         for (int i = 2; i < 7; i++) {
-            assertTrue(shipMock.Coordinates().contains(new Coordinate("C", i)));
+            assertTrue(shipMock.Coordinates().contains(new Coordinate('C', i)));
         }
 
         assertEquals(5, shipMock.Length());
@@ -70,7 +72,7 @@ public class ShipTests {
         // Sink the ship
         assertFalse(shipMock.IsSunk());
 
-        Coordinate c2 = new Coordinate("C",2);
+        Coordinate c2 = new Coordinate('C',2);
         shipMock.Hit(c2);
         assertEquals(2, shipMock.Hits().size());
         assertTrue(shipMock.Hits().contains(c2));
@@ -85,19 +87,19 @@ public class ShipTests {
         assertTrue(shipMock.Hits().contains(c3));
         assertFalse(shipMock.IsSunk());
 
-        Coordinate c4 = new Coordinate("C",4);
+        Coordinate c4 = new Coordinate('C',4);
         shipMock.Hit(c4);
         assertEquals(3, shipMock.Hits().size());
         assertTrue(shipMock.Hits().contains(c4));
         assertFalse(shipMock.IsSunk());
 
-        Coordinate c5 = new Coordinate("C",5);
+        Coordinate c5 = new Coordinate('C',5);
         shipMock.Hit(c5);
         assertEquals(4, shipMock.Hits().size());
         assertTrue(shipMock.Hits().contains(c5));
         assertFalse(shipMock.IsSunk());
 
-        Coordinate c6 = new Coordinate("C",6);
+        Coordinate c6 = new Coordinate('C',6);
         shipMock.Hit(c6);
         assertEquals(5, shipMock.Hits().size());
         assertTrue(shipMock.Hits().contains(c6));
@@ -109,7 +111,7 @@ public class ShipTests {
     void ShipB8E8Test() {
         Ship shipMock = shipB8E8Mock;
         for (char i = 'B'; i <= 'E'; i++) {
-            assertTrue(shipMock.Coordinates().contains(new Coordinate(String.valueOf(i), 8)));
+            assertTrue(shipMock.Coordinates().contains(new Coordinate(i, 8)));
         }
 
         assertEquals(4, shipMock.Length());
@@ -120,7 +122,7 @@ public class ShipTests {
 
         int hits = 0;
         for (char i = 'B'; i <= 'E'; i++) {
-            Coordinate cd = new Coordinate(String.valueOf(i),8);
+            Coordinate cd = new Coordinate(i,8);
             shipMock.Hit(cd);
             hits++;
 
@@ -141,7 +143,7 @@ public class ShipTests {
         // Horizontal ship surrounded with "watter"
 
         for (int i = 4; i <= 6; i++) {
-            assertTrue(shipMock.Coordinates().contains(new Coordinate("G", i)));
+            assertTrue(shipMock.Coordinates().contains(new Coordinate('G', i)));
         }
 
         assertEquals(3, shipMock.Length());
@@ -152,7 +154,7 @@ public class ShipTests {
 
         int hits = 0;
         for (int i = 4; i <= 6; i++)  {
-            Coordinate cd = new Coordinate("G",i);
+            Coordinate cd = new Coordinate('G',i);
             shipMock.Hit(cd);
             hits++;
 
@@ -173,14 +175,14 @@ public class ShipTests {
         Ship shipHorizontal = shipG4G6Mock;
 
         // Sink ship
-        shipHorizontal.Hit(new Coordinate("G",4));
-        shipHorizontal.Hit(new Coordinate("G",5));
-        shipHorizontal.Hit(new Coordinate("G",6));
+        shipHorizontal.Hit(new Coordinate('G',4));
+        shipHorizontal.Hit(new Coordinate('G',5));
+        shipHorizontal.Hit(new Coordinate('G',6));
         assertTrue(shipHorizontal.IsSunk());
 
         for (char i = 'A'; i <= 'J'; i++) {
             for (int j = 1; j <= 10; j++) {
-                Coordinate cd = new Coordinate(String.valueOf(i), j);
+                Coordinate cd = new Coordinate(i, j);
 
                 if (shipHorizontal.Hits().contains(cd)) {
                     assertThrowsExactly(UnsupportedOperationException.class,
@@ -201,15 +203,15 @@ public class ShipTests {
         Ship shipVertical = shipB8E8Mock;
 
         // Sink ship
-        shipVertical.Hit(new Coordinate("B",8));
-        shipVertical.Hit(new Coordinate("C",8));
-        shipVertical.Hit(new Coordinate("D",8));
-        shipVertical.Hit(new Coordinate("E",8));
+        shipVertical.Hit(new Coordinate('B',8));
+        shipVertical.Hit(new Coordinate('C',8));
+        shipVertical.Hit(new Coordinate('D',8));
+        shipVertical.Hit(new Coordinate('E',8));
         assertTrue(shipVertical.IsSunk());
 
         for (char i = 'A'; i <= 'J'; i++) {
             for (int j = 1; j <= 10; j++) {
-                Coordinate cd = new Coordinate(String.valueOf(i), j);
+                Coordinate cd = new Coordinate(i, j);
 
                 if (shipVertical.Hits().contains(cd)) {
                     assertThrowsExactly(UnsupportedOperationException.class,
@@ -227,7 +229,7 @@ public class ShipTests {
     @Test
     void CarrierMockTest() {
         for(int i = 1; i <= 5; i++) {
-            assertTrue(carrierMock.Coordinates().contains(new Coordinate("C", i)));
+            assertTrue(carrierMock.Coordinates().contains(new Coordinate('C', i)));
         }
         assertEquals(5, carrierMock.Length());
         assertEquals(carrierMock.Length(), carrierMock.Coordinates().size());
@@ -235,7 +237,7 @@ public class ShipTests {
         assertFalse(carrierMock.IsSunk());
 
         for(int i = 1; i <= 5; i++) {
-            carrierMock.Hit(new Coordinate("C", i));
+            carrierMock.Hit(new Coordinate('C', i));
         }
         assertTrue(carrierMock.IsSunk());
 
@@ -246,7 +248,7 @@ public class ShipTests {
     @Test
     void BattleShipMockTest() {
         for(int i = 5; i <= 8; i++) {
-            assertTrue(battleShipMock.Coordinates().contains(new Coordinate("B", i)));
+            assertTrue(battleShipMock.Coordinates().contains(new Coordinate('B', i)));
         }
         assertEquals(4, battleShipMock.Length());
         assertEquals(battleShipMock.Length(), battleShipMock.Coordinates().size());
@@ -254,7 +256,7 @@ public class ShipTests {
         assertFalse(battleShipMock.IsSunk());
 
         for(int i = 5; i <= 8; i++) {
-            battleShipMock.Hit(new Coordinate("B", i));
+            battleShipMock.Hit(new Coordinate('B', i));
         }
         assertTrue(battleShipMock.IsSunk());
 
@@ -265,7 +267,7 @@ public class ShipTests {
     @Test
     void CruiserMockTest() {
         for(int i = 8; i<= 10; i++) {
-            assertTrue(cruiserMock.Coordinates().contains(new Coordinate("C", i)));
+            assertTrue(cruiserMock.Coordinates().contains(new Coordinate('C', i)));
         }
         assertEquals(3, cruiserMock.Length());
         assertEquals(cruiserMock.Length(), cruiserMock.Coordinates().size());
@@ -273,17 +275,18 @@ public class ShipTests {
         assertFalse(cruiserMock.IsSunk());
 
         for(int i = 8; i<= 10; i++) {
-            cruiserMock.Hit(new Coordinate("C", i));
+            cruiserMock.Hit(new Coordinate('C', i));
         }
         assertTrue(cruiserMock.IsSunk());
 
         assertTrue(cruiserMock instanceof Ship);
         assertTrue(cruiserMock instanceof Cruiser);
     }
+
     @Test
     void DestroyerMockTest() {
         for(int i = 1; i <= 2; i++) {
-            assertTrue(destroyerMock.Coordinates().contains(new Coordinate("D", i)));
+            assertTrue(destroyerMock.Coordinates().contains(new Coordinate('D', i)));
         }
         assertEquals(2, destroyerMock.Length());
         assertEquals(destroyerMock.Length(), destroyerMock.Coordinates().size());
@@ -291,30 +294,36 @@ public class ShipTests {
         assertFalse(destroyerMock.IsSunk());
 
         for(int i = 1; i <= 2; i++) {
-            destroyerMock.Hit(new Coordinate("D", i));
+            destroyerMock.Hit(new Coordinate('D', i));
         }
         assertTrue(destroyerMock.IsSunk());
 
         assertTrue(destroyerMock instanceof Ship);
         assertTrue(destroyerMock instanceof Destroyer);
     }
+
     @Test
     void SubmarineMockTest() {
-        assertTrue(submarineMock.Coordinates().contains(new Coordinate("H", 8)));
+        assertTrue(submarineMock.Coordinates().contains(new Coordinate('H', 8)));
         assertEquals(1, submarineMock.Length());
         assertEquals(submarineMock.Length(), submarineMock.Coordinates().size());
         assertTrue(submarineMock.Hits().isEmpty());
         assertFalse(submarineMock.IsSunk());
 
-        submarineMock.Hit(new Coordinate("H", 8));
+        submarineMock.Hit(new Coordinate('H', 8));
         assertTrue(submarineMock.IsSunk());
 
         assertTrue(submarineMock instanceof Ship);
         assertTrue(submarineMock instanceof Submarine);
     }
 
-
-
-
-
+    @Test
+    void ExceptionTest() {
+        Coordinate c = new Coordinate('B', 7);
+        assertThrowsExactly(ExceptionInInitializerError.class,
+            ()-> shipC2C6HitMock.ThrowInitException(ShipType.Battleship, c, Direction.South),
+                String.join("",
+                        "Cannot set a ", ShipType.Battleship.toString(),
+                        " Direction ", Direction.South.toString(), " at Coordinate ", c.toString()));
+    }
 }
