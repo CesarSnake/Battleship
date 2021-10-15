@@ -19,7 +19,6 @@ public class CoordinateTests {
         assertEquals(5, c.Number());
     }
 
-
     @Test
     void ConstructorTest() {
         for (char i = 'A'; i <= 'J'; i++) { // Valid letters
@@ -31,7 +30,6 @@ public class CoordinateTests {
             }
         }
     }
-
 
     @Test
     void ConstructorInvalid() {
@@ -127,7 +125,7 @@ public class CoordinateTests {
                 String.join("", "Invalid Coordinate: ", letter, Integer.toString(1)));
         }
 
-        // numbers between A-J are tested on ConstructorTest
+        // letters between A-J are tested on ConstructorTest
 
         // limit right 10
         for (char i = 'K'; i < ('Z'+50); i++) {
