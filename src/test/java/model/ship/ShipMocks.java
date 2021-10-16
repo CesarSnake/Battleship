@@ -82,8 +82,11 @@ class CarrierMock extends Carrier {
 }
 class BattleshipMock extends Battleship {
     BattleshipMock(Coordinate cd, Direction d) {
-        super(cd, Direction.North);
         // As we are using a mock to testing, it doesn't matter the value of cd and d
+
+        // Also, we will not use the values from the parent class constructor
+        super(new Coordinate('H', 1), Direction.North);
+
         _coordinates = List.of(
             new Coordinate('B',5),
             new Coordinate('B',6),
@@ -96,8 +99,11 @@ class BattleshipMock extends Battleship {
 }
 class CruiserMock extends Cruiser {
     CruiserMock(Coordinate cd, Direction d) {
-        super(cd, Direction.North);
         // As we are using a mock to testing, it doesn't matter the value of cd and d
+
+        // Also, we will not use the values from the parent class constructor
+        super(new Coordinate('G', 1), Direction.North);
+
         _coordinates = List.of(
             new Coordinate('C',8),
             new Coordinate('C',9),
@@ -109,8 +115,11 @@ class CruiserMock extends Cruiser {
 }
 class DestroyerMock extends Destroyer {
     DestroyerMock(Coordinate cd, Direction d) {
-        super(cd, Direction.North);
         // As we are using a mock to testing, it doesn't matter the value of cd and d
+
+        // Also, we will not use the values from the parent class constructor
+        super(new Coordinate('J', 1), Direction.North);
+
         _coordinates = List.of(
             new Coordinate('D',1),
             new Coordinate('D',2)
@@ -121,8 +130,11 @@ class DestroyerMock extends Destroyer {
 }
 class SubmarineMock extends Submarine {
     SubmarineMock(Coordinate cd, Direction d) {
-        super(cd,Direction.North);
         // As we are using a mock to testing, it doesn't matter the value of cd and d
+
+        // Also, we will not use the values from the parent class constructor
+        super(new Coordinate('F', 1), Direction.North);
+
         _coordinates = List.of(
             new Coordinate('H',8)
         );
