@@ -3,7 +3,6 @@ package model.ship;
 import model.Coordinate;
 import model.Direction;
 
-import javax.management.InvalidAttributeValueException;
 import java.util.ArrayList;
 import java.util.List;
 
