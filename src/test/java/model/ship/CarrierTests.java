@@ -11,12 +11,12 @@ public class CarrierTests {
     @Test
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
-                () -> new Carrier(null, null),
-                "Cannot create a Carrier because \"coordinate\" or \"direction\" is null");
+            () -> new Carrier(null, null),
+            "Cannot create a Carrier because \"coordinate\" or \"direction\" is null");
 
         assertThrowsExactly(NullPointerException.class,
-                () -> new Carrier(null, null),
-                "Cannot create a Carrier because \"coordinate\" or \"direction\" is null");
+            () -> new Carrier(null, null),
+            "Cannot create a Carrier because \"coordinate\" or \"direction\" is null");
     }
 
     @Test

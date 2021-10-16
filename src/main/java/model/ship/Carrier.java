@@ -8,6 +8,10 @@ import java.util.ArrayList;
 public class Carrier extends Ship {
 
     public Carrier(Coordinate coordinate, Direction direction) {
+        if (coordinate == null || direction == null) {
+            throw new NullPointerException("Cannot create a Carrier because \"coordinate\" or \"direction\" is null");
+        }
+
         _length = 5;
         _hits = new ArrayList<>();
 
