@@ -20,7 +20,7 @@ public class CarrierTests {
     }
 
     @Test
-    void SetShipDirectionNorthTest() {
+    void SetCarrierInvalidDirectionNorthTest() {
         Direction dir = Direction.North;
 
         // Invalid positions
@@ -32,10 +32,14 @@ public class CarrierTests {
                     () -> new Carrier(c, dir),
                     String.join("",
                         "Cannot set a Carrier Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString())
-                );
+                        Direction.North.toString(), " at Coordinate ", c.toString()));
             }
         }
+    }
+
+    @Test
+    void SetCarrierDirectionNorthTest() {
+        Direction dir = Direction.North;
 
         // Valid positions
         for (char i = 'E'; i <= 'J'; i++) {
@@ -54,7 +58,25 @@ public class CarrierTests {
     }
 
     @Test
-    void SetShipDirectionSouthTest() {
+    void SetCarrierInvalidDirectionSouthTest() {
+        Direction dir = Direction.South;
+
+        // Invalid positions
+        for (char i = 'G'; i <= 'J'; i++) {
+            for (int j = 1; j <= 10; j++) {
+                Coordinate c = new Coordinate(i, j);
+
+                assertThrowsExactly(ExceptionInInitializerError.class,
+                    () -> new Carrier(c, dir),
+                    String.join("",
+                        "Cannot set a Carrier Direction ",
+                        Direction.North.toString(), " at Coordinate ", c.toString()));
+            }
+        }
+    }
+
+    @Test
+    void SetCarrierDirectionSouthTest() {
         Direction dir = Direction.South;
 
         // Valid positions
@@ -70,24 +92,28 @@ public class CarrierTests {
                 assertFalse(carrier.IsSunk());
             }
         }
+    }
+
+    @Test
+    void SetCarrierInvalidDirectionEastTest() {
+        Direction dir = Direction.East;
 
         // Invalid positions
-        for (char i = 'G'; i <= 'J'; i++) {
-            for (int j = 1; j <= 10; j++) {
+        for (char i = 'A'; i <= 'J'; i++) {
+            for (int j = 7; j <= 10; j++) {
                 Coordinate c = new Coordinate(i, j);
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Carrier(c, dir),
                     String.join("",
                         "Cannot set a Carrier Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString())
-                );
+                        Direction.North.toString(), " at Coordinate ", c.toString()));
             }
         }
     }
 
     @Test
-    void SetShipDirectionEastTest() {
+    void SetCarrierDirectionEastTest() {
         Direction dir = Direction.East;
 
         // Valid positions
@@ -103,24 +129,28 @@ public class CarrierTests {
                 assertFalse(carrier.IsSunk());
             }
         }
+    }
+
+    @Test
+    void SetCarrierInvalidDirectionWestTest() {
+        Direction dir = Direction.West;
 
         // Invalid positions
         for (char i = 'A'; i <= 'J'; i++) {
-            for (int j = 7; j <= 10; j++) {
+            for (int j = 1; j <= 4; j++) {
                 Coordinate c = new Coordinate(i, j);
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Carrier(c, dir),
                     String.join("",
-                        "Cannot set a Carrier Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString())
-                );
+                        "Cannot instantiate a Carrier Direction ",
+                        Direction.North.toString(), " at Coordinate ", c.toString()));
             }
         }
     }
 
     @Test
-    void SetShipDirectionWestTest() {
+    void SetCarrierDirectionWestTest() {
         Direction dir = Direction.West;
 
         // Valid positions
@@ -134,20 +164,6 @@ public class CarrierTests {
                 assertEquals(5, carrier.Coordinates().size());
                 assertTrue(carrier.Hits().isEmpty());
                 assertFalse(carrier.IsSunk());
-            }
-        }
-
-        // Invalid positions
-        for (char i = 'A'; i <= 'J'; i++) {
-            for (int j = 1; j <= 4; j++) {
-                Coordinate c = new Coordinate(i, j);
-
-                assertThrowsExactly(ExceptionInInitializerError.class,
-                    () -> new Carrier(c, dir),
-                    String.join("",
-                        "Cannot instantiate a Carrier Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString())
-                );
             }
         }
     }
