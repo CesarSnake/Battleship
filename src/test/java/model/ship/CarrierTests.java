@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CarrierTests {
-    // Carrier fills 4 cells
+    // Carrier fills 5 cells
     @Test
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,

@@ -80,8 +80,8 @@ class CarrierMock extends Carrier {
         _hits = new ArrayList<>();
     }
 }
-class BattleShipMock extends BattleShip {
-    BattleShipMock(Coordinate cd, Direction d) {
+class BattleshipMock extends Battleship {
+    BattleshipMock(Coordinate cd, Direction d) {
         super(cd, Direction.North);
         // As we are using a mock to testing, it doesn't matter the value of cd and d
         _coordinates = List.of(

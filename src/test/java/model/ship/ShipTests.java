@@ -246,7 +246,7 @@ public class ShipTests {
 
     @Test
     void BattleShipMockTest() {
-        BattleShip battleShipMock = new BattleShipMock(null, null);
+        Battleship battleShipMock = new BattleshipMock(null, null);
 
         for(int i = 5; i <= 8; i++) {
             assertTrue(battleShipMock.Coordinates().contains(new Coordinate('B', i)));
@@ -262,7 +262,7 @@ public class ShipTests {
         assertTrue(battleShipMock.IsSunk());
 
         assertTrue(battleShipMock instanceof Ship);
-        assertTrue(battleShipMock instanceof BattleShip);
+        assertTrue(battleShipMock instanceof Battleship);
     }
 
     @Test
