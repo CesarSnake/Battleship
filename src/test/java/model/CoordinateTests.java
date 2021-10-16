@@ -31,6 +31,23 @@ public class CoordinateTests {
     }
 
     @Test
+    void ConstructorNullTest() {
+        String exceptionMessage = "Cannot create a Coordinate because \"letter\" or \"number\" is null";
+
+        assertThrowsExactly(NullPointerException.class,
+            () -> new Coordinate(null, 1),
+            exceptionMessage);
+
+        assertThrowsExactly(NullPointerException.class,
+            () -> new Coordinate('A', null),
+            exceptionMessage);
+
+        assertThrowsExactly(NullPointerException.class,
+            () -> new Coordinate(null, null),
+            exceptionMessage);
+    }
+
+    @Test
     void ConstructorInvalid() {
         char letter = '0';
         assertThrowsExactly(ExceptionInInitializerError.class,

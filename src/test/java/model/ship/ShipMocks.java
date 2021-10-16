@@ -64,8 +64,11 @@ class ShipG4G6Mock extends Ship {
 
 class CarrierMock extends Carrier {
     CarrierMock(Coordinate cd, Direction d) {
-        super(cd,d);
-        // As we are using a mock to testing, it doesn't matter the value or cd and (inherited from parent constructor)
+        // As we are using a mock to testing, it doesn't matter the value of cd and d
+
+        // Also, we will not use the values from the parent class constructor
+        super(new Coordinate('E', 1), Direction.North);
+
         _coordinates = List.of(
             new Coordinate('C',1),
             new Coordinate('C',2),
@@ -79,8 +82,8 @@ class CarrierMock extends Carrier {
 }
 class BattleShipMock extends BattleShip {
     BattleShipMock(Coordinate cd, Direction d) {
-        super(cd,d);
-        // As we are using a mock to testing, it doesn't matter the value or cd and (inherited from parent constructor)
+        super(cd, Direction.North);
+        // As we are using a mock to testing, it doesn't matter the value of cd and d
         _coordinates = List.of(
             new Coordinate('B',5),
             new Coordinate('B',6),
@@ -93,8 +96,8 @@ class BattleShipMock extends BattleShip {
 }
 class CruiserMock extends Cruiser {
     CruiserMock(Coordinate cd, Direction d) {
-        super(cd,d);
-        // As we are using a mock to testing, it doesn't matter the value or cd and (inherited from parent constructor)
+        super(cd, Direction.North);
+        // As we are using a mock to testing, it doesn't matter the value of cd and d
         _coordinates = List.of(
             new Coordinate('C',8),
             new Coordinate('C',9),
@@ -106,8 +109,8 @@ class CruiserMock extends Cruiser {
 }
 class DestroyerMock extends Destroyer {
     DestroyerMock(Coordinate cd, Direction d) {
-        super(cd,d);
-        // As we are using a mock to testing, it doesn't matter the value or cd and (inherited from parent constructor)
+        super(cd, Direction.North);
+        // As we are using a mock to testing, it doesn't matter the value of cd and d
         _coordinates = List.of(
             new Coordinate('D',1),
             new Coordinate('D',2)
@@ -118,8 +121,8 @@ class DestroyerMock extends Destroyer {
 }
 class SubmarineMock extends Submarine {
     SubmarineMock(Coordinate cd, Direction d) {
-        super(cd,d);
-        // As we are using a mock to testing, it doesn't matter the value or cd and (inherited from parent constructor)
+        super(cd,Direction.North);
+        // As we are using a mock to testing, it doesn't matter the value of cd and d
         _coordinates = List.of(
             new Coordinate('H',8)
         );

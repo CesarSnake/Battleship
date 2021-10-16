@@ -9,6 +9,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CarrierTests {
     // Carrier fills 4 cells
     @Test
+    void ConstructorNullTest() {
+        assertThrowsExactly(NullPointerException.class,
+                () -> new Carrier(null, null),
+                "Cannot create a Carrier because \"coordinate\" or \"direction\" is null");
+
+        assertThrowsExactly(NullPointerException.class,
+                () -> new Carrier(null, null),
+                "Cannot create a Carrier because \"coordinate\" or \"direction\" is null");
+    }
+
+    @Test
     void SetShipDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -18,9 +29,10 @@ public class CarrierTests {
                 Coordinate c = new Coordinate(i, j);
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
-                        () -> new Carrier(c, dir),
-                        String.join("","Cannot set a Carrier Direction ",
-                            Direction.North.toString(), " at Coordinate ", c.toString())
+                    () -> new Carrier(c, dir),
+                    String.join("",
+                        "Cannot set a Carrier Direction ",
+                        Direction.North.toString(), " at Coordinate ", c.toString())
                 );
             }
         }
@@ -33,6 +45,8 @@ public class CarrierTests {
 
                 assertNotNull(carrier);
                 assertEquals(5, carrier.Length());
+                assertEquals(5, carrier.Coordinates().size());
+                assertTrue(carrier.Coordinates().contains(c));
                 assertTrue(carrier.Hits().isEmpty());
                 assertFalse(carrier.IsSunk());
             }
@@ -51,6 +65,7 @@ public class CarrierTests {
 
                 assertNotNull(carrier);
                 assertEquals(5, carrier.Length());
+                assertEquals(5, carrier.Coordinates().size());
                 assertTrue(carrier.Hits().isEmpty());
                 assertFalse(carrier.IsSunk());
             }
@@ -62,9 +77,10 @@ public class CarrierTests {
                 Coordinate c = new Coordinate(i, j);
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
-                        () -> new Carrier(c, dir),
-                        String.join("","Cannot set a Carrier Direction ",
-                            Direction.North.toString(), " at Coordinate ", c.toString())
+                    () -> new Carrier(c, dir),
+                    String.join("",
+                        "Cannot set a Carrier Direction ",
+                        Direction.North.toString(), " at Coordinate ", c.toString())
                 );
             }
         }
@@ -82,6 +98,7 @@ public class CarrierTests {
 
                 assertNotNull(carrier);
                 assertEquals(5, carrier.Length());
+                assertEquals(5, carrier.Coordinates().size());
                 assertTrue(carrier.Hits().isEmpty());
                 assertFalse(carrier.IsSunk());
             }
@@ -93,9 +110,10 @@ public class CarrierTests {
                 Coordinate c = new Coordinate(i, j);
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
-                        () -> new Carrier(c, dir),
-                        String.join("","Cannot set a Carrier Direction ",
-                            Direction.North.toString(), " at Coordinate ", c.toString())
+                    () -> new Carrier(c, dir),
+                    String.join("",
+                        "Cannot set a Carrier Direction ",
+                        Direction.North.toString(), " at Coordinate ", c.toString())
                 );
             }
         }
@@ -113,6 +131,7 @@ public class CarrierTests {
 
                 assertNotNull(carrier);
                 assertEquals(5, carrier.Length());
+                assertEquals(5, carrier.Coordinates().size());
                 assertTrue(carrier.Hits().isEmpty());
                 assertFalse(carrier.IsSunk());
             }
@@ -124,9 +143,10 @@ public class CarrierTests {
                 Coordinate c = new Coordinate(i, j);
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
-                        () -> new Carrier(c, dir),
-                        String.join("","Cannot instantiate a Carrier Direction ",
-                            Direction.North.toString(), " at Coordinate ", c.toString())
+                    () -> new Carrier(c, dir),
+                    String.join("",
+                        "Cannot instantiate a Carrier Direction ",
+                        Direction.North.toString(), " at Coordinate ", c.toString())
                 );
             }
         }
@@ -142,8 +162,11 @@ public class CarrierTests {
         for (int i = 1; i <= 5; i++) {
             Coordinate c = new Coordinate('A',i);
             carrier.Hit(c);
-            assertFalse(carrier.IsSunk());
             assertTrue(carrier.Hits().contains(c));
+
+            if(i != 5) {
+                assertFalse(carrier.IsSunk());
+            }
         }
 
         assertTrue(carrier.IsSunk());

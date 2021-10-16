@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -15,11 +17,6 @@ public class ShipTests {
     Ship shipC2C6HitMock;
     Ship shipB8E8Mock;
     Ship shipG4G6Mock;
-    Carrier carrierMock;
-    BattleShip battleShipMock;
-    Cruiser cruiserMock;
-    Destroyer destroyerMock;
-    Submarine submarineMock;
 
     @BeforeAll
     void InitOnce() {
@@ -32,12 +29,6 @@ public class ShipTests {
         shipC2C6HitMock = new ShipC2C6HitMock();
         shipB8E8Mock = new ShipB8E8Mock();
         shipG4G6Mock = new ShipG4G6Mock();
-
-        carrierMock = new CarrierMock(null, null);
-        battleShipMock = new BattleShipMock(null, null);
-        cruiserMock = new CruiserMock(null, null);
-        destroyerMock = new DestroyerMock(null, null);
-        submarineMock = new SubmarineMock(null, null);
     }
 
     @Test
@@ -53,6 +44,13 @@ public class ShipTests {
         assertNull(emptyShip.Hits());
 
         assertNull(emptyShip.IsSunk());
+    }
+
+    @Test
+    void HitNullCoordinateTest() {
+        assertThrowsExactly(NullPointerException.class,
+            () -> shipC2C6HitMock.Hit(null),
+            "Cannot hit the ship because \"coordinate\" is null");
     }
 
     @Test
@@ -228,6 +226,7 @@ public class ShipTests {
 
     @Test
     void CarrierMockTest() {
+        Carrier carrierMock = new CarrierMock(null, null);
         for(int i = 1; i <= 5; i++) {
             assertTrue(carrierMock.Coordinates().contains(new Coordinate('C', i)));
         }
@@ -247,6 +246,8 @@ public class ShipTests {
 
     @Test
     void BattleShipMockTest() {
+        BattleShip battleShipMock = new BattleShipMock(null, null);
+
         for(int i = 5; i <= 8; i++) {
             assertTrue(battleShipMock.Coordinates().contains(new Coordinate('B', i)));
         }
@@ -266,6 +267,8 @@ public class ShipTests {
 
     @Test
     void CruiserMockTest() {
+        Cruiser cruiserMock = new CruiserMock(null, null);
+
         for(int i = 8; i<= 10; i++) {
             assertTrue(cruiserMock.Coordinates().contains(new Coordinate('C', i)));
         }
@@ -285,6 +288,8 @@ public class ShipTests {
 
     @Test
     void DestroyerMockTest() {
+        Destroyer destroyerMock = new DestroyerMock(null, null);
+
         for(int i = 1; i <= 2; i++) {
             assertTrue(destroyerMock.Coordinates().contains(new Coordinate('D', i)));
         }
@@ -304,6 +309,8 @@ public class ShipTests {
 
     @Test
     void SubmarineMockTest() {
+        Submarine submarineMock = new SubmarineMock(null, null);
+
         assertTrue(submarineMock.Coordinates().contains(new Coordinate('H', 8)));
         assertEquals(1, submarineMock.Length());
         assertEquals(submarineMock.Length(), submarineMock.Coordinates().size());
@@ -318,12 +325,109 @@ public class ShipTests {
     }
 
     @Test
-    void ExceptionTest() {
-        Coordinate c = new Coordinate('B', 7);
-        assertThrowsExactly(ExceptionInInitializerError.class,
-            ()-> shipC2C6HitMock.ThrowInitException(ShipType.Battleship, c, Direction.South),
+    void GenerateCoordinatesNullTest() {
+        assertThrowsExactly(NullPointerException.class,
+            ()-> new Ship().GenerateCoordinates(null, null, -1),
+            "Cannot create a GenerateCoordinates because \"coordinate\" or \"direction\" is null");
+}
+
+    @Test
+    void GenerateCoordinatesExceptionNorthTest() {
+        // North
+        for (int i = 1; i <= 10; i++) {
+            int number = i;
+            assertThrowsExactly(UnsupportedOperationException.class,
+                () -> new Ship().GenerateCoordinates(new Coordinate('A', number), Direction.North, 1),
                 String.join("",
-                        "Cannot set a ", ShipType.Battleship.toString(),
-                        " Direction ", Direction.South.toString(), " at Coordinate ", c.toString()));
+                        "Cannot generate ", String.valueOf(1), " coordinates direction", Direction.North.toString()));
+        }
+    }
+
+    @Test
+    void GenerateCoordinatesExceptionEastTest() {
+        // East
+        for (char i = 'A'; i <= 'J'; i++) {
+            char letter = i;
+            assertThrowsExactly(UnsupportedOperationException.class,
+                () -> new Ship().GenerateCoordinates(new Coordinate(letter, 10), Direction.East, 1),
+                String.join("",
+                        "Cannot generate ", String.valueOf(1), " coordinates direction", Direction.East.toString()));
+        }
+    }
+
+    @Test
+    void GenerateCoordinatesExceptionSouthTest() {
+        // Shout
+        for (int i = 1; i <= 10; i++) {
+            int number = i;
+            assertThrowsExactly(UnsupportedOperationException.class,
+                () -> new Ship().GenerateCoordinates(new Coordinate('J', number), Direction.South, 1),
+                String.join("",
+                        "Cannot generate ", String.valueOf(1), " coordinates direction", Direction.South.toString()));
+        }
+    }
+
+    @Test
+    void GenerateCoordinatesExceptionWestTest() {
+        // West
+        for (char i = 'A'; i <='J' ; i++) {
+            char letter = i;
+            assertThrowsExactly(UnsupportedOperationException.class,
+                ()-> new Ship().GenerateCoordinates(new Coordinate(letter,1), Direction.West, 1),
+                String.join("",
+                        "Cannot generate ", String.valueOf(1), " coordinates direction", Direction.West.toString()));
+        }
+    }
+
+    @Test
+    void GenerateCoordinatesNorthTest() {
+        int increase = 3;
+        for (int i = 1; i <= 10; i++) {
+            List<Coordinate> generated = new Ship().GenerateCoordinates(new Coordinate('E', i), Direction.North, increase);
+
+            assertEquals(increase+1, generated.size());
+            for (char j = (char)('E'-increase); j <= 'E'; j++) {
+                assertTrue(generated.contains(new Coordinate(j, i)));
+            }
+        }
+    }
+
+    @Test
+    void GenerateCoordinatesEastTest() {
+        int increase = 3;
+        for (char i = 'A'; i <= 'J'; i++) {
+            List<Coordinate> generated = new Ship().GenerateCoordinates(new Coordinate(i, 5), Direction.East, increase);
+
+            assertEquals(increase+1, generated.size());
+            for (int j = 5; j <= 5+increase; j++) {
+                assertTrue(generated.contains(new Coordinate(i, j)));
+            }
+        }
+    }
+
+    @Test
+    void GenerateCoordinatesSouthTest() {
+        int increase = 3;
+        for (int i = 1; i <= 10; i++) {
+            List<Coordinate> generated = new Ship().GenerateCoordinates(new Coordinate('E', i), Direction.South, increase);
+
+            assertEquals(increase+1, generated.size());
+            for (char j = 'E'; j <= 'E'+increase; j++) {
+                assertTrue(generated.contains(new Coordinate(j, i)));
+            }
+        }
+    }
+
+    @Test
+    void GenerateCoordinatesWestTest() {
+        int increase = 3;
+        for (char i = 'A'; i <= 'J'; i++) {
+            List<Coordinate> generated = new Ship().GenerateCoordinates(new Coordinate(i, 5), Direction.West, increase);
+
+            assertEquals(increase+1, generated.size());
+            for (int j = 5-increase; j <= 5; j++) {
+                assertTrue(generated.contains(new Coordinate(i, j)));
+            }
+        }
     }
 }

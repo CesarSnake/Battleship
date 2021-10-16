@@ -10,11 +10,15 @@ public class Coordinate {
     private List<Integer> _validNumbers = List.of(1,2,3,4,5,6,7,8,9,10);
 
     public Coordinate(Character letter, Integer number) {
+        if (letter == null || number == null) {
+            throw new NullPointerException("Cannot create a Coordinate because \"letter\" or \"number\" is null");
+        }
+
         if (!_validLetters.contains(letter) ||
             !_validNumbers.contains(number)) {
-            throw new ExceptionInInitializerError(String.join("",
-                "Invalid Coordinate: ",
-                String.valueOf(letter), Integer.toString(number)));
+            throw new ExceptionInInitializerError(
+                String.join("",
+                "Invalid Coordinate: ", String.valueOf(letter), Integer.toString(number)));
         }
 
         _letter = letter;
@@ -42,6 +46,7 @@ public class Coordinate {
 
     @Override
     public String toString() {
-        return (String.join("", String.valueOf(_letter), Integer.toString(_number)));
+        return (String.join("",
+            String.valueOf(_letter), Integer.toString(_number)));
     }
 }
