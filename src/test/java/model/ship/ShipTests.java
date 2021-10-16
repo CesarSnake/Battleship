@@ -329,6 +329,14 @@ public class ShipTests {
         assertThrowsExactly(NullPointerException.class,
             ()-> new Ship().GenerateCoordinates(null, null, -1),
             "Cannot create a GenerateCoordinates because \"coordinate\" or \"direction\" is null");
+
+        assertThrowsExactly(NullPointerException.class,
+            ()-> new Ship().GenerateCoordinates(null, Direction.North, -1),
+            "Cannot create a GenerateCoordinates because \"coordinate\" or \"direction\" is null");
+
+        assertThrowsExactly(NullPointerException.class,
+            ()-> new Ship().GenerateCoordinates(new Coordinate('D',8), null, -1),
+            "Cannot create a GenerateCoordinates because \"coordinate\" or \"direction\" is null");
 }
 
     @Test
