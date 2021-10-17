@@ -187,4 +187,68 @@ public class CruiserTests {
 
         assertTrue(cruiser.IsSunk());
     }
+
+    @Test
+    void CruiserNorthToString() {
+        Cruiser cruiser = new Cruiser(new Coordinate('G', 2), Direction.North);
+
+        assertEquals("Ship not sunk, hits: []", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('F',2));
+        assertEquals("Ship not sunk, hits: [F2]", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('G',2));
+        assertEquals("Ship not sunk, hits: [F2, G2]", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('E',2));
+        assertEquals("Cruiser sunk, hits: [E2, F2, G2]", cruiser.toString());
+    }
+
+    @Test
+    void CruiserEastToString() {
+        Cruiser cruiser = new Cruiser(new Coordinate('F', 2), Direction.East);
+
+        assertEquals("Ship not sunk, hits: []", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('F',2));
+        assertEquals("Ship not sunk, hits: [F2]", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('F',3));
+        assertEquals("Ship not sunk, hits: [F2, F3]", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('F',4));
+        assertEquals("Cruiser sunk, hits: [F2, F3, F4]", cruiser.toString());
+    }
+
+    @Test
+    void CruiserSouthToString() {
+        Cruiser cruiser = new Cruiser(new Coordinate('B', 7), Direction.South);
+
+        assertEquals("Ship not sunk, hits: []", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('D',7));
+        assertEquals("Ship not sunk, hits: [D7]", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('C',7));
+        assertEquals("Ship not sunk, hits: [C7, D7]", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('B',7));
+        assertEquals("Cruiser sunk, hits: [B7, C7, D7]", cruiser.toString());
+    }
+
+    @Test
+    void CruiserWestToString() {
+        Cruiser cruiser = new Cruiser(new Coordinate('G', 7), Direction.West);
+
+        assertEquals("Ship not sunk, hits: []", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('G',6));
+        assertEquals("Ship not sunk, hits: [G6]", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('G',7));
+        assertEquals("Ship not sunk, hits: [G6, G7]", cruiser.toString());
+
+        cruiser.Hit(new Coordinate('G',5));
+        assertEquals("Cruiser sunk, hits: [G5, G6, G7]", cruiser.toString());
+    }
 }

@@ -107,4 +107,44 @@ public class SubmarineTests {
         submarine.Hit(c);
         assertTrue(submarine.Hits().contains(c));
     }
+
+    @Test
+    void SubmarineNorthToString() {
+        Submarine submarine = new Submarine(new Coordinate('E', 2), Direction.North);
+
+        assertEquals("Ship not sunk, hits: []", submarine.toString());
+
+        submarine.Hit(new Coordinate('E',2));
+        assertEquals("Submarine sunk, hits: [E2]", submarine.toString());
+    }
+
+    @Test
+    void SubmarineEastToString() {
+        Submarine submarine = new Submarine(new Coordinate('F', 2), Direction.East);
+
+        assertEquals("Ship not sunk, hits: []", submarine.toString());
+
+        submarine.Hit(new Coordinate('F',2));
+        assertEquals("Submarine sunk, hits: [F2]", submarine.toString());
+    }
+
+    @Test
+    void SubmarineSouthToString() {
+        Submarine submarine = new Submarine(new Coordinate('B', 7), Direction.South);
+
+        assertEquals("Ship not sunk, hits: []", submarine.toString());
+
+        submarine.Hit(new Coordinate('B',7));
+        assertEquals("Submarine sunk, hits: [B7]", submarine.toString());
+    }
+
+    @Test
+    void SubmarineWestToString() {
+        Submarine submarine = new Submarine(new Coordinate('G', 7), Direction.West);
+
+        assertEquals("Ship not sunk, hits: []", submarine.toString());
+
+        submarine.Hit(new Coordinate('G',7));
+        assertEquals("Submarine sunk, hits: [G7]", submarine.toString());
+    }
 }

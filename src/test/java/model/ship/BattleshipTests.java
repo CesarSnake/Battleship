@@ -187,4 +187,80 @@ public class BattleshipTests {
 
         assertTrue(battleship.IsSunk());
     }
+
+    @Test
+    void BattleshipNorthToString() {
+        Battleship battleship = new Battleship(new Coordinate('G', 2), Direction.North);
+
+        assertEquals("Ship not sunk, hits: []", battleship.toString());
+
+        battleship.Hit(new Coordinate('D',2));
+        assertEquals("Ship not sunk, hits: [D2]", battleship.toString());
+
+        battleship.Hit(new Coordinate('F',2));
+        assertEquals("Ship not sunk, hits: [D2, F2]", battleship.toString());
+
+        battleship.Hit(new Coordinate('G',2));
+        assertEquals("Ship not sunk, hits: [D2, F2, G2]", battleship.toString());
+
+        battleship.Hit(new Coordinate('E',2));
+        assertEquals("Battleship sunk, hits: [D2, E2, F2, G2]", battleship.toString());
+    }
+
+    @Test
+    void BattleshipEastToString() {
+        Battleship battleship = new Battleship(new Coordinate('F', 2), Direction.East);
+
+        assertEquals("Ship not sunk, hits: []", battleship.toString());
+
+        battleship.Hit(new Coordinate('F',3));
+        assertEquals("Ship not sunk, hits: [F3]", battleship.toString());
+
+        battleship.Hit(new Coordinate('F',4));
+        assertEquals("Ship not sunk, hits: [F3, F4]", battleship.toString());
+
+        battleship.Hit(new Coordinate('F',2));
+        assertEquals("Ship not sunk, hits: [F2, F3, F4]", battleship.toString());
+
+        battleship.Hit(new Coordinate('F',5));
+        assertEquals("Battleship sunk, hits: [F2, F3, F4, F5]", battleship.toString());
+    }
+
+    @Test
+    void BattleshipSouthToString() {
+        Battleship battleship = new Battleship(new Coordinate('B', 7), Direction.South);
+
+        assertEquals("Ship not sunk, hits: []", battleship.toString());
+
+        battleship.Hit(new Coordinate('D',7));
+        assertEquals("Ship not sunk, hits: [D7]", battleship.toString());
+
+        battleship.Hit(new Coordinate('E',7));
+        assertEquals("Ship not sunk, hits: [D7, E7]", battleship.toString());
+
+        battleship.Hit(new Coordinate('C',7));
+        assertEquals("Ship not sunk, hits: [C7, D7, E7]", battleship.toString());
+
+        battleship.Hit(new Coordinate('B',7));
+        assertEquals("Battleship sunk, hits: [B7, C7, D7, E7]", battleship.toString());
+    }
+
+    @Test
+    void BattleshipWestToString() {
+        Battleship battleship = new Battleship(new Coordinate('G', 7), Direction.West);
+
+        assertEquals("Ship not sunk, hits: []", battleship.toString());
+
+        battleship.Hit(new Coordinate('G',6));
+        assertEquals("Ship not sunk, hits: [G6]", battleship.toString());
+
+        battleship.Hit(new Coordinate('G',4));
+        assertEquals("Ship not sunk, hits: [G4, G6]", battleship.toString());
+
+        battleship.Hit(new Coordinate('G',7));
+        assertEquals("Ship not sunk, hits: [G4, G6, G7]", battleship.toString());
+
+        battleship.Hit(new Coordinate('G',5));
+        assertEquals("Battleship sunk, hits: [G4, G5, G6, G7]", battleship.toString());
+    }
 }

@@ -187,4 +187,92 @@ public class CarrierTests {
 
         assertTrue(carrier.IsSunk());
     }
+
+    @Test
+    void CarrierNorthToString() {
+        Carrier carrier = new Carrier(new Coordinate('G', 2), Direction.North);
+
+        assertEquals("Ship not sunk, hits: []", carrier.toString());
+
+        carrier.Hit(new Coordinate('D',2));
+        assertEquals("Ship not sunk, hits: [D2]", carrier.toString());
+
+        carrier.Hit(new Coordinate('F',2));
+        assertEquals("Ship not sunk, hits: [D2, F2]", carrier.toString());
+
+        carrier.Hit(new Coordinate('C',2));
+        assertEquals("Ship not sunk, hits: [C2, D2, F2]", carrier.toString());
+
+        carrier.Hit(new Coordinate('G',2));
+        assertEquals("Ship not sunk, hits: [C2, D2, F2, G2]", carrier.toString());
+
+        carrier.Hit(new Coordinate('E',2));
+        assertEquals("Carrier sunk, hits: [C2, D2, E2, F2, G2]", carrier.toString());
+    }
+
+    @Test
+    void CarrierEastToString() {
+        Carrier carrier = new Carrier(new Coordinate('F', 2), Direction.East);
+
+        assertEquals("Ship not sunk, hits: []", carrier.toString());
+
+        carrier.Hit(new Coordinate('F',6));
+        assertEquals("Ship not sunk, hits: [F6]", carrier.toString());
+
+        carrier.Hit(new Coordinate('F',4));
+        assertEquals("Ship not sunk, hits: [F4, F6]", carrier.toString());
+
+        carrier.Hit(new Coordinate('F',2));
+        assertEquals("Ship not sunk, hits: [F2, F4, F6]", carrier.toString());
+
+        carrier.Hit(new Coordinate('F',3));
+        assertEquals("Ship not sunk, hits: [F2, F3, F4, F6]", carrier.toString());
+
+        carrier.Hit(new Coordinate('F',5));
+        assertEquals("Carrier sunk, hits: [F2, F3, F4, F5, F6]", carrier.toString());
+    }
+
+    @Test
+    void CarrierSouthToString() {
+        Carrier carrier = new Carrier(new Coordinate('B', 7), Direction.South);
+
+        assertEquals("Ship not sunk, hits: []", carrier.toString());
+
+        carrier.Hit(new Coordinate('F',7));
+        assertEquals("Ship not sunk, hits: [F7]", carrier.toString());
+
+        carrier.Hit(new Coordinate('D',7));
+        assertEquals("Ship not sunk, hits: [D7, F7]", carrier.toString());
+
+        carrier.Hit(new Coordinate('E',7));
+        assertEquals("Ship not sunk, hits: [D7, E7, F7]", carrier.toString());
+
+        carrier.Hit(new Coordinate('C',7));
+        assertEquals("Ship not sunk, hits: [C7, D7, E7, F7]", carrier.toString());
+
+        carrier.Hit(new Coordinate('B',7));
+        assertEquals("Carrier sunk, hits: [B7, C7, D7, E7, F7]", carrier.toString());
+    }
+
+    @Test
+    void CarrierWestToString() {
+        Carrier carrier = new Carrier(new Coordinate('G', 7), Direction.West);
+
+        assertEquals("Ship not sunk, hits: []", carrier.toString());
+
+        carrier.Hit(new Coordinate('G',6));
+        assertEquals("Ship not sunk, hits: [G6]", carrier.toString());
+
+        carrier.Hit(new Coordinate('G',4));
+        assertEquals("Ship not sunk, hits: [G4, G6]", carrier.toString());
+
+        carrier.Hit(new Coordinate('G',3));
+        assertEquals("Ship not sunk, hits: [G3, G4, G6]", carrier.toString());
+
+        carrier.Hit(new Coordinate('G',7));
+        assertEquals("Ship not sunk, hits: [G3, G4, G6, G7]", carrier.toString());
+
+        carrier.Hit(new Coordinate('G',5));
+        assertEquals("Carrier sunk, hits: [G3, G4, G5, G6, G7]", carrier.toString());
+    }
 }

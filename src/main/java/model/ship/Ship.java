@@ -4,7 +4,9 @@ import model.Coordinate;
 import model.Direction;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Ship {
     List<Coordinate> _coordinates;
@@ -37,6 +39,35 @@ public class Ship {
 
     public Boolean IsSunk() {
         return _hits.size() == _length;
+    }
+
+    @Override
+    public String toString() {
+        ArrayList<String> stringList = new ArrayList<>();
+
+        // ship type
+        if (IsSunk()) {
+            stringList.add(getClass().getSimpleName());
+            stringList.add( " sunk, ");
+        } else {
+            stringList.add(getClass().getSuperclass().getSimpleName());
+            stringList.add(" not sunk, ");
+        }
+
+        // coordinates (sorted)
+        stringList.add("hits: ");
+
+        List<String> hitsSorted = _hits
+            .stream()
+            .sorted(Comparator
+                .comparing(Coordinate::Letter)
+                .thenComparing(Coordinate::Number))
+            .map(Coordinate::toString)
+            .collect(Collectors.toList());
+
+        stringList.add(hitsSorted.toString());
+
+        return String.join("", stringList);
     }
 
     protected List<Coordinate> GenerateCoordinates(Coordinate coordinate, Direction direction, int increase) {

@@ -179,4 +179,56 @@ public class DestroyerTests {
 
         assertTrue(destroyer.IsSunk());
     }
+
+    @Test
+    void DestroyerNorthToString() {
+        Destroyer destroyer = new Destroyer(new Coordinate('G', 2), Direction.North);
+
+        assertEquals("Ship not sunk, hits: []", destroyer.toString());
+
+        destroyer.Hit(new Coordinate('G',2));
+        assertEquals("Ship not sunk, hits: [G2]", destroyer.toString());
+
+        destroyer.Hit(new Coordinate('F',2));
+        assertEquals("Destroyer sunk, hits: [F2, G2]", destroyer.toString());
+    }
+
+    @Test
+    void DestroyerEastToString() {
+        Destroyer destroyer = new Destroyer(new Coordinate('F', 2), Direction.East);
+
+        assertEquals("Ship not sunk, hits: []", destroyer.toString());
+
+        destroyer.Hit(new Coordinate('F',2));
+        assertEquals("Ship not sunk, hits: [F2]", destroyer.toString());
+
+        destroyer.Hit(new Coordinate('F',3));
+        assertEquals("Destroyer sunk, hits: [F2, F3]", destroyer.toString());
+    }
+
+    @Test
+    void DestroyerSouthToString() {
+        Destroyer destroyer = new Destroyer(new Coordinate('B', 7), Direction.South);
+
+        assertEquals("Ship not sunk, hits: []", destroyer.toString());
+
+        destroyer.Hit(new Coordinate('B',7));
+        assertEquals("Ship not sunk, hits: [B7]", destroyer.toString());
+
+        destroyer.Hit(new Coordinate('C',7));
+        assertEquals("Destroyer sunk, hits: [B7, C7]", destroyer.toString());
+    }
+
+    @Test
+    void DestroyerWestToString() {
+        Destroyer destroyer = new Destroyer(new Coordinate('G', 7), Direction.West);
+
+        assertEquals("Ship not sunk, hits: []", destroyer.toString());
+
+        destroyer.Hit(new Coordinate('G',7));
+        assertEquals("Ship not sunk, hits: [G7]", destroyer.toString());
+
+        destroyer.Hit(new Coordinate('G',6));
+        assertEquals("Destroyer sunk, hits: [G6, G7]", destroyer.toString());
+    }
 }

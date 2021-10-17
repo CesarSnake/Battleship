@@ -438,4 +438,23 @@ public class ShipTests {
             }
         }
     }
+
+    @Test
+    void ToString() {
+        //shipB8E8Mock
+
+        assertEquals("Ship not sunk, hits: []", shipB8E8Mock.toString());
+
+        shipB8E8Mock.Hit(new Coordinate('E',8));
+        assertEquals("Ship not sunk, hits: [E8]", shipB8E8Mock.toString());
+
+        shipB8E8Mock.Hit(new Coordinate('B',8));
+        assertEquals("Ship not sunk, hits: [B8, E8]", shipB8E8Mock.toString());
+
+        shipB8E8Mock.Hit(new Coordinate('D',8));
+        assertEquals("Ship not sunk, hits: [B8, D8, E8]", shipB8E8Mock.toString());
+
+        shipB8E8Mock.Hit(new Coordinate('C',8));
+        assertEquals("ShipB8E8Mock sunk, hits: [B8, C8, D8, E8]", shipB8E8Mock.toString());
+    }
 }
