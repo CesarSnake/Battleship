@@ -189,7 +189,7 @@ public class ShipTests {
                 } else {
                     assertThrowsExactly(UnsupportedOperationException.class,
                         () -> shipHorizontal.Hit(cd),
-                        String.join("",shipHorizontal.getClass().getName(), " is not positioned on the coordinate: ", cd.toString()));
+                        String.join("",shipHorizontal.getClass().getSimpleName(), " is not positioned on the coordinate: ", cd.toString()));
                 }
             }
         }
@@ -218,7 +218,7 @@ public class ShipTests {
                 } else {
                     assertThrowsExactly(UnsupportedOperationException.class,
                         () -> shipVertical.Hit(cd),
-                        String.join("",shipVertical.getClass().getName(), " is not positioned on the coordinate: ", cd.toString()));
+                        String.join("",shipVertical.getClass().getSimpleName(), " is not positioned on the coordinate: ", cd.toString()));
                 }
             }
         }

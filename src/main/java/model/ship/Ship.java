@@ -25,7 +25,7 @@ public class Ship {
         if (!_coordinates.contains(coordinate)) {
             throw new UnsupportedOperationException(
                 String.join("",
-                getClass().getName(), " is not positioned on the coordinate: ", coordinate.toString()));
+                getClass().getSimpleName(), " is not positioned on the coordinate: ", coordinate.toString()));
         }
         if (_hits.contains(coordinate)) {
             throw new UnsupportedOperationException(

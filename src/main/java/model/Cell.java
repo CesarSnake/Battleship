@@ -31,7 +31,7 @@ public class Cell {
         if (!ship.Coordinates().contains(_coordinate)) {
             throw new UnsupportedOperationException(
                 String.join("",
-                    "The ship ", ship.getClass().getName(), "has different coordinates than this Cell ", _coordinate.toString()));
+                    "The ship ", ship.getClass().getSimpleName(), "has different coordinates than this Cell ", _coordinate.toString()));
         }
         _ship = ship;
     }
