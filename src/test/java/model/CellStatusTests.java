@@ -9,15 +9,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CellStatusTests {
+    CellStatus hide;
     CellStatus watter;
     CellStatus hit;
     CellStatus destroyed;
 
     @BeforeAll
      void InitOnce() {
+        hide = CellStatus.Hide;
         watter = CellStatus.Watter;
         hit = CellStatus.Hit;
         destroyed = CellStatus.Destroyed;
+    }
+
+    @Test
+    void StatusHideTest() {
+        assertEquals(CellStatus.Hide, hide);
+        assertEquals("Hide", hide.toString());
+        assertEquals(CellStatus.Hide.toString(), hide.toString());
     }
 
     @Test

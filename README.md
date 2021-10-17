@@ -127,3 +127,11 @@ Press any key to back main menu
 - Un vaixell pot rebre tants atacs com tantes coordenades ocupe, si rep un atac en una coordenada lliure, aquesta passa a ser atacada.
 - Si un vaixell rep un altre atac a una coordenada que ja ha sigut atacada, llançarà una excepció.
 - El vaixell és enfonsat quan totes les coordenades reben un atac.
+
+#### ShipFactory
+- És una classe que retorna el tipus de vaixell desitjat.
+
+#### Cell
+- La casella estarà formada per una coordenada i un estat (aigua, tocat o enfonsat).
+- La casella ha de retornar una llista de les seues caselles veïnes d'acord a la coordenada.
+- Cada vaixell del joc estarà associat a X caselles, per tanta cada casella podra tant ser associada, com retornar a quin vaixell és associada.
