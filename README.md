@@ -133,5 +133,4 @@ Press any key to back main menu
 
 #### Cell
 - La casella estarà formada per una coordenada i un estat (aigua, tocat o enfonsat).
-- La casella ha de retornar una llista de les seues caselles veïnes d'acord a la coordenada.
 - Cada vaixell del joc estarà associat a X caselles, per tanta cada casella podra tant ser associada, com retornar a quin vaixell és associada.
