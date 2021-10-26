@@ -16,7 +16,7 @@ public class Cell {
         _status = CellStatus.Hide;
     }
 
-    public Coordinate Coortinate() { return _coordinate; }
+    public Coordinate Coordinate() { return _coordinate; }
     public CellStatus Status() { return _status; }
 
     public void SetShip(Ship ship) {

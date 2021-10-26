@@ -38,11 +38,11 @@ public class CellTests {
     void GettersTest() {
         Cell c1 = new Cell(a1);
 
-        assertEquals(a1, c1.Coortinate());
+        assertEquals(a1, c1.Coordinate());
         assertEquals(CellStatus.Hide, c1.Status());
 
         Cell c2 = new Cell(j1);
-        assertEquals(j1, c2.Coortinate());
+        assertEquals(j1, c2.Coordinate());
         assertEquals(CellStatus.Hide, c1.Status());
     }
 
