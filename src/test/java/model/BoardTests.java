@@ -1,7 +1,8 @@
 package model;
 
-import model.ship.Carrier;
-import model.ship.Cruiser;
+import model.ship.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BoardTests {
     Board board;
 
-    @BefforeAll
+    @BeforeEach
     void Setup() {
         board = new Board();
     }
@@ -28,7 +29,7 @@ public class BoardTests {
 
     @Test
     void HitSymbolTest() {
-        assertEquals('\\', board.HIT_SYMBOL);
+        assertEquals('/', board.HIT_SYMBOL);
     }
 
     @Test
@@ -45,7 +46,7 @@ public class BoardTests {
     @Test
     void CoordinatesUsedTest() {
         assertNotNull(board.CoordinatesUsed());
-        assertEquals(0, board.CoordinatesUsed.size());
+        assertEquals(0, board.CoordinatesUsed().size());
     }
 
     @Test
@@ -102,11 +103,6 @@ public class BoardTests {
         assertTrue(board.Ships().contains(carrier));
 
         assertFalse(board.AddShip(cruiser));
-
-        assertThrowsExactly(
-            UnsupportedOperationException.class,
-            ()-> board.AddShip(cruiser),
-            String.join("", "The ship cannot be placed in the same position than other"));
     }
 
     @Test
@@ -118,7 +114,7 @@ public class BoardTests {
 
             assertThrowsExactly(
                 UnsupportedOperationException.class,
-                ()-> board.AddShip(cruiser),
+                ()-> board.AddShip(carrier),
                 String.join("", "A ship hit or destroyed cannot be placed"));
         }
     }
@@ -219,12 +215,12 @@ public class BoardTests {
                 if(carrier.Coordinates().contains(cd)) {
                     // hit
                     if (!cd.equals(new Coordinate('F', 7))) {
-                        assertEquals(CellStatus.Hit. board.GetCell(cd).Status());
+                        assertEquals(CellStatus.Hit, board.GetCell(cd).Status());
                         continue;
                     }
 
                     // destroyed
-                    assertEquals(CellStatus.Destroyed. board.GetCell(cd).Status());
+                    assertEquals(CellStatus.Destroyed, board.GetCell(cd).Status());
 
                 } else {
                    assertEquals(CellStatus.Watter, board.GetCell(cd).Status());
@@ -236,6 +232,7 @@ public class BoardTests {
     @Test
     void HitCellDestroyedTest() {
         Carrier carrier = new Carrier(new Coordinate('F',3), Direction.East);
+        board.AddShip(carrier);
 
         for (char i = 'A'; i <= 'J'; i++) {
             for (int j = 1; j <= 10; j++) {
@@ -246,20 +243,44 @@ public class BoardTests {
                 if(carrier.Coordinates().contains(cd)) {
                     // hit
                     if (!cd.equals(new Coordinate('F', 7))) {
-                        assertEquals(CellStatus.Hit. board.GetCell(cd).Status());
+                        assertTrue(board.GetCell(cd).HasShip());
+                        assertEquals(CellStatus.Hit, board.GetCell(cd).Status());
                         continue;
                     }
 
                     // destroyed
-                    assertEquals(CellStatus.Destroyed. board.GetCell(cd).Status());
+                    assertTrue(board.GetCell(cd).HasShip());
+                    assertEquals(CellStatus.Destroyed, board.GetCell(cd).Status());
 
                 } else {
+                    assertFalse(board.GetCell(cd).HasShip());
                     assertEquals(CellStatus.Watter, board.GetCell(cd).Status());
                 }
             }
         }
 
         // All the cells of the ship must be destroyed
+        for (int i = 3; i <= 7; i++) {
+            Coordinate cd = new Coordinate('F', i);
+            assertEquals(CellStatus.Destroyed, board.GetCell(cd).Status());
+        }
+    }
+
+    @Test
+    void DestroyShipTest() {
+        Carrier carrier = new Carrier(new Coordinate('F',3), Direction.East);
+        board.AddShip(carrier);
+
+        // ship hit
+        for (int i = 3; i < 7; i++) {
+            Coordinate cd = new Coordinate('F', i);
+            assertEquals(CellStatus.Hide, board.GetCell(cd).Status());
+
+            board.HitCell(cd);
+            assertEquals(CellStatus.Hit, board.GetCell(cd).Status());
+        }
+
+        // ship destroyed
         for (int i = 3; i <= 7; i++) {
             Coordinate cd = new Coordinate('F', i);
             assertEquals(CellStatus.Destroyed, board.GetCell(cd).Status());
@@ -287,7 +308,7 @@ public class BoardTests {
         
         for (char i = 'A'; i <= 'J'; i++) {
             ArrayList<String> line = new ArrayList<>();
-            line.add(i);
+            line.add(String.valueOf(i));
             
             for (int j = 1; j <= 10; j++) {
                 line.add("·");
@@ -305,7 +326,7 @@ public class BoardTests {
         
         for (char i = 'A'; i <= 'J'; i++) {
             ArrayList<String> line = new ArrayList<>();
-            line.add(i);
+            line.add(String.valueOf(i));
             
             for (int j = 1; j <= 10; j++) {
                 line.add("·");
@@ -334,12 +355,12 @@ public class BoardTests {
     // J · · · · · · · · · ·
     @Test
     void ToStringShipHitTest() {
-        ArrayList<String> colums = new ArrayList<>();
+        ArrayList<String> columns = new ArrayList<>();
         columns.add("# 1 2 3 4 5 6 7 8 9 10");
         
         for (char i = 'A'; i <= 'J'; i++) {
             ArrayList<String> line = new ArrayList<>();
-            line.add(i);
+            line.add(String.valueOf(i));
             
             for (int j = 1; j <= 10; j++) {
                 line.add("·");
@@ -358,7 +379,7 @@ public class BoardTests {
         
         for (char i = 'A'; i <= 'J'; i++) {
             ArrayList<String> line = new ArrayList<>();
-            line.add(i);
+            line.add(String.valueOf(i));
             
             for (int j = 1; j <= 10; j++) {
                 Coordinate cd = new Coordinate(i, j);
@@ -396,7 +417,7 @@ public class BoardTests {
         
         for (char i = 'A'; i <= 'J'; i++) {
             ArrayList<String> line = new ArrayList<>();
-            line.add(i);
+            line.add(String.valueOf(i));
             
             for (int j = 1; j <= 10; j++) {
                 line.add("·");
@@ -415,7 +436,7 @@ public class BoardTests {
                         
         for (char i = 'A'; i <= 'J'; i++) {
             ArrayList<String> line = new ArrayList<>();
-            line.add(i);
+            line.add(String.valueOf(i));
             
             for (int j = 1; j <= 10; j++) {
                 Coordinate cd = new Coordinate(i, j);
