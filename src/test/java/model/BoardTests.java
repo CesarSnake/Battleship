@@ -372,7 +372,7 @@ public class BoardTests {
                     line.add("·");
                 }
             }
-            columns.add(String.join(" ", line);
+            columns.add(String.join(" ", line));
         }
 
         assertEquals(String.join("\n", columns), board.toString());
