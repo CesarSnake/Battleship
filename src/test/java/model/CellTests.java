@@ -132,7 +132,7 @@ public class CellTests {
         assertEquals(CellStatus.Hide, cellA1.Status());
 
         cellA1.Hit();
-        assertEquals(CellStatus.Watter, cellA1.Status());
+        assertEquals(CellStatus.Water, cellA1.Status());
 
         assertThrowsExactly(UnsupportedOperationException.class,
             ()-> cellA1.Hit(),
@@ -173,11 +173,11 @@ public class CellTests {
         cellJ10.Hit();
         cellE5.Hit();
 
-        assertEquals(CellStatus.Watter, cellA1.Status());
-        assertEquals(CellStatus.Watter, cellJ1.Status());
-        assertEquals(CellStatus.Watter, cellA10.Status());
-        assertEquals(CellStatus.Watter, cellJ10.Status());
-        assertEquals(CellStatus.Watter, cellE5.Status());
+        assertEquals(CellStatus.Water, cellA1.Status());
+        assertEquals(CellStatus.Water, cellJ1.Status());
+        assertEquals(CellStatus.Water, cellA10.Status());
+        assertEquals(CellStatus.Water, cellJ10.Status());
+        assertEquals(CellStatus.Water, cellE5.Status());
     }
 
     @Test

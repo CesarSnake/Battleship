@@ -10,14 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CellStatusTests {
     CellStatus hide;
-    CellStatus watter;
+    CellStatus Water;
     CellStatus hit;
     CellStatus destroyed;
 
     @BeforeAll
      void InitOnce() {
         hide = CellStatus.Hide;
-        watter = CellStatus.Watter;
+        Water = CellStatus.Water;
         hit = CellStatus.Hit;
         destroyed = CellStatus.Destroyed;
     }
@@ -30,10 +30,10 @@ public class CellStatusTests {
     }
 
     @Test
-    void StatusWatterTest() {
-        assertEquals(CellStatus.Watter, watter);
-        assertEquals("Watter", watter.toString());
-        assertEquals(CellStatus.Watter.toString(), watter.toString());
+    void StatusWaterTest() {
+        assertEquals(CellStatus.Water, Water);
+        assertEquals("Water", Water.toString());
+        assertEquals(CellStatus.Water.toString(), Water.toString());
     }
 
     @Test

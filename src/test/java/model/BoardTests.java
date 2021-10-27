@@ -6,15 +6,38 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTests {
     Board board;
+    Coordinate i2;
+    Coordinate e8;
+    Coordinate c4;
+    Coordinate e4;
+    Coordinate h10;
+    Carrier carrier;
+    Battleship battleship;
+    Cruiser cruiser;
+    Destroyer destroyer;
+    Submarine submarine;
+
 
     @BeforeEach
     void Setup() {
         board = new Board();
+        i2 = new Coordinate('I',2);
+        e8 = new Coordinate('E',8);
+        c4 = new Coordinate('C',4);
+        e4 = new Coordinate('E',4);
+        h10 = new Coordinate('H',10);
+
+        carrier = new Carrier(i2, Direction.East);
+        battleship = new Battleship(e8, Direction.North);
+        cruiser = new Cruiser(c4, Direction.West);
+        destroyer = new Destroyer(e4, Direction.South);
+        submarine = new Submarine(h10, Direction.East);
     }
 
     @Test
@@ -177,13 +200,13 @@ public class BoardTests {
                 assertEquals(CellStatus.Hide, board.GetCell(cd).Status());
 
                 board.HitCell(cd);
-                assertEquals(CellStatus.Watter, board.GetCell(cd).Status());
+                assertEquals(CellStatus.Water, board.GetCell(cd).Status());
             }
         }
     }
 
     @Test
-    void HitCellWatterTest() {
+    void HitCellWaterTest() {
         // a cell cannot be hit twice
 
         for (char i = 'A'; i <= 'J'; i++) {
@@ -192,7 +215,7 @@ public class BoardTests {
                 assertEquals(CellStatus.Hide, board.GetCell(cd).Status());
 
                 board.HitCell(cd);
-                assertEquals(CellStatus.Watter, board.GetCell(cd).Status());
+                assertEquals(CellStatus.Water, board.GetCell(cd).Status());
 
                 assertThrowsExactly(
                     UnsupportedOperationException.class,
@@ -205,6 +228,7 @@ public class BoardTests {
     @Test
     void HitCellHitTest() {
         Carrier carrier = new Carrier(new Coordinate('F',3), Direction.East);
+        board.AddShip(carrier);
 
         for (char i = 'A'; i <= 'J'; i++) {
             for (int j = 1; j <= 10; j++) {
@@ -223,7 +247,7 @@ public class BoardTests {
                     assertEquals(CellStatus.Destroyed, board.GetCell(cd).Status());
 
                 } else {
-                   assertEquals(CellStatus.Watter, board.GetCell(cd).Status());
+                   assertEquals(CellStatus.Water, board.GetCell(cd).Status());
                 }
             }
         }
@@ -254,7 +278,7 @@ public class BoardTests {
 
                 } else {
                     assertFalse(board.GetCell(cd).HasShip());
-                    assertEquals(CellStatus.Watter, board.GetCell(cd).Status());
+                    assertEquals(CellStatus.Water, board.GetCell(cd).Status());
                 }
             }
         }
@@ -357,7 +381,7 @@ public class BoardTests {
     void ToStringShipHitTest() {
         ArrayList<String> columns = new ArrayList<>();
         columns.add("# 1 2 3 4 5 6 7 8 9 10");
-        
+
         for (char i = 'A'; i <= 'J'; i++) {
             ArrayList<String> line = new ArrayList<>();
             line.add(String.valueOf(i));
@@ -376,7 +400,7 @@ public class BoardTests {
 
         columns.clear();
         columns.add("# 1 2 3 4 5 6 7 8 9 10");
-        
+
         for (char i = 'A'; i <= 'J'; i++) {
             ArrayList<String> line = new ArrayList<>();
             line.add(String.valueOf(i));
@@ -414,7 +438,7 @@ public class BoardTests {
     @Test
     void ToStringShipDestroyedTest() {
         ArrayList<String> columns = new ArrayList<>();
-        
+
         for (char i = 'A'; i <= 'J'; i++) {
             ArrayList<String> line = new ArrayList<>();
             line.add(String.valueOf(i));
@@ -446,6 +470,245 @@ public class BoardTests {
                     line.add("X");
                 } else {
                     line.add("·");
+                }
+            }
+            columns.add(String.join(" ", line));
+        }
+
+        assertEquals(String.join("\n", columns), board.toString());
+    }
+
+    // Board with all the ships hide
+    // # 1 2 3 4 5 6 7 8 9 10
+    // A · · · · · · · · · ·
+    // B · · · · · · · · · ·
+    // C · · · · · · · · · ·
+    // D · · · · · · · · · ·
+    // E · · · · · · · · · ·
+    // F · · · · · · · · · ·
+    // G · · · · · · · · · ·
+    // H · · · · · · · · · ·
+    // I · · · · · · · · · ·
+    // J · · · · · · · · · ·
+    @Test
+    void CompleteBoardWaterTest() {
+        assertTrue(board.AddShip(carrier));
+        assertEquals(1, board.Ships().size());
+        assertTrue(board.Ships().contains(carrier));
+
+        assertTrue(board.AddShip(battleship));
+        assertEquals(2, board.Ships().size());
+        assertTrue(board.Ships().contains(battleship));
+
+        assertTrue(board.AddShip(cruiser));
+        assertEquals(3, board.Ships().size());
+        assertTrue(board.Ships().contains(cruiser));
+
+        assertTrue(board.AddShip(destroyer));
+        assertEquals(4, board.Ships().size());
+        assertTrue(board.Ships().contains(destroyer));
+
+        assertTrue(board.AddShip(submarine));
+        assertEquals(5, board.Ships().size());
+        assertTrue(board.Ships().contains(submarine));
+
+        // Board with all the ships hide
+        ArrayList<String> columns = new ArrayList<>();
+        columns.add("# 1 2 3 4 5 6 7 8 9 10");
+        for (char i = 'A'; i <= 'J'; i++) {
+            ArrayList<String> line = new ArrayList<>();
+            line.add(String.valueOf(i));
+
+            for (int j = 1; j <= 10; j++) {
+                line.add("·");
+            }
+            columns.add(String.join(" ", line));
+        }
+
+        assertEquals(String.join("\n", columns), board.toString());
+    }
+
+    // Board with all Water discovered
+    // # 1 2 3 4 5 6 7 8 9 10
+    // A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    // B ~ ~ ~ ~ ~ ~ ~ · ~ ~
+    // C ~ · · ~ ~ ~ ~ · ~ ~
+    // D ~ ~ ~ ~ ~ ~ ~ · ~ ~
+    // E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    // F ~ ~ ~ · ~ ~ ~ ~ ~ ~
+    // G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    // H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    // I ~ · · · · ~ ~ ~ ~ ~
+    // J ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    @Test
+    void CompleteBoardWaterDiscoveredTest() {
+        assertTrue(board.AddShip(carrier));
+        assertEquals(1, board.Ships().size());
+        assertTrue(board.Ships().contains(carrier));
+
+        assertTrue(board.AddShip(battleship));
+        assertEquals(2, board.Ships().size());
+        assertTrue(board.Ships().contains(battleship));
+
+        assertTrue(board.AddShip(cruiser));
+        assertEquals(3, board.Ships().size());
+        assertTrue(board.Ships().contains(cruiser));
+
+        assertTrue(board.AddShip(destroyer));
+        assertEquals(4, board.Ships().size());
+        assertTrue(board.Ships().contains(destroyer));
+
+        assertTrue(board.AddShip(submarine));
+        assertEquals(5, board.Ships().size());
+        assertTrue(board.Ships().contains(submarine));
+
+        // Board with all Water discovered
+        ArrayList<String> columns = new ArrayList<>();
+        columns.add("# 1 2 3 4 5 6 7 8 9 10");
+        for (char i = 'A'; i <= 'J'; i++) {
+            ArrayList<String> line = new ArrayList<>();
+            line.add(String.valueOf(i));
+
+            for (int j = 1; j <= 10; j++) {
+                Coordinate cd = new Coordinate(i,j);
+                if (board.Ships().stream().anyMatch(ship ->
+                        ship.Coordinates().contains(cd))) {
+                    line.add("·");
+                } else {
+                    assertEquals(CellStatus.Water, board.HitCell(cd));
+                    line.add("~");
+                }
+            }
+            columns.add(String.join(" ", line));
+        }
+
+        assertEquals(String.join("\n", columns), board.toString());
+    }
+
+    // Board with all the ships hits
+    // # 1 2 3 4 5 6 7 8 9 10
+    // A · · · · · · · · · ·
+    // B · · · · · · · / · ·
+    // C · / / · · · · / · ·
+    // D · · · · · · · / · ·
+    // E · · · · · · · · · ·
+    // F · · · / · · · · · ·
+    // G · · · · · · · · · ·
+    // H · · · · · · · · · ·
+    // I · · / / / / · · · ·
+    // J · · · · · · · · · ·
+    @Test
+    void CompleteBoardShipsHitsTest() {
+        assertTrue(board.AddShip(carrier));
+        assertEquals(1, board.Ships().size());
+        assertTrue(board.Ships().contains(carrier));
+
+        assertTrue(board.AddShip(battleship));
+        assertEquals(2, board.Ships().size());
+        assertTrue(board.Ships().contains(battleship));
+
+        assertTrue(board.AddShip(cruiser));
+        assertEquals(3, board.Ships().size());
+        assertTrue(board.Ships().contains(cruiser));
+
+        assertTrue(board.AddShip(destroyer));
+        assertEquals(4, board.Ships().size());
+        assertTrue(board.Ships().contains(destroyer));
+
+        assertTrue(board.AddShip(submarine));
+        assertEquals(5, board.Ships().size());
+        assertTrue(board.Ships().contains(submarine));
+
+        // Board with all the ships hits
+        List<Coordinate> coordinateList = List.of(i2, e8, c4, e4, h10);
+        ArrayList<String> columns = new ArrayList<>();
+        columns.add("# 1 2 3 4 5 6 7 8 9 10");
+        for (char i = 'A'; i <= 'J'; i++) {
+            ArrayList<String> line = new ArrayList<>();
+            line.add(String.valueOf(i));
+
+            for (int j = 1; j <= 10; j++) {
+                Coordinate cd = new Coordinate(i,j);
+
+                // we want to hit all the possible coordinates of the ship but not destroy it
+                if (board.Ships().stream().anyMatch(ship ->
+                            ship.Coordinates().contains(cd))) {
+                    if (coordinateList.contains(cd)) {
+                        line.add("·");
+                        continue;
+                    }
+                    assertEquals(CellStatus.Hit, board.HitCell(cd));
+                    line.add("/");
+                } else {
+                    assertEquals(CellStatus.Water, board.HitCell(cd));
+                    line.add("~");
+                }
+            }
+            columns.add(String.join(" ", line));
+        }
+
+        assertEquals(String.join("\n", columns), board.toString());
+    }
+
+    // Board with all the ships destroyed
+    // # 1 2 3 4 5 6 7 8 9 10
+    // A · · · · · · · · · ·
+    // B · · · · · · · X · ·
+    // C · X X X · · · X · ·
+    // D · · · · · · · X · ·
+    // E · · · X · · · X · ·
+    // F · · · X · · · · · ·
+    // G · · · · · · · · · ·
+    // H · · · · · · · · · X
+    // I · X X X X X · · · ·
+    // J · · · · · · · · · ·
+    @Test
+    void CompleteBoardShipsDestroyedTest() {
+        assertTrue(board.AddShip(carrier));
+        assertEquals(1, board.Ships().size());
+        assertTrue(board.Ships().contains(carrier));
+
+        assertTrue(board.AddShip(battleship));
+        assertEquals(2, board.Ships().size());
+        assertTrue(board.Ships().contains(battleship));
+
+        assertTrue(board.AddShip(cruiser));
+        assertEquals(3, board.Ships().size());
+        assertTrue(board.Ships().contains(cruiser));
+
+        assertTrue(board.AddShip(destroyer));
+        assertEquals(4, board.Ships().size());
+        assertTrue(board.Ships().contains(destroyer));
+
+        assertTrue(board.AddShip(submarine));
+        assertEquals(5, board.Ships().size());
+        assertTrue(board.Ships().contains(submarine));
+
+        // Board with all the ships destroyed
+        List<Coordinate> destroyedCoordinateList = List.of(c4, e8, h10,
+            new Coordinate('F', 4), new Coordinate('I', 6));
+
+        ArrayList<String> columns = new ArrayList<>();
+        columns.add("# 1 2 3 4 5 6 7 8 9 10");
+        for (char i = 'A'; i <= 'J'; i++) {
+            ArrayList<String> line = new ArrayList<>();
+            line.add(String.valueOf(i));
+
+            for (int j = 1; j <= 10; j++) {
+                Coordinate cd = new Coordinate(i,j);
+
+                // we want to hit all the possible coordinates of the ship but not destroy it
+                if (board.Ships().stream().anyMatch(ship ->
+                        ship.Coordinates().contains(cd))) {
+                    if (destroyedCoordinateList.contains(cd)) {
+                        assertEquals(CellStatus.Destroyed, board.HitCell(cd));
+                    } else {
+                        assertEquals(CellStatus.Hit, board.HitCell(cd));
+                    }
+                    line.add("X");
+                } else {
+                    assertEquals(CellStatus.Water, board.HitCell(cd));
+                    line.add("~");
                 }
             }
             columns.add(String.join(" ", line));

@@ -138,7 +138,7 @@ public class ShipTests {
     @Test
     void ShipG4G6Test() {
         Ship shipMock = shipG4G6Mock;
-        // Horizontal ship surrounded with "watter"
+        // Horizontal ship surrounded with "Water"
 
         for (int i = 4; i <= 6; i++) {
             assertTrue(shipMock.Coordinates().contains(new Coordinate('G', i)));

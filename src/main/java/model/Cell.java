@@ -46,14 +46,14 @@ public class Cell {
 
     public CellStatus Hit() {
         // Was already hit
-        if (_status == CellStatus.Watter) {
+        if (_status == CellStatus.Water) {
             throw new UnsupportedOperationException(
                 String.join("", "Coordinate: ", _coordinate.toString(), " already hit"));
         }
 
         if (_ship == null) {
             // cell is free
-            _status = CellStatus.Watter;
+            _status = CellStatus.Water;
         } else {
             // cell has a ship
             _ship.Hit(_coordinate);
