@@ -292,7 +292,7 @@ public class BoardTests {
             for (int j = 1; j <= 10; j++) {
                 line.add("·");
             }
-            columns.add(String.join(" ", line);
+            columns.add(String.join(" ", line));
         }
 
         assertEquals(String.join("\n", columns), board.toString());
@@ -310,7 +310,7 @@ public class BoardTests {
             for (int j = 1; j <= 10; j++) {
                 line.add("·");
             }
-            columns.add(String.join(" ", line);
+            columns.add(String.join(" ", line));
         }
 
         assertEquals(String.join("\n", columns), board.toString());
@@ -344,7 +344,7 @@ public class BoardTests {
             for (int j = 1; j <= 10; j++) {
                 line.add("·");
             }
-            columns.add(String.join(" ", line);
+            columns.add(String.join(" ", line));
         }
 
         assertEquals(String.join("\n", columns), board.toString());
@@ -401,7 +401,7 @@ public class BoardTests {
             for (int j = 1; j <= 10; j++) {
                 line.add("·");
             }
-            columns.add(String.join(" ", line);
+            columns.add(String.join(" ", line));
         }
 
         assertEquals(String.join("\n", columns), board.toString());
@@ -427,7 +427,7 @@ public class BoardTests {
                     line.add("·");
                 }
             }
-            columns.add(String.join(" ", line);
+            columns.add(String.join(" ", line));
         }
 
         assertEquals(String.join("\n", columns), board.toString());
