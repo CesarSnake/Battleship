@@ -304,7 +304,11 @@ public class BoardTests {
             assertEquals(CellStatus.Hit, board.GetCell(cd).Status());
         }
 
-        // ship destroyed
+        // destroy ship
+        Coordinate destroyCoordinate = new Coordinate('F',7);
+        assertEquals(CellStatus.Destroyed, board.HitCell(destroyCoordinate));
+
+        // check ship is destroyed
         for (int i = 3; i <= 7; i++) {
             Coordinate cd = new Coordinate('F', i);
             assertEquals(CellStatus.Destroyed, board.GetCell(cd).Status());

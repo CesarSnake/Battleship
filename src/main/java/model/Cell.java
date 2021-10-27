@@ -19,6 +19,14 @@ public class Cell {
     public Coordinate Coordinate() { return _coordinate; }
     public CellStatus Status() { return _status; }
 
+    public void SetStatus(CellStatus status) {
+        if (status == null) {
+            throw new NullPointerException("Cannot set a null status");
+        }
+
+        _status = status;
+    }
+
     public void SetShip(Ship ship) {
         if (ship == null) {
             throw new NullPointerException("Cannot set a null ship");

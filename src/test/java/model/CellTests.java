@@ -47,6 +47,31 @@ public class CellTests {
     }
 
     @Test
+    void SetStatusNullTest() {
+        assertThrowsExactly(NullPointerException.class,
+                ()-> cellA1.SetStatus(null),
+                "Cannot set a null status");
+    }
+
+    @Test
+    void SetStatusTest() {
+        Cell c1 = new Cell(a1);
+        assertEquals(CellStatus.Hide, c1.Status());
+
+        c1.SetStatus(CellStatus.Water);
+        assertEquals(CellStatus.Water, c1.Status());
+
+        c1.SetStatus(CellStatus.Hit);
+        assertEquals(CellStatus.Hit, c1.Status());
+
+        c1.SetStatus(CellStatus.Destroyed);
+        assertEquals(CellStatus.Destroyed, c1.Status());
+
+        c1.SetStatus(CellStatus.Hide);
+        assertEquals(CellStatus.Hide, c1.Status());
+    }
+
+    @Test
     void SetShipNullTest() {
         assertThrowsExactly(NullPointerException.class,
             ()-> cellA1.SetShip(null),

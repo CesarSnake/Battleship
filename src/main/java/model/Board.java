@@ -3,7 +3,6 @@ package model;
 import model.ship.Ship;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Board {
@@ -68,9 +67,6 @@ public class Board {
             }
         }
 
-        // if the ship is destroyed, the cells hit must be replaced by destroyed
-        //Todo
-
         return true;
     }
 
@@ -110,13 +106,25 @@ public class Board {
 
             coordinatesUsedList.add(coordinate);
             cellStatus = cell.Hit();
-//            // each cell changes his status, but if the ship is destroyed, the cells with hits are not updated, we must change to destroyed
-//            if (cellStatus == CellStatus.Destroyed) {
-//                for (Coordinate shipCoordinate: cell.GetShip().Coordinates()) {
-//                    GetCell(shipCoordinate).SetStatus(CellStatus.Destroyed);
-//                }
-//            }
+
+            // each cell changes his status, but if the ship is destroyed, the cells with hits are not updated, we must change to destroyed
+            if (cellStatus == CellStatus.Destroyed) {
+                UpdateCells(cell.GetShip());
+            }
         }
         return cellStatus;
     }
+
+    private void UpdateCells(Ship ship) {
+        for (Coordinate shipCoordinate: ship.Coordinates()) {
+            for (Cell cellToUpdate: cellsList) {
+                if (!cellToUpdate.Coordinate().equals(shipCoordinate)) {
+                    continue;
+                }
+                cellToUpdate.SetStatus(CellStatus.Destroyed);
+            }
+        }
+    }
+
+
 }
