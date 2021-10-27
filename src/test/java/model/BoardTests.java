@@ -266,99 +266,170 @@ public class BoardTests {
         }
     }
 
+    // toString() tests
+    
+    // Empty Board:
+    // # 1 2 3 4 5 6 7 8 9 10
+    // A · · · · · · · · · ·
+    // B · · · · · · · · · ·
+    // C · · · · · · · · · ·
+    // D · · · · · · · · · ·
+    // E · · · · · · · · · ·
+    // F · · · · · · · · · ·
+    // G · · · · · · · · · ·
+    // H · · · · · · · · · ·
+    // I · · · · · · · · · ·
+    // J · · · · · · · · · ·
     @Test
     void ToStringEmptyBoardTest() {
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> columns = new ArrayList<>();
+        columns.add("# 1 2 3 4 5 6 7 8 9 10");
+        
         for (char i = 'A'; i <= 'J'; i++) {
+            ArrayList<String> line = new ArrayList<>();
+            line.add(i);
+            
             for (int j = 1; j <= 10; j++) {
-                result.add("·");
+                line.add("·");
             }
-            result.add("\n");
+            columns.add(String.join(" ", line);
         }
 
-        assertEquals(String.join("", result), board.toString());
+        assertEquals(String.join("\n", columns), board.toString());
     }
 
     @Test
     void ToStringShipNotDiscoveredTest() {
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> columns = new ArrayList<>();
+        columns.add("# 1 2 3 4 5 6 7 8 9 10");
+        
         for (char i = 'A'; i <= 'J'; i++) {
+            ArrayList<String> line = new ArrayList<>();
+            line.add(i);
+            
             for (int j = 1; j <= 10; j++) {
-                result.add("·");
+                line.add("·");
             }
-            result.add("\n");
+            columns.add(String.join(" ", line);
         }
 
-        assertEquals(String.join(" ", result), board.toString());
-        assertTrue(board.AddShip(new Carrier(new Coordinate('E', 5), Direction.South)));
+        assertEquals(String.join("\n", columns), board.toString());
 
-        assertEquals(String.join(" ", result), board.toString());
+        assertTrue(board.AddShip(new Carrier(new Coordinate('E', 5), Direction.South)));
+        assertEquals(String.join("\n", columns), board.toString());
     }
 
+
+    // Ship Hit Board:
+    // # 1 2 3 4 5 6 7 8 9 10
+    // A · · · · · · · · · ·
+    // B · · · · · · · · · ·
+    // C · · · · · · · · · ·
+    // D · · · · · · · · · ·
+    // E · · · · · · · · · ·
+    // F · · · · / · · · · ·
+    // G · · · · / · · · · ·
+    // H · · · · / · · · · ·
+    // I · · · · / · · · · ·
+    // J · · · · · · · · · ·
     @Test
     void ToStringShipHitTest() {
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> colums = new ArrayList<>();
+        columns.add("# 1 2 3 4 5 6 7 8 9 10");
+        
         for (char i = 'A'; i <= 'J'; i++) {
+            ArrayList<String> line = new ArrayList<>();
+            line.add(i);
+            
             for (int j = 1; j <= 10; j++) {
-                result.add("·");
+                line.add("·");
             }
-            result.add("\n");
+            columns.add(String.join(" ", line);
         }
 
-        assertEquals(String.join(" ", result), board.toString());
+        assertEquals(String.join("\n", columns), board.toString());
 
         Carrier carrier = new Carrier(new Coordinate('E', 5), Direction.South);
         assertTrue(board.AddShip(carrier));
 
-        result.clear();
+
+        columns.clear();
+        columns.add("# 1 2 3 4 5 6 7 8 9 10");
+        
         for (char i = 'A'; i <= 'J'; i++) {
+            ArrayList<String> line = new ArrayList<>();
+            line.add(i);
+            
             for (int j = 1; j <= 10; j++) {
                 Coordinate cd = new Coordinate(i, j);
-
+                
+                // We want to hit the ship but not destroy it
                 if(carrier.Coordinates().contains(cd) &&
                     !cd.equals(new Coordinate('E', 5))) {
                         board.HitCell(cd);
-                        result.add("\\");
+                        line.add("\\");
                 } else {
-                    result.add("·");
+                    line.add("·");
                 }
             }
-            result.add("\n");
+            columns.add(String.join(" ", line);
         }
 
-        assertEquals(String.join(" ", result), board.toString());
+        assertEquals(String.join("\n", columns), board.toString());
     }
 
+    // ShipDestroyed Board:
+    // # 1 2 3 4 5 6 7 8 9 10
+    // A · · · · · · · · · ·
+    // B · · · · · · · · · ·
+    // C · · · · · · · · · ·
+    // D · · · · · · · · · ·
+    // E · · · · X · · · · ·
+    // F · · · · X · · · · ·
+    // G · · · · X · · · · ·
+    // H · · · · X · · · · ·
+    // I · · · · X · · · · ·
+    // J · · · · · · · · · ·
     @Test
     void ToStringShipDestroyedTest() {
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> columns = new ArrayList<>();
+        
         for (char i = 'A'; i <= 'J'; i++) {
+            ArrayList<String> line = new ArrayList<>();
+            line.add(i);
+            
             for (int j = 1; j <= 10; j++) {
-                result.add("·");
+                line.add("·");
             }
-            result.add("\n");
+            columns.add(String.join(" ", line);
         }
 
-        assertEquals(String.join(" ", result), board.toString());
+        assertEquals(String.join("\n", columns), board.toString());
+
 
         Carrier carrier = new Carrier(new Coordinate('E', 5), Direction.South);
         assertTrue(board.AddShip(carrier));
 
-        result.clear();
+        columns.clear();
+        columns.add("# 1 2 3 4 5 6 7 8 9 10");
+                        
         for (char i = 'A'; i <= 'J'; i++) {
+            ArrayList<String> line = new ArrayList<>();
+            line.add(i);
+            
             for (int j = 1; j <= 10; j++) {
                 Coordinate cd = new Coordinate(i, j);
 
                 if(carrier.Coordinates().contains(cd)) {
                     board.HitCell(cd);
-                    result.add("X");
+                    line.add("X");
                 } else {
-                    result.add("·");
+                    line.add("·");
                 }
             }
-            result.add("\n");
+            columns.add(String.join(" ", line);
         }
 
-        assertEquals(String.join(" ", result), board.toString());
+        assertEquals(String.join("\n", columns), board.toString());
     }
 }
