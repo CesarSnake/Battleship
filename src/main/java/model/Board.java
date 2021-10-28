@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    public static final char HIDE_SYMBOL = '·';
-    public static final char WATER_SYMBOL = '~';
-    public static final char HIT_SYMBOL = '/';
-    public static final char DESTROYED_SYMBOL = 'X';
-    public static final int BOARD_SIZE = 10;
+    public final char HIDE_SYMBOL = '·';
+    public final char WATER_SYMBOL = '~';
+    public final char HIT_SYMBOL = '/';
+    public final char DESTROYED_SYMBOL = 'X';
+    public final int BOARD_SIZE = 10;
 
     private ArrayList<Coordinate> coordinatesUsedList = new ArrayList<>();
     private ArrayList<Ship> shipsList = new ArrayList<>();
@@ -19,7 +19,6 @@ public class Board {
     public List<Coordinate> CoordinatesUsed() {
         return coordinatesUsedList;
     }
-
     public List<Ship> Ships() {
         return shipsList;
     }
@@ -115,6 +114,26 @@ public class Board {
         return cellStatus;
     }
 
+    @Override
+    public String toString() {
+        ArrayList<String> columns = new ArrayList<>();
+        columns.add(String.join(" ", List.of("#","1","2","3","4","5","6","7","8","9","10")));
+
+        for (char i = 'A'; i <= 'J'; i++) {
+            ArrayList<String> line = new ArrayList<>();
+            line.add(String.valueOf(i));
+
+            for (int j = 1; j <= 10; j++) {
+                Cell cell = GetCell(new Coordinate(i,j));
+                line.add(GetCellStatusSymbol(cell));
+            }
+
+            columns.add(String.join(" ", line));
+        }
+
+        return String.join("\n", columns);
+    }
+
     private void UpdateCells(Ship ship) {
         for (Coordinate shipCoordinate: ship.Coordinates()) {
             for (Cell cellToUpdate: cellsList) {
@@ -126,5 +145,18 @@ public class Board {
         }
     }
 
+    private String GetCellStatusSymbol(Cell cell) {
+        char statusSymbol;
+        if (cell.Status() == CellStatus.Water) {
+            statusSymbol = WATER_SYMBOL;
+        } else if (cell.Status() == CellStatus.Hit) {
+            statusSymbol = HIT_SYMBOL;
+        } else if (cell.Status() == CellStatus.Destroyed) {
+            statusSymbol = DESTROYED_SYMBOL;
+        } else {
+            statusSymbol = HIDE_SYMBOL;
+        }
 
+        return String.valueOf(statusSymbol);
+    }
 }

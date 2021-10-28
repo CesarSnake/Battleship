@@ -416,7 +416,7 @@ public class BoardTests {
                 if(carrier.Coordinates().contains(cd) &&
                     !cd.equals(new Coordinate('E', 5))) {
                         board.HitCell(cd);
-                        line.add("\\");
+                        line.add("/");
                 } else {
                     line.add("·");
                 }
@@ -442,6 +442,7 @@ public class BoardTests {
     @Test
     void ToStringShipDestroyedTest() {
         ArrayList<String> columns = new ArrayList<>();
+        columns.add("# 1 2 3 4 5 6 7 8 9 10");
 
         for (char i = 'A'; i <= 'J'; i++) {
             ArrayList<String> line = new ArrayList<>();
