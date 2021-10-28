@@ -89,9 +89,9 @@ El joc mostrarà la següent pantalla:
 Rules:
 The objective of the game is discover where are the ships.
 You must atack the ships and sink all of them to win.
-To atack a ship you must insert a coordinate and pres enter.
+To attack a ship you must insert a coordinate and pres enter.
 
-Simbols:
+Symbols:
 · unknown, place not discovered.
 ~ water, you miss your shot.
 / hit, you hit one ship but it is not sink
@@ -99,7 +99,7 @@ X sink, you sink the ship.
 
 Ships in the game:
 Carrier, which has 5 holes
-Battleship wich has 4 holes
+Battleship which has 4 holes
 Cruiser, which has 3 holes
 Destroyer, which has 2 holes
 Submarine, which has 1 holes
