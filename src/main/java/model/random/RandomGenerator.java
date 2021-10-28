@@ -1,6 +1,7 @@
 package model.random;
 
 import model.Coordinate;
+import model.Direction;
 
 import java.util.Random;
 
@@ -9,6 +10,11 @@ public class RandomGenerator {
 
     public Coordinate GetRandomCoordinate() {
         return new Coordinate(GetRandomLetter(), GetRandomNumber());
+    }
+
+    public Direction GetRandomDirection() {
+        int dir = new Random().nextInt(Direction.values().length);
+        return Direction.values()[dir];
     }
 
     private char GetRandomLetter() {

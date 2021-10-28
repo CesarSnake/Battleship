@@ -1,6 +1,7 @@
 package model.random;
 
 import model.Coordinate;
+import model.Direction;
 
 public class RandomController {
     private final RandomGenerator randomGenerator;
@@ -15,5 +16,9 @@ public class RandomController {
 
     public Coordinate RandomCoordinate() {
         return randomGenerator.GetRandomCoordinate();
+    }
+
+    public Direction RandomDirection() {
+        return randomGenerator.GetRandomDirection();
     }
 }
