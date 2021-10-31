@@ -11,11 +11,11 @@ public class Cruiser extends Ship {
             throw new NullPointerException("Cannot create a Cruiser because \"coordinate\" or \"direction\" is null");
         }
 
-        _length = 3;
-        _hits = new ArrayList<>();
+        length = 3;
+        hits = new ArrayList<>();
 
         try {
-            _coordinates = GenerateCoordinates(coordinate, direction, _length-1);
+            coordinates = GenerateCoordinates(coordinate, direction, length-1);
         } catch (UnsupportedOperationException e) {
             throw new ExceptionInInitializerError(
                 String.join("",

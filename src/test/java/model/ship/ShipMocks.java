@@ -22,43 +22,43 @@ class ShipEmptyMock extends Ship {
 class ShipC2C6HitMock extends Ship {
     // it simulates a ship on the coordinates C2-C6 with 1 hit on C3
     ShipC2C6HitMock() {
-        _coordinates = List.of(
+        coordinates = List.of(
             new Coordinate('C',2),
             new Coordinate('C',3),
             new Coordinate('C',4),
             new Coordinate('C',5),
             new Coordinate('C',6)
         );
-        _length = _coordinates.size();
-        _hits = new ArrayList<>();
-        _hits.add(new Coordinate('C', 3));
+        length = coordinates.size();
+        hits = new ArrayList<>();
+        hits.add(new Coordinate('C', 3));
     }
 }
 
 class ShipB8E8Mock extends Ship {
     // it simulates a ship on the coordinates B8-E8 without hits
     ShipB8E8Mock() {
-        _coordinates = List.of(
+        coordinates = List.of(
                 new Coordinate('B',8),
                 new Coordinate('C',8),
                 new Coordinate('D',8),
                 new Coordinate('E',8)
         );
-        _length = _coordinates.size();
-        _hits = new ArrayList<>();
+        length = coordinates.size();
+        hits = new ArrayList<>();
     }
 }
 
 class ShipG4G6Mock extends Ship {
     // it simulates a ship on the coordinates B8-E8 without hits
     ShipG4G6Mock() {
-        _coordinates = List.of(
+        coordinates = List.of(
                 new Coordinate('G',4),
                 new Coordinate('G',5),
                 new Coordinate('G',6)
         );
-        _length = _coordinates.size();
-        _hits = new ArrayList<>();
+        length = coordinates.size();
+        hits = new ArrayList<>();
     }
 }
 
@@ -69,15 +69,15 @@ class CarrierMock extends Carrier {
         // Also, we will not use the values from the parent class constructor
         super(new Coordinate('E', 1), Direction.North);
 
-        _coordinates = List.of(
+        coordinates = List.of(
             new Coordinate('C',1),
             new Coordinate('C',2),
             new Coordinate('C',3),
             new Coordinate('C',4),
             new Coordinate('C',5)
         );
-        _length = 5;
-        _hits = new ArrayList<>();
+        length = 5;
+        hits = new ArrayList<>();
     }
 }
 class BattleshipMock extends Battleship {
@@ -87,14 +87,14 @@ class BattleshipMock extends Battleship {
         // Also, we will not use the values from the parent class constructor
         super(new Coordinate('H', 1), Direction.North);
 
-        _coordinates = List.of(
+        coordinates = List.of(
             new Coordinate('B',5),
             new Coordinate('B',6),
             new Coordinate('B',7),
             new Coordinate('B',8)
         );
-        _length = 4;
-        _hits = new ArrayList<>();
+        length = 4;
+        hits = new ArrayList<>();
     }
 }
 class CruiserMock extends Cruiser {
@@ -104,13 +104,13 @@ class CruiserMock extends Cruiser {
         // Also, we will not use the values from the parent class constructor
         super(new Coordinate('G', 1), Direction.North);
 
-        _coordinates = List.of(
+        coordinates = List.of(
             new Coordinate('C',8),
             new Coordinate('C',9),
             new Coordinate('C',10)
         );
-        _length = 3;
-        _hits = new ArrayList<>();
+        length = 3;
+        hits = new ArrayList<>();
     }
 }
 class DestroyerMock extends Destroyer {
@@ -120,12 +120,12 @@ class DestroyerMock extends Destroyer {
         // Also, we will not use the values from the parent class constructor
         super(new Coordinate('J', 1), Direction.North);
 
-        _coordinates = List.of(
+        coordinates = List.of(
             new Coordinate('D',1),
             new Coordinate('D',2)
         );
-        _length = 2;
-        _hits = new ArrayList<>();
+        length = 2;
+        hits = new ArrayList<>();
     }
 }
 class SubmarineMock extends Submarine {
@@ -135,10 +135,10 @@ class SubmarineMock extends Submarine {
         // Also, we will not use the values from the parent class constructor
         super(new Coordinate('F', 1), Direction.North);
 
-        _coordinates = List.of(
+        coordinates = List.of(
             new Coordinate('H',8)
         );
-        _length = 1;
-        _hits = new ArrayList<>();
+        length = 1;
+        hits = new ArrayList<>();
     }
 }

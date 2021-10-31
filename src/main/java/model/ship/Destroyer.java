@@ -11,11 +11,11 @@ public class Destroyer extends Ship {
             throw new NullPointerException("Cannot create a Destroyer because \"coordinate\" or \"direction\" is null");
         }
 
-        _length = 2;
-        _hits = new ArrayList<>();
+        length = 2;
+        hits = new ArrayList<>();
 
         try {
-            _coordinates = GenerateCoordinates(coordinate, direction, _length-1);
+            coordinates = GenerateCoordinates(coordinate, direction, length-1);
         } catch (UnsupportedOperationException e) {
             throw new ExceptionInInitializerError(
                 String.join("",

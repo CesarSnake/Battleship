@@ -3,34 +3,34 @@ package model;
 import java.util.List;
 
 public class Coordinate {
-    private Character _letter;
-    private Integer _number;
-
-    private List<Character> _validLetters = List.of('A','B','C','D','E','F','G','H','I','J');
-    private List<Integer> _validNumbers = List.of(1,2,3,4,5,6,7,8,9,10);
+    private final Character letter;
+    private final Integer number;
 
     public Coordinate(Character letter, Integer number) {
         if (letter == null || number == null) {
             throw new NullPointerException("Cannot create a Coordinate because \"letter\" or \"number\" is null");
         }
 
-        if (!_validLetters.contains(letter) ||
-            !_validNumbers.contains(number)) {
+        List<Character> validLetters = List.of('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+        List<Integer> validNumbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        if (!validLetters.contains(letter) ||
+            !validNumbers.contains(number)) {
             throw new ExceptionInInitializerError(
                 String.join("",
                 "Invalid Coordinate: ", String.valueOf(letter), Integer.toString(number)));
         }
 
-        _letter = letter;
-        _number = number;
+        this.letter = letter;
+        this.number = number;
     }
 
     public Character Letter() {
-        return _letter;
+        return letter;
     }
 
     public Integer Number() {
-        return _number;
+        return number;
     }
 
     @Override
@@ -40,13 +40,13 @@ public class Coordinate {
         }
 
         Coordinate c = (Coordinate) o;
-        return _letter.equals(c.Letter()) &&
-            _number.equals(c.Number());
+        return letter.equals(c.Letter()) &&
+            number.equals(c.Number());
     }
 
     @Override
     public String toString() {
         return (String.join("",
-            String.valueOf(_letter), Integer.toString(_number)));
+            String.valueOf(letter), Integer.toString(number)));
     }
 }

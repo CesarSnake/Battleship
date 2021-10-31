@@ -3,28 +3,29 @@ package model;
 import model.ship.Ship;
 
 public class Cell {
-    Coordinate _coordinate;
-    CellStatus _status;
-    Ship _ship = null;
+    Coordinate coordinate;
+    CellStatus status;
+    Ship ship;
 
     public Cell(Coordinate coordinate) {
         if (coordinate == null) {
             throw new NullPointerException("Cannot create a Cell because \"coordinate\" is null");
         }
 
-        _coordinate = coordinate;
-        _status = CellStatus.Hide;
+        this.coordinate = coordinate;
+        status = CellStatus.Hide;
+        ship = null;
     }
 
-    public Coordinate Coordinate() { return _coordinate; }
-    public CellStatus Status() { return _status; }
+    public Coordinate Coordinate() { return coordinate; }
+    public CellStatus Status() { return status; }
 
     public void SetStatus(CellStatus status) {
         if (status == null) {
             throw new NullPointerException("Cannot set a null status");
         }
 
-        _status = status;
+        this.status = status;
     }
 
     public void SetShip(Ship ship) {
@@ -32,45 +33,46 @@ public class Cell {
             throw new NullPointerException("Cannot set a null ship");
         }
 
-        if (_ship != null) {
+        if (this.ship != null) {
             throw new UnsupportedOperationException("This cell has already a ship");
         }
 
-        if (!ship.Coordinates().contains(_coordinate)) {
+        if (!ship.Coordinates().contains(coordinate)) {
             throw new UnsupportedOperationException(
                 String.join("",
-                    "The ship ", ship.getClass().getSimpleName(), "has different coordinates than this Cell ", _coordinate.toString()));
+                    "The ship ", ship.getClass().getSimpleName(), "has different coordinates than this Cell ", coordinate.toString()));
         }
-        _ship = ship;
+
+        this.ship = ship;
     }
 
     public boolean HasShip() {
-        return  _ship != null;
+        return  ship != null;
     }
 
     public Ship GetShip() {
-        return _ship;
+        return ship;
     }
 
     public CellStatus Hit() {
         // Was already hit
-        if (_status == CellStatus.Water) {
+        if (status == CellStatus.Water) {
             throw new UnsupportedOperationException(
-                String.join("", "Coordinate: ", _coordinate.toString(), " already hit"));
+                String.join("", "Coordinate: ", coordinate.toString(), " already hit"));
         }
 
-        if (_ship == null) {
+        if (ship == null) {
             // cell is free
-            _status = CellStatus.Water;
+            status = CellStatus.Water;
         } else {
             // cell has a ship
-            _ship.Hit(_coordinate);
-            _status = CellStatus.Hit;
+            ship.Hit(coordinate);
+            status = CellStatus.Hit;
 
-            if (_ship.IsSunk()) {
-                _status = CellStatus.Destroyed;
+            if (ship.IsSunk()) {
+                status = CellStatus.Destroyed;
             }
         }
-        return _status;
+        return status;
     }
 }

@@ -12,9 +12,9 @@ public class Board {
     public final char DESTROYED_SYMBOL = 'X';
     public final int BOARD_SIZE = 10;
 
-    private ArrayList<Coordinate> coordinatesUsedList = new ArrayList<>();
-    private ArrayList<Ship> shipsList = new ArrayList<>();
-    private ArrayList<Cell> cellsList = new ArrayList<>();
+    private final ArrayList<Coordinate> coordinatesUsedList;
+    private final ArrayList<Ship> shipsList;
+    private final ArrayList<Cell> cellsList;
 
     public List<Coordinate> CoordinatesUsed() {
         return coordinatesUsedList;
@@ -24,6 +24,10 @@ public class Board {
     }
 
     public Board() {
+        coordinatesUsedList = new ArrayList<>();
+        shipsList = new ArrayList<>();
+        cellsList = new ArrayList<>();
+
         // add cells on the board
         for (char i = 'A'; i <= 'J'; i++) {
             for (int j = 1; j <= 10; j++) {

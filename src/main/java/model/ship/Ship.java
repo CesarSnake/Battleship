@@ -9,36 +9,36 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Ship {
-    List<Coordinate> _coordinates;
-    Integer _length;
-    ArrayList<Coordinate> _hits;
+    List<Coordinate> coordinates;
+    Integer length;
+    ArrayList<Coordinate> hits;
 
     Ship() { /* Ship itself is empty, acts as an interface for the ship types */ }
     
-    public List<Coordinate> Coordinates() { return _coordinates; }
-    public Integer Length() { return _length; }
-    public List<Coordinate> Hits() { return _hits; }
+    public List<Coordinate> Coordinates() { return coordinates; }
+    public Integer Length() { return length; }
+    public List<Coordinate> Hits() { return hits; }
 
     public void Hit(Coordinate coordinate) {
         if (coordinate == null) {
             throw new NullPointerException("Cannot hit the ship because \"coordinate\" is null");
         }
 
-        if (!_coordinates.contains(coordinate)) {
+        if (!coordinates.contains(coordinate)) {
             throw new UnsupportedOperationException(
                 String.join("",
                 getClass().getSimpleName(), " is not positioned on the coordinate: ", coordinate.toString()));
         }
-        if (_hits.contains(coordinate)) {
+        if (hits.contains(coordinate)) {
             throw new UnsupportedOperationException(
                 String.join("", "Coordinate: ", coordinate.toString(), " already hit"));
         }
 
-        _hits.add(coordinate);
+        hits.add(coordinate);
     }
 
     public Boolean IsSunk() {
-        return _hits.size() == _length;
+        return hits.size() == length;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class Ship {
         // coordinates (sorted)
         stringList.add("hits: ");
 
-        List<String> hitsSorted = _hits
+        List<String> hitsSorted = hits
             .stream()
             .sorted(Comparator
                 .comparing(Coordinate::Letter)

@@ -12,8 +12,8 @@ public class Submarine extends Ship {
             throw new NullPointerException("Cannot create a Submarine because \"coordinate\" or \"direction\" is null");
         }
 
-        _length = 1;
-        _hits = new ArrayList<>();
-        _coordinates = List.of(coordinate);
+        length = 1;
+        hits = new ArrayList<>();
+        coordinates = List.of(coordinate);
     }
 }
