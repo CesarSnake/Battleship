@@ -324,4 +324,206 @@ public class GameControllerTests {
         assertEquals(boardExpected, boardStatus);
         assertFalse(game.HasFinish());
     }
+
+    // using the same simulated board than the previous test
+    @Test
+    void AttackCoordinateWatterAlreadyAttackedTest() {
+        RandomGenerator randomGeneratorMock = new RandomGeneratorForGameMock();
+        RandomController randomControllerMock = new RandomController(randomGeneratorMock);
+
+        GameController game = new GameController(randomControllerMock);
+        String boardStatus = game.NewGame();
+
+        String boardExpected = "Turn: 0\n" +
+            "# 1 2 3 4 5 6 7 8 9 10\n" +
+            "A · · · · · · · · · ·\n" +
+            "B · · · · · · · · · ·\n" +
+            "C · · · · · · · · · ·\n" +
+            "D · · · · · · · · · ·\n" +
+            "E · · · · · · · · · ·\n" +
+            "F · · · · · · · · · ·\n" +
+            "G · · · · · · · · · ·\n" +
+            "H · · · · · · · · · ·\n" +
+            "I · · · · · · · · · ·\n" +
+            "J · · · · · · · · · ·";
+        assertEquals(boardExpected, boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Attack all the column A (it has no ships)
+        for (int i = 1; i <= 10; i++) {
+            boardStatus = game.AttackCoordinate(new Coordinate('A',i));
+        }
+
+        boardExpected = "Turn: 10\n" +
+            "# 1 2 3 4 5 6 7 8 9 10\n" +
+            "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "B · · · · · · · · · ·\n" +
+            "C · · · · · · · · · ·\n" +
+            "D · · · · · · · · · ·\n" +
+            "E · · · · · · · · · ·\n" +
+            "F · · · · · · · · · ·\n" +
+            "G · · · · · · · · · ·\n" +
+            "H · · · · · · · · · ·\n" +
+            "I · · · · · · · · · ·\n" +
+            "J · · · · · · · · · ·";
+        assertEquals(boardExpected, boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Attack again the same cells
+        for (int i = 1; i <= 10; i++) {
+            Coordinate coordinate = new Coordinate('A',i);
+            boardStatus= game.AttackCoordinate(coordinate);
+
+            boardExpected = "Turn: 10\n" +
+                "# 1 2 3 4 5 6 7 8 9 10\n" +
+                "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "B · · · · · · · · · ·\n" +
+                "C · · · · · · · · · ·\n" +
+                "D · · · · · · · · · ·\n" +
+                "E · · · · · · · · · ·\n" +
+                "F · · · · · · · · · ·\n" +
+                "G · · · · · · · · · ·\n" +
+                "H · · · · · · · · · ·\n" +
+                "I · · · · · · · · · ·\n" +
+                "J · · · · · · · · · ·\n"+
+                "Coordinate: " + coordinate + " already hit";
+
+            assertEquals(boardExpected, boardStatus);
+            assertFalse(game.HasFinish());
+        }
+    }
+
+    @Test
+    void AttackCoordinateHitAlreadyAttackedTest() {
+        RandomGenerator randomGeneratorMock = new RandomGeneratorForGameMock();
+        RandomController randomControllerMock = new RandomController(randomGeneratorMock);
+
+        GameController game = new GameController(randomControllerMock);
+        String boardStatus = game.NewGame();
+
+        String boardExpected = "Turn: 0\n" +
+            "# 1 2 3 4 5 6 7 8 9 10\n" +
+            "A · · · · · · · · · ·\n" +
+            "B · · · · · · · · · ·\n" +
+            "C · · · · · · · · · ·\n" +
+            "D · · · · · · · · · ·\n" +
+            "E · · · · · · · · · ·\n" +
+            "F · · · · · · · · · ·\n" +
+            "G · · · · · · · · · ·\n" +
+            "H · · · · · · · · · ·\n" +
+            "I · · · · · · · · · ·\n" +
+            "J · · · · · · · · · ·";
+        assertEquals(boardExpected, boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Hit the Carrier without sink
+        for (char i = 'C'; i < 'G'; i++) {
+            Coordinate coordinate = new Coordinate(i, 3);
+            boardStatus = game.AttackCoordinate(coordinate);
+        }
+
+        boardExpected = "Turn: 4\n" +
+            "# 1 2 3 4 5 6 7 8 9 10\n" +
+            "A · · · · · · · · · ·\n" +
+            "B · · · · · · · · · ·\n" +
+            "C · · / · · · · · · ·\n" +
+            "D · · / · · · · · · ·\n" +
+            "E · · / · · · · · · ·\n" +
+            "F · · / · · · · · · ·\n" +
+            "G · · · · · · · · · ·\n" +
+            "H · · · · · · · · · ·\n" +
+            "I · · · · · · · · · ·\n" +
+            "J · · · · · · · · · ·";
+        assertEquals(boardExpected, boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Attack again the same cells
+        for (char i = 'C'; i < 'G'; i++) {
+            Coordinate coordinate = new Coordinate(i, 3);
+            boardStatus = game.AttackCoordinate(coordinate);
+
+            boardExpected = "Turn: 4\n" +
+                "# 1 2 3 4 5 6 7 8 9 10\n" +
+                "A · · · · · · · · · ·\n" +
+                "B · · · · · · · · · ·\n" +
+                "C · · / · · · · · · ·\n" +
+                "D · · / · · · · · · ·\n" +
+                "E · · / · · · · · · ·\n" +
+                "F · · / · · · · · · ·\n" +
+                "G · · · · · · · · · ·\n" +
+                "H · · · · · · · · · ·\n" +
+                "I · · · · · · · · · ·\n" +
+                "J · · · · · · · · · ·\n" +
+                "Coordinate: " + coordinate + " already hit";
+            assertEquals(boardExpected, boardStatus);
+            assertFalse(game.HasFinish());
+        }
+    }
+
+    @Test
+    void AttackCoordinateDestroyedAlreadyAttackedTest() {
+        RandomGenerator randomGeneratorMock = new RandomGeneratorForGameMock();
+        RandomController randomControllerMock = new RandomController(randomGeneratorMock);
+
+        GameController game = new GameController(randomControllerMock);
+        String boardStatus = game.NewGame();
+
+        String boardExpected = "Turn: 0\n" +
+            "# 1 2 3 4 5 6 7 8 9 10\n" +
+            "A · · · · · · · · · ·\n" +
+            "B · · · · · · · · · ·\n" +
+            "C · · · · · · · · · ·\n" +
+            "D · · · · · · · · · ·\n" +
+            "E · · · · · · · · · ·\n" +
+            "F · · · · · · · · · ·\n" +
+            "G · · · · · · · · · ·\n" +
+            "H · · · · · · · · · ·\n" +
+            "I · · · · · · · · · ·\n" +
+            "J · · · · · · · · · ·";
+        assertEquals(boardExpected, boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Hit the Carrier without sink
+        for (char i = 'C'; i <= 'G'; i++) {
+            Coordinate coordinate = new Coordinate(i, 3);
+            boardStatus = game.AttackCoordinate(coordinate);
+        }
+
+        boardExpected = "Turn: 5\n" +
+            "# 1 2 3 4 5 6 7 8 9 10\n" +
+            "A · · · · · · · · · ·\n" +
+            "B · · · · · · · · · ·\n" +
+            "C · · X · · · · · · ·\n" +
+            "D · · X · · · · · · ·\n" +
+            "E · · X · · · · · · ·\n" +
+            "F · · X · · · · · · ·\n" +
+            "G · · X · · · · · · ·\n" +
+            "H · · · · · · · · · ·\n" +
+            "I · · · · · · · · · ·\n" +
+            "J · · · · · · · · · ·";
+        assertEquals(boardExpected, boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Attack again the same cells
+        for (char i = 'C'; i <= 'G'; i++) {
+            Coordinate coordinate = new Coordinate(i, 3);
+            boardStatus = game.AttackCoordinate(coordinate);
+
+            boardExpected = "Turn: 5\n" +
+                "# 1 2 3 4 5 6 7 8 9 10\n" +
+                "A · · · · · · · · · ·\n" +
+                "B · · · · · · · · · ·\n" +
+                "C · · X · · · · · · ·\n" +
+                "D · · X · · · · · · ·\n" +
+                "E · · X · · · · · · ·\n" +
+                "F · · X · · · · · · ·\n" +
+                "G · · X · · · · · · ·\n" +
+                "H · · · · · · · · · ·\n" +
+                "I · · · · · · · · · ·\n" +
+                "J · · · · · · · · · ·\n" +
+                "Coordinate: " + coordinate + " already hit";
+            assertEquals(boardExpected, boardStatus);
+            assertFalse(game.HasFinish());
+        }
+    }
 }
