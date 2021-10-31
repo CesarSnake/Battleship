@@ -95,13 +95,13 @@ public class GameController {
             turn++;
         } catch (UnsupportedOperationException exception) {
             errorMessage = exception.getMessage();
-        } finally {
-            gameStatus.add(String.join(" ", "Turn:", String.valueOf(turn)));
-            gameStatus.add(board.toString());
+        }
 
-            if(errorMessage != null) {
-                gameStatus.add(errorMessage);
-            }
+        gameStatus.add(String.join(" ", "Turn:", String.valueOf(turn)));
+        gameStatus.add(board.toString());
+
+        if(errorMessage != null) {
+            gameStatus.add(errorMessage);
         }
 
         return String.join("\n", gameStatus);
