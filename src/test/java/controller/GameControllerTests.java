@@ -110,17 +110,17 @@ public class GameControllerTests {
         // The game starts when the player request a new game
         String boardStatus = game.NewGame();
         String boardExpected = "Turn: 0\n" +
-                "# 1 2 3 4 5 6 7 8 9 10\n" +
-                "A · · · · · · · · · ·\n" +
-                "B · · · · · · · · · ·\n" +
-                "C · · · · · · · · · ·\n" +
-                "D · · · · · · · · · ·\n" +
-                "E · · · · · · · · · ·\n" +
-                "F · · · · · · · · · ·\n" +
-                "G · · · · · · · · · ·\n" +
-                "H · · · · · · · · · ·\n" +
-                "I · · · · · · · · · ·\n" +
-                "J · · · · · · · · · ·";
+            "# 1 2 3 4 5 6 7 8 9 10\n" +
+            "A · · · · · · · · · ·\n" +
+            "B · · · · · · · · · ·\n" +
+            "C · · · · · · · · · ·\n" +
+            "D · · · · · · · · · ·\n" +
+            "E · · · · · · · · · ·\n" +
+            "F · · · · · · · · · ·\n" +
+            "G · · · · · · · · · ·\n" +
+            "H · · · · · · · · · ·\n" +
+            "I · · · · · · · · · ·\n" +
+            "J · · · · · · · · · ·";
         assertEquals(boardExpected, boardStatus);
         assertFalse(game.HasFinish());
 
@@ -131,7 +131,7 @@ public class GameControllerTests {
         game.AttackCoordinate(new Coordinate('J',1));
         assertFalse(game.HasFinish());
 
-        boardStatus = game.AttackCoordinate(new Coordinate('A',10));
+        boardStatus = game.AttackCoordinate(new Coordinate('J',10));
         boardExpected = "Turn: 4\n" +
             "# 1 2 3 4 5 6 7 8 9 10\n" +
             "A ~ · · · · · · · · ~\n" +
@@ -252,7 +252,7 @@ public class GameControllerTests {
 
         // Destroy Cruiser
         boardStatus = game.AttackCoordinate(new Coordinate('B',9));
-        boardExpected = "Turn: 23\n" +
+        boardExpected = "Turn: 24\n" +
             "# 1 2 3 4 5 6 7 8 9 10\n" +
             "A ~ · · · · · · · · ~\n" +
             "B · · · · · · X X X ·\n" +
@@ -269,7 +269,7 @@ public class GameControllerTests {
 
         // Destroy Destroyer
         boardStatus = game.AttackCoordinate(new Coordinate('J',2));
-        boardExpected = "Turn: 24\n" +
+        boardExpected = "Turn: 25\n" +
             "# 1 2 3 4 5 6 7 8 9 10\n" +
             "A ~ · · · · · · · · ~\n" +
             "B · · · · · · X X X ·\n" +
@@ -286,7 +286,7 @@ public class GameControllerTests {
 
         // Destroy Submarine
         boardStatus = game.AttackCoordinate(new Coordinate('E',9));
-        boardExpected = "Turn: 25\n" +
+        boardExpected = "Turn: 26\n" +
             "# 1 2 3 4 5 6 7 8 9 10\n" +
             "A ~ · · · · · · · · ~\n" +
             "B · · · · · · X X X ·\n" +
@@ -308,6 +308,7 @@ public class GameControllerTests {
 
 
         // it only changes when a new game is created
+        game = new GameController(); // it must be other controller as our mock only returned 5 coordinates and after the same
         boardStatus = game.NewGame();
         boardExpected = "Turn: 0\n" +
             "# 1 2 3 4 5 6 7 8 9 10\n" +
