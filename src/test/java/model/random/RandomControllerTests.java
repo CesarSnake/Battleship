@@ -198,7 +198,7 @@ public class RandomControllerTests {
 
     @Test
     void RandomCoordinatesMockTest() {
-        RandomGenerator randomGenerator5Times = new RandomGeneratorForGameMock();
+        RandomGenerator randomGenerator5Times = new RandomGeneratorGameMock();
         randomController = new RandomController(randomGenerator5Times);
 
         assertEquals(new Coordinate('C', 3), randomController.RandomCoordinate());
@@ -214,7 +214,7 @@ public class RandomControllerTests {
 
     @Test
     void RandomDirectionMockTest() {
-        RandomGenerator randomGenerator5Times = new RandomGeneratorForGameMock();
+        RandomGenerator randomGenerator5Times = new RandomGeneratorGameMock();
         randomController = new RandomController(randomGenerator5Times);
 
         assertEquals(Direction.South, randomController.RandomDirection());

@@ -6,7 +6,7 @@ import model.Direction;
 import java.util.List;
 
 // it returns different coordinates and directions each time it is called (5 times max)
-public class RandomGeneratorForGameMock extends RandomGenerator {
+public class RandomGeneratorGameMock extends RandomGenerator {
     int timesCalledCoordinate = 0;
     int timesCalledDirection = 0;
     boolean stopIncrement = false;

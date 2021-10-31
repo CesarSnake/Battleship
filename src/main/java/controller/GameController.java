@@ -75,7 +75,7 @@ public class GameController {
             String.join(" ","Turn:", String.valueOf(turn)),
             board.toString());
 
-        return  String.join("\n", gameStatus);
+        return String.join("\n", gameStatus);
     }
 
     public String AttackCoordinate(Coordinate coordinate) {
@@ -85,6 +85,12 @@ public class GameController {
 
         if (coordinate == null) {
             throw new NullPointerException("Coordinate to attack cannot be null");
+        }
+
+        if (HasFinish()) {
+            return String.join("\n", List.of(
+                String.join(" ","Turn:", String.valueOf(turn)),
+                board.toString()));
         }
 
         ArrayList<String> gameStatus = new ArrayList<>();

@@ -3,7 +3,8 @@ package controller;
 import model.Coordinate;
 import model.random.RandomController;
 import model.random.RandomGenerator;
-import model.random.RandomGeneratorForGameMock;
+import model.random.RandomGeneratorExtremeGameMock;
+import model.random.RandomGeneratorGameMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -102,7 +103,7 @@ public class GameControllerTests {
     void GameTest() {
         // we are going to simulate a game using the mock RandomCoordinatesMockTest
         // we need it as the real game generate random coordinates to place the ships
-        RandomGenerator randomGeneratorMock = new RandomGeneratorForGameMock();
+        RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
 
         GameController game = new GameController(randomControllerMock);
@@ -329,7 +330,7 @@ public class GameControllerTests {
     // using the same simulated board than the previous test
     @Test
     void AttackCoordinateWatterAlreadyAttackedTest() {
-        RandomGenerator randomGeneratorMock = new RandomGeneratorForGameMock();
+        RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
 
         GameController game = new GameController(randomControllerMock);
@@ -396,7 +397,7 @@ public class GameControllerTests {
 
     @Test
     void AttackCoordinateHitAlreadyAttackedTest() {
-        RandomGenerator randomGeneratorMock = new RandomGeneratorForGameMock();
+        RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
 
         GameController game = new GameController(randomControllerMock);
@@ -463,7 +464,7 @@ public class GameControllerTests {
 
     @Test
     void AttackCoordinateDestroyedAlreadyAttackedTest() {
-        RandomGenerator randomGeneratorMock = new RandomGeneratorForGameMock();
+        RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
 
         GameController game = new GameController(randomControllerMock);
@@ -526,5 +527,170 @@ public class GameControllerTests {
             assertEquals(boardExpected, boardStatus);
             assertFalse(game.HasFinish());
         }
+    }
+
+    // Simulated game:
+    // # 1 2 3 4 5 6 7 8 9 10
+    // A · · · · · · · · · ·
+    // B · · · · · · · · · ·
+    // C · · · · · · · · · ·
+    // D · · · · · · · · · ·
+    // E · · · · · · · · · ·
+    // F · · · · · · · · · ·
+    // G · · · · · · · · · ·
+    // H · · · · · · · · · ·
+    // I X · X X · X X X · ·
+    // J X X X X · X X X X X
+    @Test
+    void GameExtremeTest() {
+        RandomGenerator randomGeneratorMock = new RandomGeneratorExtremeGameMock();
+        RandomController randomControllerMock = new RandomController(randomGeneratorMock);
+
+        GameController game = new GameController(randomControllerMock);
+        String boardStatus = game.NewGame();
+
+        String boardExpected = "Turn: 0\n" +
+            "# 1 2 3 4 5 6 7 8 9 10\n" +
+            "A · · · · · · · · · ·\n" +
+            "B · · · · · · · · · ·\n" +
+            "C · · · · · · · · · ·\n" +
+            "D · · · · · · · · · ·\n" +
+            "E · · · · · · · · · ·\n" +
+            "F · · · · · · · · · ·\n" +
+            "G · · · · · · · · · ·\n" +
+            "H · · · · · · · · · ·\n" +
+            "I · · · · · · · · · ·\n" +
+            "J · · · · · · · · · ·";
+        assertEquals(boardExpected, boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Hit all the Watter cells
+        for (char i = 'A'; i <='H' ; i++) {
+            for (int j = 1; j <=10 ; j++) {
+                Coordinate coordinate = new Coordinate(i,j);
+                boardStatus = game.AttackCoordinate(coordinate);
+            }
+        }
+
+        boardExpected = "Turn: 80\n" +
+            "# 1 2 3 4 5 6 7 8 9 10\n" +
+            "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "B ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "C ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "D ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "F ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "I · · · · · · · · · ·\n" +
+            "J · · · · · · · · · ·";
+        assertEquals(boardExpected, boardStatus);
+        assertFalse(game.HasFinish());
+
+
+        // Attack again all the watter cells
+        for (char i = 'A'; i <='H' ; i++) {
+            for (int j = 1; j <=10 ; j++) {
+                Coordinate coordinate = new Coordinate(i,j);
+                boardStatus = game.AttackCoordinate(coordinate);
+
+                boardExpected = "Turn: 80\n" +
+                    "# 1 2 3 4 5 6 7 8 9 10\n" +
+                    "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "B ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "C ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "D ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "F ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "I · · · · · · · · · ·\n" +
+                    "J · · · · · · · · · ·\n" +
+                    "Coordinate: " + coordinate + " already hit";
+                assertEquals(boardExpected, boardStatus);
+                assertFalse(game.HasFinish());
+            }
+        }
+
+
+        //Hit the ship cells without sink one
+        Coordinate lastCoordinate = new Coordinate('J',10);
+        for (char i = 'I'; i <='J' ; i++) {
+            for (int j = 1; j <=10 ; j++) {
+                Coordinate coordinate = new Coordinate(i,j);
+
+                if(coordinate.equals(lastCoordinate)) {
+                    continue;
+                }
+
+                boardStatus = game.AttackCoordinate(coordinate);
+            }
+        }
+
+        boardExpected = "Turn: 99\n" +
+            "# 1 2 3 4 5 6 7 8 9 10\n" +
+            "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "B ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "C ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "D ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "F ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "I X ~ X X ~ X X X ~ ~\n" +
+            "J X X X X ~ / / / / ·";
+        assertEquals(boardExpected, boardStatus);
+        assertFalse(game.HasFinish());
+
+
+        //Hit again the same cells
+        for (char i = 'I'; i <='J' ; i++) {
+            for (int j = 1; j <=10 ; j++) {
+                Coordinate coordinate = new Coordinate(i,j);
+
+                if(coordinate.equals(lastCoordinate)) {
+                    continue;
+                }
+
+                boardStatus = game.AttackCoordinate(coordinate);
+                boardExpected = "Turn: 99\n" +
+                    "# 1 2 3 4 5 6 7 8 9 10\n" +
+                    "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "B ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "C ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "D ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "F ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                    "I X ~ X X ~ X X X ~ ~\n" +
+                    "J X X X X ~ / / / / ·\n" +
+                    "Coordinate: " + coordinate + " already hit";
+                assertEquals(boardExpected, boardStatus);
+                assertFalse(game.HasFinish());
+            }
+        }
+
+        // Finish the game
+        boardStatus = game.AttackCoordinate(lastCoordinate);
+        boardExpected = "Turn: 100\n" +
+            "# 1 2 3 4 5 6 7 8 9 10\n" +
+            "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "B ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "C ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "D ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "F ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+            "I X ~ X X ~ X X X ~ ~\n" +
+            "J X X X X ~ X X X X X";
+        assertEquals(boardExpected, boardStatus);
+        assertTrue(game.HasFinish());
+
+        //Hit again the same coordinate
+        boardStatus = game.AttackCoordinate(lastCoordinate);
+        assertEquals(boardExpected, boardStatus); // game is not updated anymore
+        assertTrue(game.HasFinish());
     }
 }
