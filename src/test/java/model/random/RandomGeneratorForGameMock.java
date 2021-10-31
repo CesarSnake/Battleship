@@ -6,25 +6,26 @@ import model.Direction;
 import java.util.List;
 
 // it returns different coordinates and directions each time it is called (5 times max)
-public class RandomGeneratorMock5Times extends RandomGenerator {
-    int timesCalled = 0;
+public class RandomGeneratorForGameMock extends RandomGenerator {
+    int timesCalledCoordinate = 0;
+    int timesCalledDirection = 0;
     boolean stopIncrement = false;
     Coordinate defaultCoordinate = new Coordinate('A', 1);
     Direction defaultDirection = Direction.East;
 
     List<Coordinate> coordinateList = List.of(
-        new Coordinate('B', 7),
         new Coordinate('C', 3),
-        new Coordinate('E', 9),
         new Coordinate('H', 8),
-        new Coordinate('J', 2)
+        new Coordinate('B', 7),
+        new Coordinate('J', 2),
+        new Coordinate('E', 9)
     );
 
     List<Direction> directionList = List.of(
-        Direction.East,
         Direction.South,
-        Direction.North,
         Direction.West,
+        Direction.East,
+        Direction.North,
         Direction.North
     );
 
@@ -36,10 +37,10 @@ public class RandomGeneratorMock5Times extends RandomGenerator {
         if (stopIncrement) {
             simulatedRandomCoordinate = defaultCoordinate;
         } else {
-            simulatedRandomCoordinate = coordinateList.get(timesCalled);
-            timesCalled++;
+            simulatedRandomCoordinate = coordinateList.get(timesCalledCoordinate);
+            timesCalledCoordinate++;
 
-            if (timesCalled == 5) {
+            if (timesCalledCoordinate == 5) {
                 stopIncrement = true;
             }
         }
@@ -54,10 +55,10 @@ public class RandomGeneratorMock5Times extends RandomGenerator {
         if (stopIncrement) {
             simulatedDirection = defaultDirection;
         } else {
-            simulatedDirection = directionList.get(timesCalled);
-            timesCalled++;
+            simulatedDirection = directionList.get(timesCalledDirection);
+            timesCalledDirection++;
 
-            if (timesCalled == 5) {
+            if (timesCalledDirection == 5) {
                 stopIncrement = true;
             }
         }

@@ -3,7 +3,7 @@ package controller;
 import model.Coordinate;
 import model.random.RandomController;
 import model.random.RandomGenerator;
-import model.random.RandomGeneratorMock5Times;
+import model.random.RandomGeneratorForGameMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -102,7 +102,7 @@ public class GameControllerTests {
     void GameTest() {
         // we are going to simulate a game using the mock RandomGeneratorMock5Times
         // we need it as the real game generate random coordinates to place the ships
-        RandomGenerator randomGeneratorMock = new RandomGeneratorMock5Times();
+        RandomGenerator randomGeneratorMock = new RandomGeneratorForGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
 
         GameController game = new GameController(randomControllerMock);

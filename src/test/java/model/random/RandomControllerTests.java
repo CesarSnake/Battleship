@@ -198,14 +198,14 @@ public class RandomControllerTests {
 
     @Test
     void RandomCoordinate5TimesMockTest() {
-        RandomGenerator randomGenerator5Times = new RandomGeneratorMock5Times();
+        RandomGenerator randomGenerator5Times = new RandomGeneratorForGameMock();
         randomController = new RandomController(randomGenerator5Times);
 
-        assertEquals(new Coordinate('B', 7), randomController.RandomCoordinate());
         assertEquals(new Coordinate('C', 3), randomController.RandomCoordinate());
-        assertEquals(new Coordinate('E', 9), randomController.RandomCoordinate());
         assertEquals(new Coordinate('H', 8), randomController.RandomCoordinate());
+        assertEquals(new Coordinate('B', 7), randomController.RandomCoordinate());
         assertEquals(new Coordinate('J', 2), randomController.RandomCoordinate());
+        assertEquals(new Coordinate('E', 9), randomController.RandomCoordinate());
 
 
         assertEquals(new Coordinate('A',1), randomController.RandomCoordinate());
@@ -214,13 +214,13 @@ public class RandomControllerTests {
 
     @Test
     void RandomDirection5TimesMockTest() {
-        RandomGenerator randomGenerator5Times = new RandomGeneratorMock5Times();
+        RandomGenerator randomGenerator5Times = new RandomGeneratorForGameMock();
         randomController = new RandomController(randomGenerator5Times);
 
-        assertEquals(Direction.East, randomController.RandomDirection());
         assertEquals(Direction.South, randomController.RandomDirection());
-        assertEquals(Direction.North, randomController.RandomDirection());
         assertEquals(Direction.West, randomController.RandomDirection());
+        assertEquals(Direction.East, randomController.RandomDirection());
+        assertEquals(Direction.North, randomController.RandomDirection());
         assertEquals(Direction.North, randomController.RandomDirection());
 
 
