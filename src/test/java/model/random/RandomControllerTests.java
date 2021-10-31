@@ -197,7 +197,7 @@ public class RandomControllerTests {
     }
 
     @Test
-    void RandomCoordinate5TimesMockTest() {
+    void RandomCoordinatesMockTest() {
         RandomGenerator randomGenerator5Times = new RandomGeneratorForGameMock();
         randomController = new RandomController(randomGenerator5Times);
 
@@ -213,7 +213,7 @@ public class RandomControllerTests {
     }
 
     @Test
-    void RandomDirection5TimesMockTest() {
+    void RandomDirectionMockTest() {
         RandomGenerator randomGenerator5Times = new RandomGeneratorForGameMock();
         randomController = new RandomController(randomGenerator5Times);
 

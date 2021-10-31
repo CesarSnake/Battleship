@@ -100,7 +100,7 @@ public class GameControllerTests {
     // J · X · · · · · · · ·
     @Test
     void GameTest() {
-        // we are going to simulate a game using the mock RandomGeneratorMock5Times
+        // we are going to simulate a game using the mock RandomCoordinatesMockTest
         // we need it as the real game generate random coordinates to place the ships
         RandomGenerator randomGeneratorMock = new RandomGeneratorForGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
