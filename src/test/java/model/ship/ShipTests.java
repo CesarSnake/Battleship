@@ -19,7 +19,7 @@ public class ShipTests {
     Ship shipG4G6Mock;
 
     @BeforeAll
-    void InitOnce() {
+    void Setup() {
         emptyShip = new ShipEmptyMock();
 
     }

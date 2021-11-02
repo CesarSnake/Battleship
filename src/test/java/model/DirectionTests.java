@@ -14,7 +14,7 @@ public class DirectionTests {
     Direction west;
 
     @BeforeAll
-    void InitOnce() {
+    void Setup() {
         north = Direction.North;
         south = Direction.South;
         east = Direction.East;

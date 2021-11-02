@@ -15,7 +15,7 @@ public class CellStatusTests {
     CellStatus destroyed;
 
     @BeforeAll
-     void InitOnce() {
+     void Setup() {
         hide = CellStatus.Hide;
         Water = CellStatus.Water;
         hit = CellStatus.Hit;

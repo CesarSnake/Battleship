@@ -15,7 +15,7 @@ public class ShipTypeTests{
     ShipType shipSubmarine;
 
     @BeforeAll
-    void InitOnce() {
+    void Setup() {
         shipCarrier = ShipType.Carrier;
         shipBattleship = ShipType.Battleship;
         shipCruiser = ShipType.Cruiser;
