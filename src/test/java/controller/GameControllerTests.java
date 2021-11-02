@@ -6,6 +6,7 @@ import model.random.RandomGenerator;
 import model.random.RandomGeneratorExtremeGameMock;
 import model.random.RandomGeneratorGameMock;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -100,6 +101,7 @@ public class GameControllerTests {
     // I · X · · · · · · · ·
     // J · X · · · · · · · ·
     @Test
+    @Tag("acceptanceTest")
     void GameTest() {
         // we are going to simulate a game using the mock RandomCoordinatesMockTest
         // we need it as the real game generate random coordinates to place the ships
@@ -542,6 +544,7 @@ public class GameControllerTests {
     // I X · X X · X X X · ·
     // J X X X X · X X X X X
     @Test
+    @Tag("acceptanceTest")
     void GameExtremeTest() {
         RandomGenerator randomGeneratorMock = new RandomGeneratorExtremeGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
