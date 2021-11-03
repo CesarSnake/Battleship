@@ -1,8 +1,6 @@
 package model;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,7 +12,7 @@ public class DirectionTests {
     Direction west;
 
     @BeforeAll
-    void InitOnce() {
+    void Setup() {
         north = Direction.North;
         south = Direction.South;
         east = Direction.East;
@@ -23,24 +21,35 @@ public class DirectionTests {
 
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Direction North Test")
     void DirectionNorthTest() {
         assertEquals(Direction.North, north);
         assertEquals("North", north.toString());
         assertEquals(Direction.North.toString(), north.toString());
     }
+
     @Test
+    @Tag("unitTest")
+    @DisplayName("Direction South Test")
     void DirectionSouthTest() {
         assertEquals(Direction.South, south);
         assertEquals("South", south.toString());
         assertEquals(Direction.South.toString(), south.toString());
     }
+
     @Test
+    @Tag("unitTest")
+    @DisplayName("Direction East Test")
     void DirectionEastTest() {
         assertEquals(Direction.East, east);
         assertEquals("East", east.toString());
         assertEquals(Direction.East.toString(), east.toString());
     }
+
     @Test
+    @Tag("unitTest")
+    @DisplayName("Direction West Test")
     void DirectionWestTest() {
         assertEquals(Direction.West, west);
         assertEquals("West", west.toString());
