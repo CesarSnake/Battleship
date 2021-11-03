@@ -8,7 +8,7 @@ public class Coordinate {
 
     public Coordinate(Character letter, Integer number) {
         if (letter == null || number == null) {
-            throw new NullPointerException("Cannot create a Coordinate because \"letter\" or \"number\" is null");
+            throw new NullPointerException("Cannot create a Coordinate because 'letter' or 'number' is null");
         }
 
         List<Character> validLetters = List.of('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
@@ -17,8 +17,7 @@ public class Coordinate {
         if (!validLetters.contains(letter) ||
             !validNumbers.contains(number)) {
             throw new ExceptionInInitializerError(
-                String.join("",
-                "Invalid Coordinate: ", String.valueOf(letter), Integer.toString(number)));
+                String.join("", "Invalid Coordinate: ", String.valueOf(letter), Integer.toString(number)));
         }
 
         this.letter = letter;
@@ -34,19 +33,18 @@ public class Coordinate {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Coordinate)) {
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Coordinate)) {
             return false;
         }
 
-        Coordinate c = (Coordinate) o;
-        return letter.equals(c.Letter()) &&
-            number.equals(c.Number());
+        Coordinate cd = (Coordinate) obj;
+        return letter.equals(cd.Letter()) &&
+            number.equals(cd.Number());
     }
 
     @Override
     public String toString() {
-        return (String.join("",
-            String.valueOf(letter), Integer.toString(number)));
+        return String.join("", String.valueOf(letter), Integer.toString(number));
     }
 }
