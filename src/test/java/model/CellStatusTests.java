@@ -1,9 +1,6 @@
 package model;
 
-import model.ship.ShipType;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,6 +20,8 @@ public class CellStatusTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Status Hide Test")
     void StatusHideTest() {
         assertEquals(CellStatus.Hide, hide);
         assertEquals("Hide", hide.toString());
@@ -30,6 +29,8 @@ public class CellStatusTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Status Water Test")
     void StatusWaterTest() {
         assertEquals(CellStatus.Water, Water);
         assertEquals("Water", Water.toString());
@@ -37,6 +38,8 @@ public class CellStatusTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Status Hit Test")
     void StatusHitTest() {
         assertEquals(CellStatus.Hit, hit);
         assertEquals("Hit", hit.toString());
@@ -45,6 +48,8 @@ public class CellStatusTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Status Destroyed Test")
     void StatusDestroyedTest() {
         assertEquals(CellStatus.Destroyed, destroyed);
         assertEquals("Destroyed", destroyed.toString());

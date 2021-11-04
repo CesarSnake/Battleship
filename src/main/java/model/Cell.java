@@ -9,16 +9,21 @@ public class Cell {
 
     public Cell(Coordinate coordinate) {
         if (coordinate == null) {
-            throw new NullPointerException("Cannot create a Cell because \"coordinate\" is null");
+            throw new NullPointerException("Cannot create a Cell because 'coordinate' is null");
         }
 
         this.coordinate = coordinate;
-        status = CellStatus.Hide;
-        ship = null;
+        this.status = CellStatus.Hide;
+        this.ship = null;
     }
 
-    public Coordinate Coordinate() { return coordinate; }
-    public CellStatus Status() { return status; }
+    public Coordinate Coordinate() { 
+        return coordinate;
+    }
+    
+    public CellStatus Status() {
+        return status;
+    }
 
     public void SetStatus(CellStatus status) {
         if (status == null) {
@@ -38,16 +43,17 @@ public class Cell {
         }
 
         if (!ship.Coordinates().contains(coordinate)) {
+            String shipName = ship.getClass().getSimpleName();
+
             throw new UnsupportedOperationException(
-                String.join("",
-                    "The ship ", ship.getClass().getSimpleName(), "has different coordinates than this Cell ", coordinate.toString()));
+                String.join(" ", "The ship", shipName, "has different coordinates than this Cell", coordinate.toString()));
         }
 
         this.ship = ship;
     }
 
     public boolean HasShip() {
-        return  ship != null;
+        return ship != null;
     }
 
     public Ship GetShip() {
@@ -58,7 +64,7 @@ public class Cell {
         // Was already hit
         if (status == CellStatus.Water) {
             throw new UnsupportedOperationException(
-                String.join("", "Coordinate: ", coordinate.toString(), " already hit"));
+                String.join(" ", "Coordinate:", coordinate.toString(), "already hit"));
         }
 
         if (ship == null) {
@@ -73,6 +79,7 @@ public class Cell {
                 status = CellStatus.Destroyed;
             }
         }
+
         return status;
     }
 }
