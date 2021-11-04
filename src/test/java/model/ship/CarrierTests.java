@@ -2,6 +2,8 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,17 +11,21 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CarrierTests {
     // Carrier fills 5 cells
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
-            () -> new Carrier(null, null),
-            "Cannot create a Carrier because \"coordinate\" or \"direction\" is null");
+            () -> new Carrier(new Coordinate('E', 4), null),
+            "Cannot create a Carrier because 'coordinate' or 'direction' is null");
 
         assertThrowsExactly(NullPointerException.class,
-            () -> new Carrier(null, null),
-            "Cannot create a Carrier because \"coordinate\" or \"direction\" is null");
+            () -> new Carrier(null, Direction.East),
+            "Cannot create a Carrier because 'coordinate' or 'direction' is null");
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Carrier invalid coordinates direction North Test")
     void SetCarrierInvalidDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -30,14 +36,16 @@ public class CarrierTests {
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Carrier(c, dir),
-                    String.join("",
-                        "Cannot set a Carrier Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString()));
+                    String.join(" ",
+                        "Cannot set a Carrier Direction",
+                        Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Carrier valid coordinates direction North Test")
     void SetCarrierDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -58,6 +66,8 @@ public class CarrierTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Carrier invalid coordinates direction South Test")
     void SetCarrierInvalidDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -68,14 +78,16 @@ public class CarrierTests {
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Carrier(c, dir),
-                    String.join("",
-                        "Cannot set a Carrier Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString()));
+                    String.join(" ",
+                        "Cannot set a Carrier Direction",
+                        Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Carrier valid coordinates direction South Test")
     void SetCarrierDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -95,6 +107,8 @@ public class CarrierTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Carrier invalid coordinates direction East Test")
     void SetCarrierInvalidDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -105,14 +119,16 @@ public class CarrierTests {
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Carrier(c, dir),
-                    String.join("",
-                        "Cannot set a Carrier Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString()));
+                    String.join(" ",
+                        "Cannot set a Carrier Direction",
+                        Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Carrier valid coordinates direction East Test")
     void SetCarrierDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -132,6 +148,8 @@ public class CarrierTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Carrier invalid coordinates direction West Test")
     void SetCarrierInvalidDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -142,14 +160,16 @@ public class CarrierTests {
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Carrier(c, dir),
-                    String.join("",
-                        "Cannot instantiate a Carrier Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString()));
+                    String.join(" ",
+                        "Cannot instantiate a Carrier Direction",
+                        Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Carrier valid coordinates direction West Test")
     void SetCarrierDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -169,6 +189,8 @@ public class CarrierTests {
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Sink Cruiser Test")
     void SinkCarrierTest() {
         Carrier carrier = new Carrier(new Coordinate('A', 1), Direction.East);
 
@@ -189,6 +211,8 @@ public class CarrierTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction North) Test")
     void CarrierNorthToString() {
         Carrier carrier = new Carrier(new Coordinate('G', 2), Direction.North);
 
@@ -211,6 +235,8 @@ public class CarrierTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction East) Test")
     void CarrierEastToString() {
         Carrier carrier = new Carrier(new Coordinate('F', 2), Direction.East);
 
@@ -233,6 +259,8 @@ public class CarrierTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction South) Test")
     void CarrierSouthToString() {
         Carrier carrier = new Carrier(new Coordinate('B', 7), Direction.South);
 
@@ -255,6 +283,8 @@ public class CarrierTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction West) Test")
     void CarrierWestToString() {
         Carrier carrier = new Carrier(new Coordinate('G', 7), Direction.West);
 

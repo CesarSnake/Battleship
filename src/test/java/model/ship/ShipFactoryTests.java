@@ -2,12 +2,16 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ShipFactoryTests {
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Create ship null parameters Test")
     void CreateShipNullTest() {
         assertThrowsExactly(NullPointerException.class,
             ()-> ShipFactory.CreateShip(null, null, null),
@@ -27,18 +31,20 @@ public class ShipFactoryTests {
 
         assertThrowsExactly(NullPointerException.class,
             ()-> ShipFactory.CreateShip(ShipType.Carrier, null, null),
-        "Cannot create a ship because \"shipType\" or \"coordinate\" or \"direction\" is null");
+        "Cannot create a ship because 'shipType' or 'coordinate' or 'direction' is null");
 
         assertThrowsExactly(NullPointerException.class,
             ()-> ShipFactory.CreateShip(ShipType.Carrier, new Coordinate('A', 1), null),
-            "Cannot create a ship because \"shipType\" or \"coordinate\" or \"direction\" is null");
+            "Cannot create a ship because 'shipType' or 'coordinate' or 'direction' is null");
 
         assertThrowsExactly(NullPointerException.class,
             ()-> ShipFactory.CreateShip(ShipType.Carrier, null, Direction.North),
-            "Cannot create a ship because \"shipType\" or \"coordinate\" or \"direction\" is null");
+            "Cannot create a ship because 'shipType' or 'coordinate' or 'direction' is null");
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Create carrier Test")
     void CreateCarrierShipTest() {
         Ship carrier = ShipFactory.CreateShip(ShipType.Carrier, new Coordinate('A', 1), Direction.East);
 
@@ -47,6 +53,8 @@ public class ShipFactoryTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Create battleship Test")
     void CreateBattleshipTest() {
         Ship battleship = ShipFactory.CreateShip(ShipType.Battleship, new Coordinate('A',1), Direction.East);
 
@@ -55,6 +63,8 @@ public class ShipFactoryTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Create cruiser Test")
     void CreateCruiserTest() {
         Ship cruiser = ShipFactory.CreateShip(ShipType.Cruiser, new Coordinate('A',1), Direction.East);
 
@@ -63,6 +73,8 @@ public class ShipFactoryTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Create destroyer Test")
     void CreateDestroyerTest() {
         Ship destroyer = ShipFactory.CreateShip(ShipType.Destroyer, new Coordinate('A',1), Direction.East);
 
@@ -71,6 +83,8 @@ public class ShipFactoryTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Create submarine Test")
     void CreateSubmarineTest() {
         Ship submarine = ShipFactory.CreateShip(ShipType.Submarine, new Coordinate('A',1), Direction.East);
 
