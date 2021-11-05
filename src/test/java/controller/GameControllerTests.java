@@ -6,8 +6,10 @@ import model.random.RandomGenerator;
 import model.random.RandomGeneratorExtremeGameMock;
 import model.random.RandomGeneratorGameMock;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import utils.TestUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,53 +22,31 @@ public class GameControllerTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("How to play Test")
     void HowToPlayTest() {
-        String rules = "Rules:\n" +
-            "The objective of the game is discover where are the ships.\n" +
-            "You must attack the ships and sink all of them to win.\n" +
-            "To attack a ship you must insert a coordinate and pres enter.\n" +
-            "\n" +
-            "Symbols:\n" +
-            "· unknown, place not discovered.\n" +
-            "~ water, you miss your shot.\n" +
-            "/ hit, you hit one ship but it is not sink\n" +
-            "X sink, you sink the ship.\n" +
-            "\n" +
-            "Ships in the game:\n" +
-            "Carrier, which has 5 holes\n" +
-            "Battleship which has 4 holes\n" +
-            "Cruiser, which has 3 holes\n" +
-            "Destroyer, which has 2 holes\n" +
-            "Submarine, which has 1 holes";
-
+        String rules = TestUtils.GetOutputFromFile("rules.out");
         assertEquals(rules, gameController.HowToPlay());
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Has Finish (not played) Test")
     void HasFinishTest() {
         assertFalse(gameController.HasFinish());
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("New Game (not played) Test")
     void NewGameTest() {
-        String expectedBoard = "Turn: 0\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A · · · · · · · · · ·\n" +
-            "B · · · · · · · · · ·\n" +
-            "C · · · · · · · · · ·\n" +
-            "D · · · · · · · · · ·\n" +
-            "E · · · · · · · · · ·\n" +
-            "F · · · · · · · · · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · · · · · · ·\n" +
-            "I · · · · · · · · · ·\n" +
-            "J · · · · · · · · · ·";
-
-        assertEquals(expectedBoard, gameController.NewGame());
+        assertEquals(TestUtils.GetOutputFromFile("gameNewGame.out"), gameController.NewGame());
         assertFalse(gameController.HasFinish());
     }
 
     @Test
+    @Tag("conditionCoverage")
+    @DisplayName("Attack coordinate (game not created) Test")
     void AttackCoordinateGameNotCreated() {
         assertThrowsExactly(NullPointerException.class,
             ()-> gameController.AttackCoordinate(new Coordinate('A',1)),
@@ -74,6 +54,8 @@ public class GameControllerTests {
     }
 
     @Test
+    @Tag("conditionCoverage")
+    @DisplayName("Attack coordinate (game not created) null parameter Test")
     void AttackCoordinateNullGameNotCreated() {
         assertThrowsExactly(NullPointerException.class,
             ()-> gameController.AttackCoordinate(null),
@@ -81,12 +63,124 @@ public class GameControllerTests {
     }
 
     @Test
+    @Tag("conditionCoverage")
+    @DisplayName("Attack coordinate null parameter Test")
     void AttackCoordinateNullTest() {
         gameController.NewGame();
         assertThrowsExactly(NullPointerException.class,
             ()-> gameController.AttackCoordinate(null),
             "Coordinate to attack cannot be null");
     }
+
+    // Attack invalid Coordinates
+    @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Attack coordinates watter twice Test")
+    void AttackCoordinateWatterAlreadyAttackedTest() {
+        RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
+        RandomController randomControllerMock = new RandomController(randomGeneratorMock);
+
+        GameController game = new GameController(randomControllerMock);
+        String boardStatus = game.NewGame();
+
+        assertEquals(TestUtils.GetOutputFromFile("gameNewGame.out"), boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Attack all the column A (it has no ships)
+        for (int i = 1; i <= 10; i++) {
+            boardStatus = game.AttackCoordinate(new Coordinate('A',i));
+        }
+
+        assertEquals(TestUtils.GetOutputFromFile("gameControllerTest01.out"), boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Attack again the same cells
+        for (int i = 1; i <= 10; i++) {
+            Coordinate coordinate = new Coordinate('A',i);
+            boardStatus = game.AttackCoordinate(coordinate);
+
+            String boardExpected = String.join("\n",
+                TestUtils.GetOutputFromFile("gameControllerTest01.out"),
+                "Coordinate: " + coordinate + " already hit");
+
+            assertEquals(boardExpected, boardStatus);
+            assertFalse(game.HasFinish());
+        }
+    }
+
+    @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Attack coordinates hit twice Test")
+    void AttackCoordinateHitAlreadyAttackedTest() {
+        RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
+        RandomController randomControllerMock = new RandomController(randomGeneratorMock);
+
+        GameController game = new GameController(randomControllerMock);
+        String boardStatus = game.NewGame();
+
+        assertEquals(TestUtils.GetOutputFromFile("gameNewGame.out"), boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Hit the Carrier without sink
+        for (char i = 'C'; i < 'G'; i++) {
+            Coordinate coordinate = new Coordinate(i, 3);
+            boardStatus = game.AttackCoordinate(coordinate);
+        }
+
+        assertEquals(TestUtils.GetOutputFromFile("gameControllerTest02.out"), boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Attack again the same cells
+        for (char i = 'C'; i < 'G'; i++) {
+            Coordinate coordinate = new Coordinate(i, 3);
+            boardStatus = game.AttackCoordinate(coordinate);
+
+            String boardExpected = String.join("\n",
+                TestUtils.GetOutputFromFile("gameControllerTest02.out"),
+                "Coordinate: " + coordinate + " already hit");
+
+            assertEquals(boardExpected, boardStatus);
+            assertFalse(game.HasFinish());
+        }
+    }
+
+    @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Attack Coordinates destroyed twice Test")
+    void AttackCoordinateDestroyedAlreadyAttackedTest() {
+        RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
+        RandomController randomControllerMock = new RandomController(randomGeneratorMock);
+
+        GameController game = new GameController(randomControllerMock);
+        String boardStatus = game.NewGame();
+
+        assertEquals(TestUtils.GetOutputFromFile("gameNewGame.out"), boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Hit the Carrier without sink
+        for (char i = 'C'; i <= 'G'; i++) {
+            Coordinate coordinate = new Coordinate(i, 3);
+            boardStatus = game.AttackCoordinate(coordinate);
+        }
+
+        assertEquals(TestUtils.GetOutputFromFile("gameControllerTest03.out"), boardStatus);
+        assertFalse(game.HasFinish());
+
+        // Attack again the same cells
+        for (char i = 'C'; i <= 'G'; i++) {
+            Coordinate coordinate = new Coordinate(i, 3);
+            boardStatus = game.AttackCoordinate(coordinate);
+
+            String boardExpected = String.join("\n",
+                TestUtils.GetOutputFromFile("gameControllerTest03.out"),
+                "Coordinate: " + coordinate + " already hit");
+
+            assertEquals(boardExpected, boardStatus);
+            assertFalse(game.HasFinish());
+        }
+    }
+
+    // Real game scenarios for GameController (simulates the interaction with the view)
 
     // Simulated game:
     // # 1 2 3 4 5 6 7 8 9 10
@@ -101,32 +195,22 @@ public class GameControllerTests {
     // I · X · · · · · · · ·
     // J · X · · · · · · · ·
     @Test
+    @Tag("mock")
     @Tag("acceptanceTest")
+    @DisplayName("Real Game (normal) Test")
     void GameTest() {
         // we are going to simulate a game using the mock RandomCoordinatesMockTest
         // we need it as the real game generate random coordinates to place the ships
         RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
-
         GameController game = new GameController(randomControllerMock);
 
         // The game starts when the player request a new game
         String boardStatus = game.NewGame();
-        String boardExpected = "Turn: 0\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A · · · · · · · · · ·\n" +
-            "B · · · · · · · · · ·\n" +
-            "C · · · · · · · · · ·\n" +
-            "D · · · · · · · · · ·\n" +
-            "E · · · · · · · · · ·\n" +
-            "F · · · · · · · · · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · · · · · · ·\n" +
-            "I · · · · · · · · · ·\n" +
-            "J · · · · · · · · · ·";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameNewGame.out"), boardStatus);
         assertFalse(game.HasFinish());
 
+        // Attack some water cells coordinates
         game.AttackCoordinate(new Coordinate('A',1));
         assertFalse(game.HasFinish());
         game.AttackCoordinate(new Coordinate('A',10));
@@ -135,22 +219,10 @@ public class GameControllerTests {
         assertFalse(game.HasFinish());
 
         boardStatus = game.AttackCoordinate(new Coordinate('J',10));
-        boardExpected = "Turn: 4\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ · · · · · · · · ~\n" +
-            "B · · · · · · · · · ·\n" +
-            "C · · · · · · · · · ·\n" +
-            "D · · · · · · · · · ·\n" +
-            "E · · · · · · · · · ·\n" +
-            "F · · · · · · · · · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · · · · · · ·\n" +
-            "I · · · · · · · · · ·\n" +
-            "J ~ · · · · · · · · ~";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameNormalTurn4.out"), boardStatus);
         assertFalse(game.HasFinish());
 
-        // Hit all the ships without destroy them
+        // Hit all the ships cells without destroy them
         game.AttackCoordinate(new Coordinate('C',3));
         assertFalse(game.HasFinish());
         game.AttackCoordinate(new Coordinate('D',3));
@@ -173,22 +245,10 @@ public class GameControllerTests {
         assertFalse(game.HasFinish());
 
         boardStatus = game.AttackCoordinate(new Coordinate('I',2));
-        boardExpected = "Turn: 14\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ · · · · · · · · ~\n" +
-            "B · · · · · · / / · ·\n" +
-            "C · · / · · · · · · ·\n" +
-            "D · · / · · · · · · ·\n" +
-            "E · · / · · · · · · ·\n" +
-            "F · · / · · · · · · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · / / / · · ·\n" +
-            "I · / · · · · · · · ·\n" +
-            "J ~ · · · · · · · · ~";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameNormalTurn14.out"), boardStatus);
         assertFalse(game.HasFinish());
 
-        // Hit some watter more
+        // Hit some watter cells more
         game.AttackCoordinate(new Coordinate('D',6));
         assertFalse(game.HasFinish());
         game.AttackCoordinate(new Coordinate('D',7));
@@ -203,332 +263,46 @@ public class GameControllerTests {
         assertFalse(game.HasFinish());
 
         boardStatus = game.AttackCoordinate(new Coordinate('F',8));
-        boardExpected = "Turn: 21\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ · · · · · · · · ~\n" +
-            "B · · · · · · / / · ·\n" +
-            "C · · / · · · · · · ·\n" +
-            "D · · / · · ~ ~ ~ · ·\n" +
-            "E · · / · ~ ~ · ~ · ·\n" +
-            "F · · / · · · · ~ · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · / / / · · ·\n" +
-            "I · / · · · · · · · ·\n" +
-            "J ~ · · · · · · · · ~";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameNormalTurn21.out"), boardStatus);
         assertFalse(game.HasFinish());
 
 
         // Destroy Carrier
         boardStatus = game.AttackCoordinate(new Coordinate('G',3));
-        boardExpected = "Turn: 22\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ · · · · · · · · ~\n" +
-            "B · · · · · · / / · ·\n" +
-            "C · · X · · · · · · ·\n" +
-            "D · · X · · ~ ~ ~ · ·\n" +
-            "E · · X · ~ ~ · ~ · ·\n" +
-            "F · · X · · · · ~ · ·\n" +
-            "G · · X · · · · · · ·\n" +
-            "H · · · · / / / · · ·\n" +
-            "I · / · · · · · · · ·\n" +
-            "J ~ · · · · · · · · ~";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameNormalTurn22.out"), boardStatus);
         assertFalse(game.HasFinish());
 
         // Destroy Battleship
         boardStatus = game.AttackCoordinate(new Coordinate('H',8));
-        boardExpected = "Turn: 23\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ · · · · · · · · ~\n" +
-            "B · · · · · · / / · ·\n" +
-            "C · · X · · · · · · ·\n" +
-            "D · · X · · ~ ~ ~ · ·\n" +
-            "E · · X · ~ ~ · ~ · ·\n" +
-            "F · · X · · · · ~ · ·\n" +
-            "G · · X · · · · · · ·\n" +
-            "H · · · · X X X X · ·\n" +
-            "I · / · · · · · · · ·\n" +
-            "J ~ · · · · · · · · ~";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameNormalTurn23.out"), boardStatus);
         assertFalse(game.HasFinish());
 
         // Destroy Cruiser
         boardStatus = game.AttackCoordinate(new Coordinate('B',9));
-        boardExpected = "Turn: 24\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ · · · · · · · · ~\n" +
-            "B · · · · · · X X X ·\n" +
-            "C · · X · · · · · · ·\n" +
-            "D · · X · · ~ ~ ~ · ·\n" +
-            "E · · X · ~ ~ · ~ · ·\n" +
-            "F · · X · · · · ~ · ·\n" +
-            "G · · X · · · · · · ·\n" +
-            "H · · · · X X X X · ·\n" +
-            "I · / · · · · · · · ·\n" +
-            "J ~ · · · · · · · · ~";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameNormalTurn24.out"), boardStatus);
         assertFalse(game.HasFinish());
 
         // Destroy Destroyer
         boardStatus = game.AttackCoordinate(new Coordinate('J',2));
-        boardExpected = "Turn: 25\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ · · · · · · · · ~\n" +
-            "B · · · · · · X X X ·\n" +
-            "C · · X · · · · · · ·\n" +
-            "D · · X · · ~ ~ ~ · ·\n" +
-            "E · · X · ~ ~ · ~ · ·\n" +
-            "F · · X · · · · ~ · ·\n" +
-            "G · · X · · · · · · ·\n" +
-            "H · · · · X X X X · ·\n" +
-            "I · X · · · · · · · ·\n" +
-            "J ~ X · · · · · · · ~";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameNormalTurn25.out"), boardStatus);
         assertFalse(game.HasFinish());
 
         // Destroy Submarine
         boardStatus = game.AttackCoordinate(new Coordinate('E',9));
-        boardExpected = "Turn: 26\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ · · · · · · · · ~\n" +
-            "B · · · · · · X X X ·\n" +
-            "C · · X · · · · · · ·\n" +
-            "D · · X · · ~ ~ ~ · ·\n" +
-            "E · · X · ~ ~ · ~ X ·\n" +
-            "F · · X · · · · ~ · ·\n" +
-            "G · · X · · · · · · ·\n" +
-            "H · · · · X X X X · ·\n" +
-            "I · X · · · · · · · ·\n" +
-            "J ~ X · · · · · · · ~";
-        assertTrue(boardStatus.contains(boardExpected));
+        assertEquals(TestUtils.GetOutputFromFile("gameNormalTurn26.out"), boardStatus);
         assertTrue(game.HasFinish());
 
         // Once the game has finished, the controller returns the last status of the party
-        game.AttackCoordinate(new Coordinate('E', 10));
-        assertEquals(boardStatus, boardExpected);
+        boardStatus = game.AttackCoordinate(new Coordinate('E', 10));
+        assertEquals(TestUtils.GetOutputFromFile("gameNormalTurn26.out"), boardStatus);
         assertTrue(game.HasFinish());
 
 
         // it only changes when a new game is created
         game = new GameController(); // it must be other controller as our mock only returned 5 coordinates and after the same
         boardStatus = game.NewGame();
-        boardExpected = "Turn: 0\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A · · · · · · · · · ·\n" +
-            "B · · · · · · · · · ·\n" +
-            "C · · · · · · · · · ·\n" +
-            "D · · · · · · · · · ·\n" +
-            "E · · · · · · · · · ·\n" +
-            "F · · · · · · · · · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · · · · · · ·\n" +
-            "I · · · · · · · · · ·\n" +
-            "J · · · · · · · · · ·";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameNewGame.out"), boardStatus);
         assertFalse(game.HasFinish());
-    }
-
-    // using the same simulated board than the previous test
-    @Test
-    void AttackCoordinateWatterAlreadyAttackedTest() {
-        RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
-        RandomController randomControllerMock = new RandomController(randomGeneratorMock);
-
-        GameController game = new GameController(randomControllerMock);
-        String boardStatus = game.NewGame();
-
-        String boardExpected = "Turn: 0\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A · · · · · · · · · ·\n" +
-            "B · · · · · · · · · ·\n" +
-            "C · · · · · · · · · ·\n" +
-            "D · · · · · · · · · ·\n" +
-            "E · · · · · · · · · ·\n" +
-            "F · · · · · · · · · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · · · · · · ·\n" +
-            "I · · · · · · · · · ·\n" +
-            "J · · · · · · · · · ·";
-        assertEquals(boardExpected, boardStatus);
-        assertFalse(game.HasFinish());
-
-        // Attack all the column A (it has no ships)
-        for (int i = 1; i <= 10; i++) {
-            boardStatus = game.AttackCoordinate(new Coordinate('A',i));
-        }
-
-        boardExpected = "Turn: 10\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "B · · · · · · · · · ·\n" +
-            "C · · · · · · · · · ·\n" +
-            "D · · · · · · · · · ·\n" +
-            "E · · · · · · · · · ·\n" +
-            "F · · · · · · · · · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · · · · · · ·\n" +
-            "I · · · · · · · · · ·\n" +
-            "J · · · · · · · · · ·";
-        assertEquals(boardExpected, boardStatus);
-        assertFalse(game.HasFinish());
-
-        // Attack again the same cells
-        for (int i = 1; i <= 10; i++) {
-            Coordinate coordinate = new Coordinate('A',i);
-            boardStatus= game.AttackCoordinate(coordinate);
-
-            boardExpected = "Turn: 10\n" +
-                "# 1 2 3 4 5 6 7 8 9 10\n" +
-                "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                "B · · · · · · · · · ·\n" +
-                "C · · · · · · · · · ·\n" +
-                "D · · · · · · · · · ·\n" +
-                "E · · · · · · · · · ·\n" +
-                "F · · · · · · · · · ·\n" +
-                "G · · · · · · · · · ·\n" +
-                "H · · · · · · · · · ·\n" +
-                "I · · · · · · · · · ·\n" +
-                "J · · · · · · · · · ·\n"+
-                "Coordinate: " + coordinate + " already hit";
-
-            assertEquals(boardExpected, boardStatus);
-            assertFalse(game.HasFinish());
-        }
-    }
-
-    @Test
-    void AttackCoordinateHitAlreadyAttackedTest() {
-        RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
-        RandomController randomControllerMock = new RandomController(randomGeneratorMock);
-
-        GameController game = new GameController(randomControllerMock);
-        String boardStatus = game.NewGame();
-
-        String boardExpected = "Turn: 0\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A · · · · · · · · · ·\n" +
-            "B · · · · · · · · · ·\n" +
-            "C · · · · · · · · · ·\n" +
-            "D · · · · · · · · · ·\n" +
-            "E · · · · · · · · · ·\n" +
-            "F · · · · · · · · · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · · · · · · ·\n" +
-            "I · · · · · · · · · ·\n" +
-            "J · · · · · · · · · ·";
-        assertEquals(boardExpected, boardStatus);
-        assertFalse(game.HasFinish());
-
-        // Hit the Carrier without sink
-        for (char i = 'C'; i < 'G'; i++) {
-            Coordinate coordinate = new Coordinate(i, 3);
-            boardStatus = game.AttackCoordinate(coordinate);
-        }
-
-        boardExpected = "Turn: 4\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A · · · · · · · · · ·\n" +
-            "B · · · · · · · · · ·\n" +
-            "C · · / · · · · · · ·\n" +
-            "D · · / · · · · · · ·\n" +
-            "E · · / · · · · · · ·\n" +
-            "F · · / · · · · · · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · · · · · · ·\n" +
-            "I · · · · · · · · · ·\n" +
-            "J · · · · · · · · · ·";
-        assertEquals(boardExpected, boardStatus);
-        assertFalse(game.HasFinish());
-
-        // Attack again the same cells
-        for (char i = 'C'; i < 'G'; i++) {
-            Coordinate coordinate = new Coordinate(i, 3);
-            boardStatus = game.AttackCoordinate(coordinate);
-
-            boardExpected = "Turn: 4\n" +
-                "# 1 2 3 4 5 6 7 8 9 10\n" +
-                "A · · · · · · · · · ·\n" +
-                "B · · · · · · · · · ·\n" +
-                "C · · / · · · · · · ·\n" +
-                "D · · / · · · · · · ·\n" +
-                "E · · / · · · · · · ·\n" +
-                "F · · / · · · · · · ·\n" +
-                "G · · · · · · · · · ·\n" +
-                "H · · · · · · · · · ·\n" +
-                "I · · · · · · · · · ·\n" +
-                "J · · · · · · · · · ·\n" +
-                "Coordinate: " + coordinate + " already hit";
-            assertEquals(boardExpected, boardStatus);
-            assertFalse(game.HasFinish());
-        }
-    }
-
-    @Test
-    void AttackCoordinateDestroyedAlreadyAttackedTest() {
-        RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
-        RandomController randomControllerMock = new RandomController(randomGeneratorMock);
-
-        GameController game = new GameController(randomControllerMock);
-        String boardStatus = game.NewGame();
-
-        String boardExpected = "Turn: 0\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A · · · · · · · · · ·\n" +
-            "B · · · · · · · · · ·\n" +
-            "C · · · · · · · · · ·\n" +
-            "D · · · · · · · · · ·\n" +
-            "E · · · · · · · · · ·\n" +
-            "F · · · · · · · · · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · · · · · · ·\n" +
-            "I · · · · · · · · · ·\n" +
-            "J · · · · · · · · · ·";
-        assertEquals(boardExpected, boardStatus);
-        assertFalse(game.HasFinish());
-
-        // Hit the Carrier without sink
-        for (char i = 'C'; i <= 'G'; i++) {
-            Coordinate coordinate = new Coordinate(i, 3);
-            boardStatus = game.AttackCoordinate(coordinate);
-        }
-
-        boardExpected = "Turn: 5\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A · · · · · · · · · ·\n" +
-            "B · · · · · · · · · ·\n" +
-            "C · · X · · · · · · ·\n" +
-            "D · · X · · · · · · ·\n" +
-            "E · · X · · · · · · ·\n" +
-            "F · · X · · · · · · ·\n" +
-            "G · · X · · · · · · ·\n" +
-            "H · · · · · · · · · ·\n" +
-            "I · · · · · · · · · ·\n" +
-            "J · · · · · · · · · ·";
-        assertEquals(boardExpected, boardStatus);
-        assertFalse(game.HasFinish());
-
-        // Attack again the same cells
-        for (char i = 'C'; i <= 'G'; i++) {
-            Coordinate coordinate = new Coordinate(i, 3);
-            boardStatus = game.AttackCoordinate(coordinate);
-
-            boardExpected = "Turn: 5\n" +
-                "# 1 2 3 4 5 6 7 8 9 10\n" +
-                "A · · · · · · · · · ·\n" +
-                "B · · · · · · · · · ·\n" +
-                "C · · X · · · · · · ·\n" +
-                "D · · X · · · · · · ·\n" +
-                "E · · X · · · · · · ·\n" +
-                "F · · X · · · · · · ·\n" +
-                "G · · X · · · · · · ·\n" +
-                "H · · · · · · · · · ·\n" +
-                "I · · · · · · · · · ·\n" +
-                "J · · · · · · · · · ·\n" +
-                "Coordinate: " + coordinate + " already hit";
-            assertEquals(boardExpected, boardStatus);
-            assertFalse(game.HasFinish());
-        }
     }
 
     // Simulated game:
@@ -544,7 +318,9 @@ public class GameControllerTests {
     // I X · X X · X X X · ·
     // J X X X X · X X X X X
     @Test
+    @Tag("mock")
     @Tag("acceptanceTest")
+    @DisplayName("Real Game (extreme) Test")
     void GameExtremeTest() {
         RandomGenerator randomGeneratorMock = new RandomGeneratorExtremeGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
@@ -552,19 +328,7 @@ public class GameControllerTests {
         GameController game = new GameController(randomControllerMock);
         String boardStatus = game.NewGame();
 
-        String boardExpected = "Turn: 0\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A · · · · · · · · · ·\n" +
-            "B · · · · · · · · · ·\n" +
-            "C · · · · · · · · · ·\n" +
-            "D · · · · · · · · · ·\n" +
-            "E · · · · · · · · · ·\n" +
-            "F · · · · · · · · · ·\n" +
-            "G · · · · · · · · · ·\n" +
-            "H · · · · · · · · · ·\n" +
-            "I · · · · · · · · · ·\n" +
-            "J · · · · · · · · · ·";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameNewGame.out"), boardStatus);
         assertFalse(game.HasFinish());
 
         // Hit all the Watter cells
@@ -575,19 +339,7 @@ public class GameControllerTests {
             }
         }
 
-        boardExpected = "Turn: 80\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "B ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "C ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "D ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "F ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "I · · · · · · · · · ·\n" +
-            "J · · · · · · · · · ·";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameExtremeTurn080.out"), boardStatus);
         assertFalse(game.HasFinish());
 
 
@@ -597,32 +349,23 @@ public class GameControllerTests {
                 Coordinate coordinate = new Coordinate(i,j);
                 boardStatus = game.AttackCoordinate(coordinate);
 
-                boardExpected = "Turn: 80\n" +
-                    "# 1 2 3 4 5 6 7 8 9 10\n" +
-                    "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "B ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "C ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "D ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "F ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "I · · · · · · · · · ·\n" +
-                    "J · · · · · · · · · ·\n" +
-                    "Coordinate: " + coordinate + " already hit";
+                String boardExpected = String.join("\n",
+                    TestUtils.GetOutputFromFile("gameExtremeTurn080.out"),
+                    "Coordinate: " + coordinate + " already hit");
+
                 assertEquals(boardExpected, boardStatus);
                 assertFalse(game.HasFinish());
             }
         }
 
 
-        //Hit the ship cells without sink one
+        // Hit the ship cells without sink one
         Coordinate lastCoordinate = new Coordinate('J',10);
         for (char i = 'I'; i <='J' ; i++) {
             for (int j = 1; j <=10 ; j++) {
                 Coordinate coordinate = new Coordinate(i,j);
 
-                if(coordinate.equals(lastCoordinate)) {
+                if (coordinate.equals(lastCoordinate)) {
                     continue;
                 }
 
@@ -630,19 +373,7 @@ public class GameControllerTests {
             }
         }
 
-        boardExpected = "Turn: 99\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "B ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "C ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "D ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "F ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "I X ~ X X ~ X X X ~ ~\n" +
-            "J X X X X ~ / / / / ·";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameExtremeTurn099.out"), boardStatus);
         assertFalse(game.HasFinish());
 
 
@@ -651,24 +382,16 @@ public class GameControllerTests {
             for (int j = 1; j <=10 ; j++) {
                 Coordinate coordinate = new Coordinate(i,j);
 
-                if(coordinate.equals(lastCoordinate)) {
+                if (coordinate.equals(lastCoordinate)) {
                     continue;
                 }
 
                 boardStatus = game.AttackCoordinate(coordinate);
-                boardExpected = "Turn: 99\n" +
-                    "# 1 2 3 4 5 6 7 8 9 10\n" +
-                    "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "B ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "C ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "D ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "F ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                    "I X ~ X X ~ X X X ~ ~\n" +
-                    "J X X X X ~ / / / / ·\n" +
-                    "Coordinate: " + coordinate + " already hit";
+
+                String boardExpected = String.join("\n",
+                    TestUtils.GetOutputFromFile("gameExtremeTurn099.out"),
+                    "Coordinate: " + coordinate + " already hit");
+
                 assertEquals(boardExpected, boardStatus);
                 assertFalse(game.HasFinish());
             }
@@ -676,24 +399,12 @@ public class GameControllerTests {
 
         // Finish the game
         boardStatus = game.AttackCoordinate(lastCoordinate);
-        boardExpected = "Turn: 100\n" +
-            "# 1 2 3 4 5 6 7 8 9 10\n" +
-            "A ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "B ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "C ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "D ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "E ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "F ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "G ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "H ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-            "I X ~ X X ~ X X X ~ ~\n" +
-            "J X X X X ~ X X X X X";
-        assertEquals(boardExpected, boardStatus);
+        assertEquals(TestUtils.GetOutputFromFile("gameExtremeTurn100.out"), boardStatus);
         assertTrue(game.HasFinish());
 
         //Hit again the same coordinate
         boardStatus = game.AttackCoordinate(lastCoordinate);
-        assertEquals(boardExpected, boardStatus); // game is not updated anymore
+        assertEquals(TestUtils.GetOutputFromFile("gameExtremeTurn100.out"), boardStatus); // game is not updated anymore
         assertTrue(game.HasFinish());
     }
 }

@@ -55,6 +55,7 @@ public class GameController {
     public String NewGame() {
         board = new Board();
         turn = 0;
+
         for (ShipType shipType: ShipType.values()) {
             boolean shipNotAdded = true;
 
@@ -63,7 +64,8 @@ public class GameController {
                 Coordinate shipCoordinate = randomController.RandomCoordinate();
                 Direction shipDirection = randomController.RandomDirection();
 
-                // as coordinates and direction are random, is quite possible that a ship cannot be placed on the coordinate and direction provided
+                /* as coordinates and direction are random,
+                 * it is quite possible that a ship cannot be placed on the coordinate and direction provided */
                 try {
                     Ship ship = ShipFactory.CreateShip(shipType, shipCoordinate, shipDirection);
                     shipNotAdded = !board.AddShip(ship);
@@ -71,11 +73,7 @@ public class GameController {
             }
         }
 
-        List<String> gameStatus = List.of(
-            String.join(" ","Turn:", String.valueOf(turn)),
-            board.toString());
-
-        return String.join("\n", gameStatus);
+        return GetGameStatus();
     }
 
     public String AttackCoordinate(Coordinate coordinate) {
@@ -88,9 +86,7 @@ public class GameController {
         }
 
         if (HasFinish()) {
-            return String.join("\n", List.of(
-                String.join(" ","Turn:", String.valueOf(turn)),
-                board.toString()));
+            return GetGameStatus();
         }
 
         ArrayList<String> gameStatus = new ArrayList<>();
@@ -103,12 +99,19 @@ public class GameController {
             errorMessage = exception.getMessage();
         }
 
-        gameStatus.add(String.join(" ", "Turn:", String.valueOf(turn)));
-        gameStatus.add(board.toString());
+        gameStatus.add(GetGameStatus());
 
-        if(errorMessage != null) {
+        if (errorMessage != null) {
             gameStatus.add(errorMessage);
         }
+
+        return String.join("\n", gameStatus);
+    }
+
+    private String GetGameStatus() {
+        List<String> gameStatus = List.of(
+            String.join(" ","Turn:", String.valueOf(turn)),
+            board.toString());
 
         return String.join("\n", gameStatus);
     }
