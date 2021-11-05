@@ -51,7 +51,7 @@ El joc ha de crear un taulell de 10x10 e introduir **aleatòriament** els 5 tipu
 - **Portaavions** de 5 caselles
 - **Blindat** de 4 caselles
 - **Creuer** de 3 caselles
-- **Destructors** de  2 caselles
+- **Destructors** de 2 caselles
 - **Submarins** de 1 casella
 
 En la pantalla de joc, apareixerà el torn actual i el taulell amb totes les caselles ocultes amb el símbol '·', baix del taulell apareixerà el missatge "Attack to coordinate".
@@ -89,7 +89,7 @@ El joc mostrarà la següent pantalla:
 Rules:
 The objective of the game is discover where are the ships.
 You must atack the ships and sink all of them to win.
-To attack a ship you must insert a coordinate and pres enter.
+To attack a ship you must insert a coordinate and press enter.
 
 Symbols:
 · unknown, place not discovered.
@@ -134,3 +134,17 @@ Press any key to back main menu
 #### Cell
 - La casella estarà formada per una coordenada i un estat (aigua, tocat o enfonsat).
 - Cada vaixell del joc estarà associat a X caselles, per tanta cada casella podra tant ser associada, com retornar a quin vaixell és associada.
+
+#### Board
+- El taulell estarà format per 100 caselles en una graella de 10 x 10, sent A-J les columnes i 1-10 cada fila.
+- El taulell només acceptara un vaixell de cada tipus, no podran haver-hi vaixells iguals.
+- El taulell rebrà ordres d'atac a una casella i actualitzarà el seu estat modificant.
+- Cada casella del taulell mostrara un símbol, els símbols són actualitzats després de cada atac del jugador.
+
+#### Game Controller
+ - El controlador només rebrà ordres (enviades per la vista) i retornara el missatge sol·licitat
+
+#### View
+ - Mostrara un menú amb les opcions disponibles
+ - Preguntara l'accioó del jugador i l'enviará al controlador.
+ - Mostrara les respostes proporcionades per al controlador.
