@@ -36,13 +36,16 @@ public class GameControllerTests {
         assertFalse(gameController.HasFinish());
     }
 
+    // each time that NewGame is called, we are doing a nester loop testing
     @Test
     @Tag("unitTest")
+    @Tag("loopTesting")
     @DisplayName("New Game (not played) Test")
     void NewGameTest() {
         assertEquals(TestUtils.GetOutputFromFile("gameNewGame.out"), gameController.NewGame());
         assertFalse(gameController.HasFinish());
     }
+
 
     @Test
     @Tag("conditionCoverage")
