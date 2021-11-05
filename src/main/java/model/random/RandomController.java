@@ -7,7 +7,7 @@ public class RandomController {
     private final RandomGenerator randomGenerator;
 
     public RandomController(RandomGenerator randomGenerator) {
-        if(randomGenerator == null) {
+        if (randomGenerator == null) {
             throw new NullPointerException("Cannot create a RandomController from a null RandomGenerator");
         }
 
