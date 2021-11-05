@@ -202,7 +202,7 @@ public class BattleshipTests {
             battleship.Hit(c);
             assertTrue(battleship.Hits().contains(c));
 
-            if(i != 4) {
+            if (i != 4) {
                 assertFalse(battleship.IsSunk());
             }
         }

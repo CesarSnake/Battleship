@@ -279,7 +279,7 @@ public class BoardTests {
                 assertEquals(CellStatus.Hide, board.GetCell(cd).Status());
 
                 board.HitCell(cd);
-                if(carrier.Coordinates().contains(cd)) {
+                if (carrier.Coordinates().contains(cd)) {
                     // hit
                     if (!cd.equals(new Coordinate('F', 7))) {
                         assertEquals(CellStatus.Hit, board.GetCell(cd).Status());
@@ -311,7 +311,7 @@ public class BoardTests {
                 assertEquals(CellStatus.Hide, board.GetCell(cd).Status());
 
                 board.HitCell(cd);
-                if(carrier.Coordinates().contains(cd)) {
+                if (carrier.Coordinates().contains(cd)) {
                     // hit
                     if (!cd.equals(new Coordinate('F', 7))) {
                         assertTrue(board.GetCell(cd).HasShip());

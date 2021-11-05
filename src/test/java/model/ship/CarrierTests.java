@@ -202,7 +202,7 @@ public class CarrierTests {
             carrier.Hit(c);
             assertTrue(carrier.Hits().contains(c));
 
-            if(i != 5) {
+            if (i != 5) {
                 assertFalse(carrier.IsSunk());
             }
         }

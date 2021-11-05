@@ -243,7 +243,7 @@ public class ShipTests {
     @DisplayName("Carrier mock Test")
     void CarrierMockTest() {
         Carrier carrierMock = new CarrierMock(null, null);
-        for(int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             assertTrue(carrierMock.Coordinates().contains(new Coordinate('C', i)));
         }
         assertEquals(5, carrierMock.Length());
@@ -251,7 +251,7 @@ public class ShipTests {
         assertTrue(carrierMock.Hits().isEmpty());
         assertFalse(carrierMock.IsSunk());
 
-        for(int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             carrierMock.Hit(new Coordinate('C', i));
         }
         assertTrue(carrierMock.IsSunk());
@@ -266,7 +266,7 @@ public class ShipTests {
     void BattleShipMockTest() {
         Battleship battleShipMock = new BattleshipMock(null, null);
 
-        for(int i = 5; i <= 8; i++) {
+        for (int i = 5; i <= 8; i++) {
             assertTrue(battleShipMock.Coordinates().contains(new Coordinate('B', i)));
         }
         assertEquals(4, battleShipMock.Length());
@@ -274,7 +274,7 @@ public class ShipTests {
         assertTrue(battleShipMock.Hits().isEmpty());
         assertFalse(battleShipMock.IsSunk());
 
-        for(int i = 5; i <= 8; i++) {
+        for (int i = 5; i <= 8; i++) {
             battleShipMock.Hit(new Coordinate('B', i));
         }
         assertTrue(battleShipMock.IsSunk());
@@ -289,7 +289,7 @@ public class ShipTests {
     void CruiserMockTest() {
         Cruiser cruiserMock = new CruiserMock(null, null);
 
-        for(int i = 8; i<= 10; i++) {
+        for (int i = 8; i<= 10; i++) {
             assertTrue(cruiserMock.Coordinates().contains(new Coordinate('C', i)));
         }
         assertEquals(3, cruiserMock.Length());
@@ -297,7 +297,7 @@ public class ShipTests {
         assertTrue(cruiserMock.Hits().isEmpty());
         assertFalse(cruiserMock.IsSunk());
 
-        for(int i = 8; i<= 10; i++) {
+        for (int i = 8; i<= 10; i++) {
             cruiserMock.Hit(new Coordinate('C', i));
         }
         assertTrue(cruiserMock.IsSunk());
@@ -312,7 +312,7 @@ public class ShipTests {
     void DestroyerMockTest() {
         Destroyer destroyerMock = new DestroyerMock(null, null);
 
-        for(int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= 2; i++) {
             assertTrue(destroyerMock.Coordinates().contains(new Coordinate('D', i)));
         }
         assertEquals(2, destroyerMock.Length());
@@ -320,7 +320,7 @@ public class ShipTests {
         assertTrue(destroyerMock.Hits().isEmpty());
         assertFalse(destroyerMock.IsSunk());
 
-        for(int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= 2; i++) {
             destroyerMock.Hit(new Coordinate('D', i));
         }
         assertTrue(destroyerMock.IsSunk());

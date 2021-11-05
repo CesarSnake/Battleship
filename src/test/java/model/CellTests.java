@@ -192,7 +192,7 @@ public class CellTests {
     @Test
     @Tag("decisionCoverage")
     @DisplayName("Hit exception Test")
-    void HitExceptionTest(){
+    void HitExceptionTest() {
         assertEquals(CellStatus.Hide, cellA1.Status());
 
         cellA1.Hit();

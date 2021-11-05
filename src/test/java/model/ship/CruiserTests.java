@@ -202,7 +202,7 @@ public class CruiserTests {
             cruiser.Hit(c);
             assertTrue(cruiser.Hits().contains(c));
 
-            if(i != 3) {
+            if (i != 3) {
                 assertFalse(cruiser.IsSunk());
             }
         }

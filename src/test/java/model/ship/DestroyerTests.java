@@ -194,7 +194,7 @@ public class DestroyerTests {
             destroyer.Hit(c);
             assertTrue(destroyer.Hits().contains(c));
 
-            if(i != 2) {
+            if (i != 2) {
                 assertFalse(destroyer.IsSunk());
             }
         }
