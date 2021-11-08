@@ -1,8 +1,6 @@
 package model.ship;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,6 +23,8 @@ public class ShipTypeTests{
 
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Ship carrier Test")
     void ShipCarrierTest() {
         assertEquals(ShipType.Carrier, shipCarrier);
         assertEquals("Carrier", shipCarrier.toString());
@@ -32,6 +32,8 @@ public class ShipTypeTests{
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Ship battleship Test")
     void ShipBattleshipTest() {
         assertEquals(ShipType.Battleship, shipBattleship);
         assertEquals("Battleship", shipBattleship.toString());
@@ -39,6 +41,8 @@ public class ShipTypeTests{
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Ship cruiser Test")
     void ShipCruiserTest() {
         assertEquals(ShipType.Cruiser, shipCruiser);
         assertEquals("Cruiser", shipCruiser.toString());
@@ -46,6 +50,8 @@ public class ShipTypeTests{
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Ship destroyer Test")
     void ShipDestroyerTest() {
         assertEquals(ShipType.Destroyer, shipDestroyer);
         assertEquals("Destroyer", shipDestroyer.toString());
@@ -53,6 +59,8 @@ public class ShipTypeTests{
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Ship submarine Test")
     void ShipSubmarineTest() {
         assertEquals(ShipType.Submarine, shipSubmarine);
         assertEquals("Submarine", shipSubmarine.toString());

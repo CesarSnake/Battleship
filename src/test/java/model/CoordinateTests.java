@@ -1,6 +1,8 @@
 package model;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,25 +16,31 @@ public class CoordinateTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Getters Test")
     void GettersTest() {
         assertEquals('F', c.Letter());
         assertEquals(5, c.Number());
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Constructor Test")
     void ConstructorTest() {
         for (char i = 'A'; i <= 'J'; i++) { // Valid letters
             for (int j = 1; j <= 10; j++) { // Valid numbers
                 Coordinate a = new Coordinate(i, j);
-
                 assertNotNull(a);
             }
         }
     }
 
     @Test
+    @Tag("decisionCoverage")
+    @Tag("conditionCoverage")
+    @DisplayName("Constructor Null parameters Test")
     void ConstructorNullTest() {
-        String exceptionMessage = "Cannot create a Coordinate because \"letter\" or \"number\" is null";
+        String exceptionMessage = "Cannot create a Coordinate because 'letter' or 'number' is null";
 
         assertThrowsExactly(NullPointerException.class,
             () -> new Coordinate(null, 1),
@@ -48,6 +56,9 @@ public class CoordinateTests {
     }
 
     @Test
+    @Tag("decisionCoverage")
+    @Tag("conditionCoverage")
+    @DisplayName("Constructor invalid parameter values Test")
     void ConstructorInvalid() {
         char letter = '0';
         assertThrowsExactly(ExceptionInInitializerError.class,
@@ -69,6 +80,8 @@ public class CoordinateTests {
     }
 
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Constructor invalid letter values Test")
     void ConstructorInvalidLetterTest() {
         for (char i = 'K'; i < 'Z'; i++) {
             char letter = i;
@@ -81,6 +94,8 @@ public class CoordinateTests {
     }
 
     @Test
+    @Tag("equivalencePartitioning")
+    @DisplayName("Constructor invalid letter symbols values Test")
     void ConstructorInvalidSymbolTest() {
         String symbols = "!·$%&/()=?¿|@#~€¡^+*[]¨Ç{},;.:-_<>ºª\\";
         for (char symbol : symbols.toCharArray()) {
@@ -93,6 +108,8 @@ public class CoordinateTests {
     }
 
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Constructor invalid letter as numbers values Test")
     void ConstructorInvalidNumberAsLetterTest() {
         for (int i = 0; i < 10; i++) {
             char letter = String.valueOf(i).charAt(0);
@@ -105,6 +122,8 @@ public class CoordinateTests {
     }
 
     @Test
+    @Tag("equivalencePartitioning")
+    @DisplayName("Constructor invalid letter lowercase values Test")
     void ConstructorInvalidLowerLetterTest() {
         for (char i = 'a'; i < 'z'; i++) {
             char letter = i;
@@ -117,6 +136,8 @@ public class CoordinateTests {
     }
 
     @Test
+    @Tag("equivalencePartitioning")
+    @DisplayName("Constructor invalid number values Test")
     void ConstructorInvalidNegativeNumberTest() {
         for (int i = 0; i > -50; i--) {
             char letter = 'B';
@@ -129,6 +150,8 @@ public class CoordinateTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Constructor limit letter values Test")
     void ConstructorLimitLetterTest() {
         // Letters must be between A and J
 
@@ -142,7 +165,7 @@ public class CoordinateTests {
 
         // letters between A-J are tested on ConstructorTest
 
-        // limit right 10
+        // limit right J
         for (char i = 'K'; i < ('Z'+50); i++) {
             char letter = i;
             int number = 1;
@@ -154,6 +177,8 @@ public class CoordinateTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Constructor limit number values Test")
     void ConstructorLimitsNumberTest() {
         // Numbers must be between 1 and 10
 
@@ -177,6 +202,8 @@ public class CoordinateTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("equals Test")
     void EqualsTest() {
         Coordinate f5 = new Coordinate('F',5);
         Coordinate H9 = new Coordinate('H',9);
@@ -191,6 +218,8 @@ public class CoordinateTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString Test")
     void ToStringTest() {
         Coordinate a1 = new Coordinate('A',1);
         Coordinate j10 = new Coordinate('J',10);

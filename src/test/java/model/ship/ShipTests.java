@@ -2,10 +2,7 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -31,7 +28,12 @@ public class ShipTests {
         shipG4G6Mock = new ShipG4G6Mock();
     }
 
+    /* The class ship acts as parent class for the different types of ships, it has not constructor
+     * we need to use mocks to test the class */
+
     @Test
+    @Tag("unitTest")
+    @DisplayName("Invalid ship Test")
     void InvalidShipTest() {
         assertNotNull(emptyShip);
         assertNull(emptyShip.Coordinates());
@@ -47,13 +49,17 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("conditionCoverage")
+    @DisplayName("Hit coordinate null parameter Test")
     void HitNullCoordinateTest() {
         assertThrowsExactly(NullPointerException.class,
             () -> shipC2C6HitMock.Hit(null),
-            "Cannot hit the ship because \"coordinate\" is null");
+            "Cannot hit the ship because 'coordinate' is null");
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Hit ship with a hit Test")
     void ShipC2C6withHitTest() {
         Ship shipMock = shipC2C6HitMock;
         // coordinate already hit
@@ -79,7 +85,7 @@ public class ShipTests {
         // Coordinate already hit
         assertThrowsExactly(UnsupportedOperationException.class,
             () -> shipMock.Hit(c3),
-            String.join("", "Coordinate: ", c3.toString(), " already hit"));
+            String.join(" ", "Coordinate:", c3.toString(), "already hit"));
 
         assertEquals(2, shipMock.Hits().size());
         assertTrue(shipMock.Hits().contains(c3));
@@ -106,6 +112,8 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Hit using ship Mock length 4 Test")
     void ShipB8E8Test() {
         Ship shipMock = shipB8E8Mock;
         for (char i = 'B'; i <= 'E'; i++) {
@@ -136,6 +144,8 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Hit using ship mock length 2 Test")
     void ShipG4G6Test() {
         Ship shipMock = shipG4G6Mock;
         // Horizontal ship surrounded with "Water"
@@ -168,6 +178,8 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Hit invalid coorddinates attacked on a Horizontal ship Test")
     void InvalidCoordinatesHorizontalShipAttackTest() {
         // test horizontal ship sunk
         Ship shipHorizontal = shipG4G6Mock;
@@ -185,17 +197,19 @@ public class ShipTests {
                 if (shipHorizontal.Hits().contains(cd)) {
                     assertThrowsExactly(UnsupportedOperationException.class,
                         () -> shipHorizontal.Hit(cd),
-                        String.join("", "Coordinate: ", cd.toString(), " already hit"));
+                        String.join(" ", "Coordinate:", cd.toString(), "already hit"));
                 } else {
                     assertThrowsExactly(UnsupportedOperationException.class,
                         () -> shipHorizontal.Hit(cd),
-                        String.join("",shipHorizontal.getClass().getSimpleName(), " is not positioned on the coordinate: ", cd.toString()));
+                        String.join(" ",shipHorizontal.getClass().getSimpleName(), "is not positioned on the coordinate:", cd.toString()));
                 }
             }
         }
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Hit invalid coordinates attacked on a Vertical ship Test")
     void InvalidCoordinatesVerticalShipAttackTest() {
         // test horizontal ship sunk
         Ship shipVertical = shipB8E8Mock;
@@ -225,9 +239,11 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("mock")
+    @DisplayName("Carrier mock Test")
     void CarrierMockTest() {
         Carrier carrierMock = new CarrierMock(null, null);
-        for(int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             assertTrue(carrierMock.Coordinates().contains(new Coordinate('C', i)));
         }
         assertEquals(5, carrierMock.Length());
@@ -235,7 +251,7 @@ public class ShipTests {
         assertTrue(carrierMock.Hits().isEmpty());
         assertFalse(carrierMock.IsSunk());
 
-        for(int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             carrierMock.Hit(new Coordinate('C', i));
         }
         assertTrue(carrierMock.IsSunk());
@@ -245,10 +261,12 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("mock")
+    @DisplayName("Battleship mock Test")
     void BattleShipMockTest() {
         Battleship battleShipMock = new BattleshipMock(null, null);
 
-        for(int i = 5; i <= 8; i++) {
+        for (int i = 5; i <= 8; i++) {
             assertTrue(battleShipMock.Coordinates().contains(new Coordinate('B', i)));
         }
         assertEquals(4, battleShipMock.Length());
@@ -256,7 +274,7 @@ public class ShipTests {
         assertTrue(battleShipMock.Hits().isEmpty());
         assertFalse(battleShipMock.IsSunk());
 
-        for(int i = 5; i <= 8; i++) {
+        for (int i = 5; i <= 8; i++) {
             battleShipMock.Hit(new Coordinate('B', i));
         }
         assertTrue(battleShipMock.IsSunk());
@@ -266,10 +284,12 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("mock")
+    @DisplayName("Cruiser mock Test")
     void CruiserMockTest() {
         Cruiser cruiserMock = new CruiserMock(null, null);
 
-        for(int i = 8; i<= 10; i++) {
+        for (int i = 8; i<= 10; i++) {
             assertTrue(cruiserMock.Coordinates().contains(new Coordinate('C', i)));
         }
         assertEquals(3, cruiserMock.Length());
@@ -277,7 +297,7 @@ public class ShipTests {
         assertTrue(cruiserMock.Hits().isEmpty());
         assertFalse(cruiserMock.IsSunk());
 
-        for(int i = 8; i<= 10; i++) {
+        for (int i = 8; i<= 10; i++) {
             cruiserMock.Hit(new Coordinate('C', i));
         }
         assertTrue(cruiserMock.IsSunk());
@@ -287,10 +307,12 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("mock")
+    @DisplayName("Destroyer mock Test")
     void DestroyerMockTest() {
         Destroyer destroyerMock = new DestroyerMock(null, null);
 
-        for(int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= 2; i++) {
             assertTrue(destroyerMock.Coordinates().contains(new Coordinate('D', i)));
         }
         assertEquals(2, destroyerMock.Length());
@@ -298,7 +320,7 @@ public class ShipTests {
         assertTrue(destroyerMock.Hits().isEmpty());
         assertFalse(destroyerMock.IsSunk());
 
-        for(int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= 2; i++) {
             destroyerMock.Hit(new Coordinate('D', i));
         }
         assertTrue(destroyerMock.IsSunk());
@@ -308,6 +330,8 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("mock")
+    @DisplayName("Submarine mock Test")
     void SubmarineMockTest() {
         Submarine submarineMock = new SubmarineMock(null, null);
 
@@ -325,21 +349,25 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Generate coordinates null parameters Test")
     void GenerateCoordinatesNullTest() {
         assertThrowsExactly(NullPointerException.class,
             ()-> new Ship().GenerateCoordinates(null, null, -1),
-            "Cannot create a GenerateCoordinates because \"coordinate\" or \"direction\" is null");
+            "Cannot create a GenerateCoordinates because 'coordinate' or 'direction' is null");
 
         assertThrowsExactly(NullPointerException.class,
             ()-> new Ship().GenerateCoordinates(null, Direction.North, -1),
-            "Cannot create a GenerateCoordinates because \"coordinate\" or \"direction\" is null");
+            "Cannot create a GenerateCoordinates because 'coordinate' or 'direction' is null");
 
         assertThrowsExactly(NullPointerException.class,
             ()-> new Ship().GenerateCoordinates(new Coordinate('D',8), null, -1),
-            "Cannot create a GenerateCoordinates because \"coordinate\" or \"direction\" is null");
+            "Cannot create a GenerateCoordinates because 'coordinate' or 'direction' is null");
 }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Generate coordinates to North on the frontier Test")
     void GenerateCoordinatesExceptionNorthTest() {
         // North
         for (int i = 1; i <= 10; i++) {
@@ -347,11 +375,13 @@ public class ShipTests {
             assertThrowsExactly(UnsupportedOperationException.class,
                 () -> new Ship().GenerateCoordinates(new Coordinate('A', number), Direction.North, 1),
                 String.join("",
-                        "Cannot generate ", String.valueOf(1), " coordinates direction", Direction.North.toString()));
+                        "Cannot generate ", String.valueOf(1), " coordinates direction ", Direction.North.toString()));
         }
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Generate coordinates to East on the frontier Test")
     void GenerateCoordinatesExceptionEastTest() {
         // East
         for (char i = 'A'; i <= 'J'; i++) {
@@ -359,11 +389,13 @@ public class ShipTests {
             assertThrowsExactly(UnsupportedOperationException.class,
                 () -> new Ship().GenerateCoordinates(new Coordinate(letter, 10), Direction.East, 1),
                 String.join("",
-                        "Cannot generate ", String.valueOf(1), " coordinates direction", Direction.East.toString()));
+                        "Cannot generate ", String.valueOf(1), " coordinates direction ", Direction.East.toString()));
         }
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Generate coordinates to South on the frontier Test")
     void GenerateCoordinatesExceptionSouthTest() {
         // Shout
         for (int i = 1; i <= 10; i++) {
@@ -371,11 +403,13 @@ public class ShipTests {
             assertThrowsExactly(UnsupportedOperationException.class,
                 () -> new Ship().GenerateCoordinates(new Coordinate('J', number), Direction.South, 1),
                 String.join("",
-                        "Cannot generate ", String.valueOf(1), " coordinates direction", Direction.South.toString()));
+                        "Cannot generate ", String.valueOf(1), " coordinates direction ", Direction.South.toString()));
         }
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Generate coordinates to West on the frontier Test")
     void GenerateCoordinatesExceptionWestTest() {
         // West
         for (char i = 'A'; i <='J' ; i++) {
@@ -383,11 +417,13 @@ public class ShipTests {
             assertThrowsExactly(UnsupportedOperationException.class,
                 ()-> new Ship().GenerateCoordinates(new Coordinate(letter,1), Direction.West, 1),
                 String.join("",
-                        "Cannot generate ", String.valueOf(1), " coordinates direction", Direction.West.toString()));
+                        "Cannot generate ", String.valueOf(1), " coordinates direction ", Direction.West.toString()));
         }
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Generate coordinates to North Test")
     void GenerateCoordinatesNorthTest() {
         int increase = 3;
         for (int i = 1; i <= 10; i++) {
@@ -401,6 +437,8 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Generate coordinates to East Test")
     void GenerateCoordinatesEastTest() {
         int increase = 3;
         for (char i = 'A'; i <= 'J'; i++) {
@@ -414,6 +452,8 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Generate coordinates to South Test")
     void GenerateCoordinatesSouthTest() {
         int increase = 3;
         for (int i = 1; i <= 10; i++) {
@@ -427,6 +467,8 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Generate coordinates to West Test")
     void GenerateCoordinatesWestTest() {
         int increase = 3;
         for (char i = 'A'; i <= 'J'; i++) {
@@ -440,6 +482,8 @@ public class ShipTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString Test")
     void ToString() {
         //shipB8E8Mock
 

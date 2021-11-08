@@ -2,6 +2,8 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,17 +11,21 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DestroyerTests {
     // Destroyer fills 2 cells
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
-            () -> new Destroyer(null, null),
-            "Cannot create a Destroyer because \"coordinate\" or \"direction\" is null");
+            () -> new Destroyer(new Coordinate('E', 5), null),
+            "Cannot create a Destroyer because 'coordinate' or 'direction' is null");
 
         assertThrowsExactly(NullPointerException.class,
-            () -> new Destroyer(null, null),
-            "Cannot create a Destroyer because \"coordinate\" or \"direction\" is null");
+            () -> new Destroyer(null, Direction.North),
+            "Cannot create a Destroyer because 'coordinate' or 'direction' is null");
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Destroyer invalid coordinates direction North Test")
     void SetDestroyerInvalidDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -29,13 +35,15 @@ public class DestroyerTests {
 
             assertThrowsExactly(ExceptionInInitializerError.class,
                 () -> new Destroyer(c, dir),
-                String.join("",
-                    "Cannot set a Destroyer Direction ",
-                    Direction.North.toString(), " at Coordinate ", c.toString()));
+                String.join(" ",
+                    "Cannot set a Destroyer Direction",
+                    Direction.North.toString(), "at Coordinate", c.toString()));
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Destroyer valid coordinates direction North Test")
     void SetDestroyerDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -56,6 +64,8 @@ public class DestroyerTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Destroyer invalid coordinates direction South Test")
     void SetDestroyerInvalidDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -65,13 +75,15 @@ public class DestroyerTests {
 
             assertThrowsExactly(ExceptionInInitializerError.class,
                 () -> new Destroyer(c, dir),
-                String.join("",
-                    "Cannot set a Destroyer Direction ",
-                    Direction.North.toString(), " at Coordinate ", c.toString()));
+                String.join(" ",
+                    "Cannot set a Destroyer Direction",
+                    Direction.North.toString(), "at Coordinate", c.toString()));
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Destroyer valid coordinates direction South Test")
     void SetDestroyerDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -91,6 +103,8 @@ public class DestroyerTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Destroyer invalid coordinates direction East Test")
     void SetDestroyerInvalidDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -100,13 +114,15 @@ public class DestroyerTests {
 
             assertThrowsExactly(ExceptionInInitializerError.class,
                 () -> new Destroyer(c, dir),
-                String.join("",
-                    "Cannot set a Destroyer Direction ",
-                    Direction.North.toString(), " at Coordinate ", c.toString()));
+                String.join(" ",
+                    "Cannot set a Destroyer Direction",
+                    Direction.North.toString(), "at Coordinate", c.toString()));
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Destroyer valid coordinates direction East Test")
     void SetDestroyerDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -126,6 +142,8 @@ public class DestroyerTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Destroyer invalid coordinates direction West Test")
     void SetDestroyerInvalidDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -135,13 +153,15 @@ public class DestroyerTests {
 
             assertThrowsExactly(ExceptionInInitializerError.class,
                 () -> new Destroyer(c, dir),
-                String.join("",
-                    "Cannot instantiate a Destroyer Direction ",
-                    Direction.North.toString(), " at Coordinate ", c.toString()));
+                String.join(" ",
+                    "Cannot instantiate a Destroyer Direction",
+                    Direction.North.toString(), "at Coordinate", c.toString()));
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Destroyer valid coordinates direction West Test")
     void SetDestroyerDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -161,6 +181,8 @@ public class DestroyerTests {
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Sink destroyer Test")
     void SinkDestroyerTest() {
         Destroyer destroyer = new Destroyer(new Coordinate('D', 1), Direction.East);
 
@@ -172,7 +194,7 @@ public class DestroyerTests {
             destroyer.Hit(c);
             assertTrue(destroyer.Hits().contains(c));
 
-            if(i != 2) {
+            if (i != 2) {
                 assertFalse(destroyer.IsSunk());
             }
         }
@@ -181,6 +203,8 @@ public class DestroyerTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction North) Test")
     void DestroyerNorthToString() {
         Destroyer destroyer = new Destroyer(new Coordinate('G', 2), Direction.North);
 
@@ -194,6 +218,8 @@ public class DestroyerTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction East) Test")
     void DestroyerEastToString() {
         Destroyer destroyer = new Destroyer(new Coordinate('F', 2), Direction.East);
 
@@ -207,6 +233,8 @@ public class DestroyerTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction South) Test")
     void DestroyerSouthToString() {
         Destroyer destroyer = new Destroyer(new Coordinate('B', 7), Direction.South);
 
@@ -220,6 +248,8 @@ public class DestroyerTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction West) Test")
     void DestroyerWestToString() {
         Destroyer destroyer = new Destroyer(new Coordinate('G', 7), Direction.West);
 

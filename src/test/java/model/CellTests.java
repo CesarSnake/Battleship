@@ -2,6 +2,8 @@ package model;
 
 import model.ship.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -28,16 +30,33 @@ public class CellTests {
     }
 
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Constructor null parameter Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
             ()-> new Cell(null),
-            "Cannot create a Cell because \"coordinate\" is null");
+            "Cannot create a Cell because 'coordinate' is null");
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Constructor Test")
+    void ConstructorTest() {
+        Coordinate c8 = new Coordinate('C', 8);
+        Cell cell = new Cell(c8);
+
+        assertNotNull(cell);
+        assertEquals(cell.Coordinate(), c8);
+        assertEquals(CellStatus.Hide, cell.Status());
+        assertFalse(cell.HasShip());
+        assertNull(cell.GetShip());
+    }
+
+    @Test
+    @Tag("unitTest")
+    @DisplayName("Getters Test")
     void GettersTest() {
         Cell c1 = new Cell(a1);
-
         assertEquals(a1, c1.Coordinate());
         assertEquals(CellStatus.Hide, c1.Status());
 
@@ -47,13 +66,17 @@ public class CellTests {
     }
 
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Set Status null parameter Test")
     void SetStatusNullTest() {
         assertThrowsExactly(NullPointerException.class,
-                ()-> cellA1.SetStatus(null),
-                "Cannot set a null status");
+            ()-> cellA1.SetStatus(null),
+            "Cannot set a null status");
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Set Status Test")
     void SetStatusTest() {
         Cell c1 = new Cell(a1);
         assertEquals(CellStatus.Hide, c1.Status());
@@ -72,6 +95,8 @@ public class CellTests {
     }
 
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Set ship null Test")
     void SetShipNullTest() {
         assertThrowsExactly(NullPointerException.class,
             ()-> cellA1.SetShip(null),
@@ -79,16 +104,19 @@ public class CellTests {
     }
 
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Set invalid ship Test")
     void SetInvalidShipTest() {
         Cruiser cruiser = new Cruiser(e5, Direction.East);
 
         assertThrowsExactly(UnsupportedOperationException.class,
             ()-> cellA1.SetShip(cruiser),
-            String.join("",
-            "The ship Cruiser has different coordinates than this Cell ", cellA1.toString()));
+            String.join(" ", "The ship Cruiser has different coordinates than this Cell", cellA1.toString()));
     }
 
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Set ships on the same Cell Test")
     void SetShipCellFilled() {
         Submarine submarine = new Submarine(a1, Direction.East);
         cellA1.SetShip(submarine);
@@ -101,7 +129,10 @@ public class CellTests {
             "This cell has already a ship");
     }
 
-    @Test void SetShipTest() {
+    @Test
+    @Tag("unitTest")
+    @DisplayName("Set ship Test")
+    void SetShipTest() {
         Carrier carrier = new Carrier(a1, Direction.East);
 
         Cell cellA1 = new Cell(new Coordinate('A',1));
@@ -124,6 +155,8 @@ public class CellTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Has ship Test")
     void HasShipTest() {
         assertFalse(cellA1.HasShip());
         assertFalse(cellJ1.HasShip());
@@ -133,7 +166,11 @@ public class CellTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Get ship Test")
     void GetShipTest() {
+        // it tests also HasShip() method
+
         Cell cellE5 = new Cell(new Coordinate('E',5));
         Cell cellE6 = new Cell(new Coordinate('E',6));
 
@@ -153,7 +190,9 @@ public class CellTests {
     }
 
     @Test
-    void HitExceptionTest(){
+    @Tag("decisionCoverage")
+    @DisplayName("Hit exception Test")
+    void HitExceptionTest() {
         assertEquals(CellStatus.Hide, cellA1.Status());
 
         cellA1.Hit();
@@ -161,17 +200,20 @@ public class CellTests {
 
         assertThrowsExactly(UnsupportedOperationException.class,
             ()-> cellA1.Hit(),
-            String.join("", "Coordinate: ", cellA1.toString(), " already hit"));
+            String.join(" ", "Coordinate:", cellA1.toString(), "already hit"));
     }
 
     @Test
-    void HitExceptionShipTest() {
+    @Tag("conditionCoverage")
+    @DisplayName("Hit cell with ship Test")
+    void HitShipTest() {
         Cell cellE5 = new Cell(new Coordinate('E',5));
         Cell cellE6 = new Cell(new Coordinate('E',6));
 
         assertNull(cellE5.GetShip());
         assertNull(cellE6.GetShip());
 
+        // The destroyer ship has length 2
         Destroyer destroyer = new Destroyer(e5, Direction.East);
 
         cellE5.SetShip(destroyer);
@@ -185,6 +227,8 @@ public class CellTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("Hit cell Test")
     void HitTest() {
         assertEquals(CellStatus.Hide, cellA1.Status());
         assertEquals(CellStatus.Hide, cellJ1.Status());
@@ -206,6 +250,8 @@ public class CellTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Set and Destroy Carrier Test")
     void SetShipCarrierTest() {
         Carrier carrier = new Carrier(a1, Direction.South);
 
@@ -214,9 +260,9 @@ public class CellTests {
             cells.add(new Cell(coordinate));
         }
 
-        cells.forEach((cell)-> cell.SetShip(carrier));
+        cells.forEach(cell -> cell.SetShip(carrier));
 
-        cells.forEach((cell)-> {
+        cells.forEach(cell -> {
             assertTrue(cell.HasShip());
             assertNotNull(cell.GetShip());
             assertTrue(cell.GetShip() instanceof Carrier);
@@ -225,6 +271,7 @@ public class CellTests {
         // Sink the ship
         for (int i = 0; i < cells.size(); i++) {
             assertEquals(CellStatus.Hide, cells.get(i).Status());
+
 
             if (i != cells.size() - 1) {
                 assertEquals(CellStatus.Hit, cells.get(i).Hit());
@@ -235,6 +282,8 @@ public class CellTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Set and Destroy Battleship Test")
     void SetShipBattleshipTest() {
         Battleship battleship = new Battleship(j1, Direction.North);
 
@@ -243,9 +292,9 @@ public class CellTests {
             cells.add(new Cell(coordinate));
         }
 
-        cells.forEach((cell)-> cell.SetShip(battleship));
+        cells.forEach(cell -> cell.SetShip(battleship));
 
-        cells.forEach((cell)-> {
+        cells.forEach(cell -> {
             assertTrue(cell.HasShip());
             assertNotNull(cell.GetShip());
             assertTrue(cell.GetShip() instanceof Battleship);
@@ -264,6 +313,8 @@ public class CellTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Set and Destroy Cruiser Test")
     void SetShipCruiserTest() {
         Cruiser cruiser = new Cruiser(a10, Direction.West);
 
@@ -272,9 +323,9 @@ public class CellTests {
             cells.add(new Cell(coordinate));
         }
 
-        cells.forEach((cell)-> cell.SetShip(cruiser));
+        cells.forEach(cell -> cell.SetShip(cruiser));
 
-        cells.forEach((cell)-> {
+        cells.forEach(cell -> {
             assertTrue(cell.HasShip());
             assertNotNull(cell.GetShip());
             assertTrue(cell.GetShip() instanceof Cruiser);
@@ -293,6 +344,8 @@ public class CellTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Set and Destroy Destroyer Test")
     void SetShipDestroyerTest() {
         Destroyer destroyer = new Destroyer(e5, Direction.North);
 
@@ -301,9 +354,9 @@ public class CellTests {
             cells.add(new Cell(coordinate));
         }
 
-        cells.forEach((cell)-> cell.SetShip(destroyer));
+        cells.forEach( cell -> cell.SetShip(destroyer));
 
-        cells.forEach((cell)-> {
+        cells.forEach( cell -> {
             assertTrue(cell.HasShip());
             assertNotNull(cell.GetShip());
             assertTrue(cell.GetShip() instanceof Destroyer);
@@ -322,31 +375,19 @@ public class CellTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Set and Destroy Submarine Test")
     void SetShipSubmarineTest() {
-        Submarine destroyer = new Submarine(j10, Direction.East);
+        Submarine submarine = new Submarine(j10, Direction.East);
 
-        ArrayList<Cell> cells = new ArrayList<>();
-        for (Coordinate coordinate: destroyer.Coordinates()) {
-            cells.add(new Cell(coordinate));
-        }
+        Cell cell = new Cell(j10);
+        cell.SetShip(submarine);
 
-        cells.forEach((cell)-> cell.SetShip(destroyer));
-
-        cells.forEach((cell)-> {
-            assertTrue(cell.HasShip());
-            assertNotNull(cell.GetShip());
-            assertTrue(cell.GetShip() instanceof Submarine);
-        });
+        assertTrue(cell.HasShip());
+        assertNotNull(cell.GetShip());
+        assertTrue(cell.GetShip() instanceof Submarine);
 
         // Sink the ship
-        for (int i = 0; i < cells.size(); i++) {
-            assertEquals(CellStatus.Hide, cells.get(i).Status());
-
-            if (i != cells.size() - 1) {
-                assertEquals(CellStatus.Hit, cells.get(i).Hit());
-            } else {
-                assertEquals(CellStatus.Destroyed, cells.get(i).Hit());
-            }
-        }
+        assertEquals(CellStatus.Destroyed, cell.Hit());
     }
 }

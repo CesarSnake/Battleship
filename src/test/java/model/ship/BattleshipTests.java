@@ -2,6 +2,8 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,17 +11,21 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BattleshipTests {
     // Battleship fills 4 cells
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
-            () -> new Battleship(null, null),
-            "Cannot create a Battleship because \"coordinate\" or \"direction\" is null");
+            () -> new Battleship(new Coordinate('E', 3), null),
+            "Cannot create a Battleship because 'coordinate' or 'direction' is null");
 
         assertThrowsExactly(NullPointerException.class,
-            () -> new Battleship(null, null),
-            "Cannot create a Battleship because \"coordinate\" or \"direction\" is null");
+            () -> new Battleship(null, Direction.South),
+            "Cannot create a Battleship because 'coordinate' or 'direction' is null");
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Battleship invalid coordinates direction North Test")
     void SetBattleshipInvalidDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -30,14 +36,16 @@ public class BattleshipTests {
 
             assertThrowsExactly(ExceptionInInitializerError.class,
                 () -> new Battleship(c, dir),
-                String.join("",
-                    "Cannot set a Battleship Direction ",
-                    Direction.North.toString(), " at Coordinate ", c.toString()));
+                String.join(" ",
+                    "Cannot set a Battleship Direction",
+                    Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Battleship valid coordinates direction North Test")
     void SetBattleshipDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -58,6 +66,8 @@ public class BattleshipTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Battleship invalid coordinates direction South Test")
     void SetBattleshipInvalidDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -68,14 +78,16 @@ public class BattleshipTests {
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Battleship(c, dir),
-                    String.join("",
-                        "Cannot set a Battleship Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString()));
+                    String.join(" ",
+                        "Cannot set a Battleship Direction",
+                        Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Battleship valid coordinates direction South Test")
     void SetBattleshipDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -95,6 +107,8 @@ public class BattleshipTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Battleship invalid coordinates direction East Test")
     void SetBattleshipInvalidDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -105,14 +119,16 @@ public class BattleshipTests {
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Battleship(c, dir),
-                    String.join("",
-                        "Cannot set a Battleship Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString()));
+                    String.join(" ",
+                        "Cannot set a Battleship Direction",
+                        Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Battleship valid coordinates direction East Test")
     void SetBattleshipDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -132,6 +148,8 @@ public class BattleshipTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Battleship invalid coordinates direction West Test")
     void SetBattleshipInvalidDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -142,14 +160,16 @@ public class BattleshipTests {
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Battleship(c, dir),
-                    String.join("",
-                        "Cannot instantiate a Battleship Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString()));
+                    String.join(" ",
+                        "Cannot instantiate a Battleship Direction",
+                        Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Battleship valid coordinates direction West Test")
     void SetBattleshipDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -169,6 +189,8 @@ public class BattleshipTests {
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Sink Battleship Test")
     void SinkBattleshipTest() {
         Battleship battleship = new Battleship(new Coordinate('B', 1), Direction.East);
 
@@ -180,7 +202,7 @@ public class BattleshipTests {
             battleship.Hit(c);
             assertTrue(battleship.Hits().contains(c));
 
-            if(i != 4) {
+            if (i != 4) {
                 assertFalse(battleship.IsSunk());
             }
         }
@@ -189,6 +211,8 @@ public class BattleshipTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction North) Test")
     void BattleshipNorthToString() {
         Battleship battleship = new Battleship(new Coordinate('G', 2), Direction.North);
 
@@ -208,6 +232,8 @@ public class BattleshipTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction East) Test")
     void BattleshipEastToString() {
         Battleship battleship = new Battleship(new Coordinate('F', 2), Direction.East);
 
@@ -227,6 +253,8 @@ public class BattleshipTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction South) Test")
     void BattleshipSouthToString() {
         Battleship battleship = new Battleship(new Coordinate('B', 7), Direction.South);
 
@@ -246,6 +274,8 @@ public class BattleshipTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction West) Test")
     void BattleshipWestToString() {
         Battleship battleship = new Battleship(new Coordinate('G', 7), Direction.West);
 

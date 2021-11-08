@@ -23,6 +23,7 @@ public class RandomGenerator {
     }
 
     private int GetRandomNumber() {
+        // coordinate numbers are between 1 and 10
         return new Random().nextInt(9) + 1;
     }
 }

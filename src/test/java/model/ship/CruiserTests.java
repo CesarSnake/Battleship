@@ -2,6 +2,8 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,17 +11,21 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CruiserTests {
     // Cruiser fills 3 cells
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
-                () -> new Cruiser(null, null),
-                "Cannot create a Cruiser because \"coordinate\" or \"direction\" is null");
+            () -> new Cruiser(new Coordinate('E', 6), null),
+            "Cannot create a Cruiser because 'coordinate' or 'direction' is null");
 
         assertThrowsExactly(NullPointerException.class,
-                () -> new Cruiser(null, null),
-                "Cannot create a Cruiser because \"coordinate\" or \"direction\" is null");
+            () -> new Cruiser(null, Direction.West),
+            "Cannot create a Cruiser because 'coordinate' or 'direction' is null");
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create cruiser invalid coordinates direction North Test")
     void SetCruiserInvalidDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -30,14 +36,16 @@ public class CruiserTests {
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Cruiser(c, dir),
-                    String.join("",
-                        "Cannot set a Cruiser Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString()));
+                    String.join(" ",
+                        "Cannot set a Cruiser Direction",
+                        Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Cruiser valid coordinates direction North Test")
     void SetCruiserDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -58,6 +66,8 @@ public class CruiserTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Cruiser invalid coordinates direction South Test")
     void SetCruiserInvalidDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -68,14 +78,16 @@ public class CruiserTests {
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Cruiser(c, dir),
-                    String.join("",
-                        "Cannot set a Cruiser Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString()));
+                    String.join(" ",
+                        "Cannot set a Cruiser Direction",
+                        Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Cruiser valid coordinates direction South Test")
     void SetCruiserDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -95,6 +107,8 @@ public class CruiserTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Cruiser invalid coordinates direction East Test")
     void SetCruiserInvalidDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -105,14 +119,16 @@ public class CruiserTests {
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Cruiser(c, dir),
-                    String.join("",
-                        "Cannot set a Cruiser Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString()));
+                    String.join(" ",
+                        "Cannot set a Cruiser Direction",
+                        Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Cruiser valid coordinates direction East Test")
     void SetCruiserDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -132,6 +148,8 @@ public class CruiserTests {
     }
 
     @Test
+    @Tag("limit")
+    @DisplayName("Create Cruiser invalid coordinates direction West Test")
     void SetCruiserInvalidDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -142,14 +160,16 @@ public class CruiserTests {
 
                 assertThrowsExactly(ExceptionInInitializerError.class,
                     () -> new Cruiser(c, dir),
-                    String.join("",
-                        "Cannot instantiate a Cruiser Direction ",
-                        Direction.North.toString(), " at Coordinate ", c.toString()));
+                    String.join(" ",
+                        "Cannot instantiate a Cruiser Direction",
+                        Direction.North.toString(), "at Coordinate", c.toString()));
             }
         }
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Create Cruiser valid coordinates direction West Test")
     void SetCruiserDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -169,6 +189,8 @@ public class CruiserTests {
     }
 
     @Test
+    @Tag("partitionedEquivalence")
+    @DisplayName("Sink Cruiser Test")
     void SinkCruiserTest() {
         Cruiser cruiser = new Cruiser(new Coordinate('C', 1), Direction.East);
 
@@ -180,7 +202,7 @@ public class CruiserTests {
             cruiser.Hit(c);
             assertTrue(cruiser.Hits().contains(c));
 
-            if(i != 3) {
+            if (i != 3) {
                 assertFalse(cruiser.IsSunk());
             }
         }
@@ -189,6 +211,8 @@ public class CruiserTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction North) Test")
     void CruiserNorthToString() {
         Cruiser cruiser = new Cruiser(new Coordinate('G', 2), Direction.North);
 
@@ -205,6 +229,8 @@ public class CruiserTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction East) Test")
     void CruiserEastToString() {
         Cruiser cruiser = new Cruiser(new Coordinate('F', 2), Direction.East);
 
@@ -221,6 +247,8 @@ public class CruiserTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction South) Test")
     void CruiserSouthToString() {
         Cruiser cruiser = new Cruiser(new Coordinate('B', 7), Direction.South);
 
@@ -237,6 +265,8 @@ public class CruiserTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction West) Test")
     void CruiserWestToString() {
         Cruiser cruiser = new Cruiser(new Coordinate('G', 7), Direction.West);
 

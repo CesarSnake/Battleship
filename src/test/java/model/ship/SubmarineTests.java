@@ -2,6 +2,8 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,17 +11,21 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SubmarineTests {
     // Submarine fills 1 cell, can be placed elsewhere
     @Test
+    @Tag("decisionCoverage")
+    @DisplayName("Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
-            () -> new Submarine(null, null),
-            "Cannot create a Submarine because \"coordinate\" or \"direction\" is null");
+            () -> new Submarine(null, Direction.South),
+            "Cannot create a Submarine because 'coordinate' or 'direction' is null");
 
         assertThrowsExactly(NullPointerException.class,
-            () -> new Submarine(null, null),
-            "Cannot create a Submarine because \"coordinate\" or \"direction\" is null");
+            () -> new Submarine(new Coordinate('E', 5), null),
+            "Cannot create a Submarine because 'coordinate' or 'direction' is null");
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Set direction North Test")
     void SetSubmarineDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -40,6 +46,8 @@ public class SubmarineTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Set direction South Test")
     void SetSubmarineDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -59,6 +67,8 @@ public class SubmarineTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Set direction East Test")
     void SetSubmarineDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -78,6 +88,8 @@ public class SubmarineTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Set direction West Test")
     void SetSubmarineDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -97,6 +109,8 @@ public class SubmarineTests {
     }
 
     @Test
+    @Tag("partitionEquivalence")
+    @DisplayName("Sink submarine Test")
     void SinkSubmarineTest() {
         Submarine submarine = new Submarine(new Coordinate('H', 1), Direction.East);
 
@@ -109,9 +123,10 @@ public class SubmarineTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction North) Test")
     void SubmarineNorthToString() {
         Submarine submarine = new Submarine(new Coordinate('E', 2), Direction.North);
-
         assertEquals("Ship not sunk, hits: []", submarine.toString());
 
         submarine.Hit(new Coordinate('E',2));
@@ -119,9 +134,10 @@ public class SubmarineTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction East) Test")
     void SubmarineEastToString() {
         Submarine submarine = new Submarine(new Coordinate('F', 2), Direction.East);
-
         assertEquals("Ship not sunk, hits: []", submarine.toString());
 
         submarine.Hit(new Coordinate('F',2));
@@ -129,9 +145,10 @@ public class SubmarineTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction South) Test")
     void SubmarineSouthToString() {
         Submarine submarine = new Submarine(new Coordinate('B', 7), Direction.South);
-
         assertEquals("Ship not sunk, hits: []", submarine.toString());
 
         submarine.Hit(new Coordinate('B',7));
@@ -139,9 +156,10 @@ public class SubmarineTests {
     }
 
     @Test
+    @Tag("unitTest")
+    @DisplayName("toString (direction West) Test")
     void SubmarineWestToString() {
         Submarine submarine = new Submarine(new Coordinate('G', 7), Direction.West);
-
         assertEquals("Ship not sunk, hits: []", submarine.toString());
 
         submarine.Hit(new Coordinate('G',7));

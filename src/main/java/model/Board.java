@@ -31,23 +31,23 @@ public class Board {
         // add cells on the board
         for (char i = 'A'; i <= 'J'; i++) {
             for (int j = 1; j <= 10; j++) {
-                Coordinate coordinateInBoard = new Coordinate(i,j);
-                Cell cellInBoard = new Cell(coordinateInBoard);
+                Coordinate coordinate = new Coordinate(i,j);
+                Cell cell = new Cell(coordinate);
 
-                cellsList.add(cellInBoard);
+                cellsList.add(cell);
             }
         }
     }
 
     public boolean AddShip(Ship ship) {
         if (ship == null) {
-            throw new NullPointerException("Cannot add null ships");
+            throw new NullPointerException("Cannot add null ship");
         }
 
         // Check if the ship was already placed in the board
         if (shipsList.stream().anyMatch(shipInList -> shipInList.getClass() == ship.getClass())) {
             throw new UnsupportedOperationException(
-                String.join("", "The ship ", ship.getClass().getSimpleName()," was already placed"));
+                String.join(" ", "The ship", ship.getClass().getSimpleName(),"was already placed"));
         }
 
         // Check if the ship has any hit
@@ -63,6 +63,7 @@ public class Board {
         }
 
         shipsList.add(ship);
+
         // update cells with the ship
         for (Cell cell: cellsList) {
             if (ship.Coordinates().contains(cell.Coordinate())) {
@@ -75,6 +76,7 @@ public class Board {
 
     public Cell GetCell(Coordinate coordinate) {
         Cell cell = null;
+
         if (coordinate == null) {
             throw new NullPointerException("Cannot get a cell with a null coordinate");
         }
@@ -93,13 +95,14 @@ public class Board {
 
     public CellStatus HitCell(Coordinate coordinate) {
         CellStatus cellStatus = null;
+
         if (coordinate == null) {
             throw new NullPointerException("Cannot hit a cell with a null coordinate");
         }
 
         if (CoordinatesUsed().contains(coordinate)) {
             throw new UnsupportedOperationException(
-                String.join("", "Coordinate: ", coordinate.toString(), " already hit"));
+                String.join(" ", "Coordinate:", coordinate.toString(), "already hit"));
         }
 
         for (Cell cell: cellsList) {
@@ -110,11 +113,13 @@ public class Board {
             coordinatesUsedList.add(coordinate);
             cellStatus = cell.Hit();
 
-            // each cell changes his status, but if the ship is destroyed, the cells with hits are not updated, we must change to destroyed
+            /* each cell changes his status, but if the ship is destroyed,
+             * the cells with hits are not updated, we must change them to destroyed */
             if (cellStatus == CellStatus.Destroyed) {
                 UpdateCells(cell.GetShip());
             }
         }
+
         return cellStatus;
     }
 
@@ -151,14 +156,24 @@ public class Board {
 
     private String GetCellStatusSymbol(Cell cell) {
         char statusSymbol;
-        if (cell.Status() == CellStatus.Water) {
-            statusSymbol = WATER_SYMBOL;
-        } else if (cell.Status() == CellStatus.Hit) {
-            statusSymbol = HIT_SYMBOL;
-        } else if (cell.Status() == CellStatus.Destroyed) {
-            statusSymbol = DESTROYED_SYMBOL;
-        } else {
-            statusSymbol = HIDE_SYMBOL;
+
+        switch (cell.Status()) {
+            case Water:
+                statusSymbol = WATER_SYMBOL;
+                break;
+
+            case Hit:
+                statusSymbol = HIT_SYMBOL;
+                break;
+
+            case Destroyed:
+                statusSymbol = DESTROYED_SYMBOL;
+                break;
+
+            case Hide:
+            default:
+                statusSymbol = HIDE_SYMBOL;
+                break;
         }
 
         return String.valueOf(statusSymbol);
