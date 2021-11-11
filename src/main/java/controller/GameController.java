@@ -21,13 +21,14 @@ public class GameController {
         randomController = new RandomController(new RandomGenerator());
     }
 
-    // this method is to use the GameController on a test environment due the RandomGenerator returns random coordinates
+    // this method is to use the class on a test environment due the RandomGenerator returns random coordinates
     public GameController(RandomController randomController) {
         this.randomController = randomController;
     }
 
     public String HowToPlay() {
-        List<String> rules = List.of("Rules:",
+        List<String> rules = List.of(
+            "Rules:",
             "The objective of the game is discover where are the ships.",
             "You must attack the ships and sink all of them to win.",
             "To attack a ship you must insert a coordinate and press enter.",
@@ -59,13 +60,17 @@ public class GameController {
         for (ShipType shipType: ShipType.values()) {
             boolean shipNotAdded = true;
 
-            // try to add the ship till get a coordinate free (not placed by other ship)
+            // try to add the ship until get a free coordinate (not placed by other ship)
             while (shipNotAdded) {
                 Coordinate shipCoordinate = randomController.RandomCoordinate();
                 Direction shipDirection = randomController.RandomDirection();
 
                 /* as coordinates and direction are random,
-                 * it is quite possible that a ship cannot be placed on the coordinate and direction provided */
+                 * it is quite possible that a ship cannot be placed on the coordinate and direction provided
+                 * each ship constructor launches an "ExceptionInInitializerError" exception
+                 * when it is created on a coordinate and direction that the ship cannot be placed due his length
+                 * also board.AddShip launches the same exception if any coordinates of the ship is filled
+                 */
                 try {
                     Ship ship = ShipFactory.CreateShip(shipType, shipCoordinate, shipDirection);
                     shipNotAdded = !board.AddShip(ship);
@@ -89,10 +94,12 @@ public class GameController {
             return GetGameStatus();
         }
 
+        // Update the board
         ArrayList<String> gameStatus = new ArrayList<>();
         String errorMessage = null;
 
         try {
+            // if the coordinate was already attack, it will return an "UnsupportedOperationException"
             board.HitCell(coordinate);
             turn++;
         } catch (UnsupportedOperationException exception) {
@@ -100,7 +107,6 @@ public class GameController {
         }
 
         gameStatus.add(GetGameStatus());
-
         if (errorMessage != null) {
             gameStatus.add(errorMessage);
         }

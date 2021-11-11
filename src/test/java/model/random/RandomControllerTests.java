@@ -2,30 +2,31 @@ package model.random;
 
 import model.Coordinate;
 import model.Direction;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RandomControllerTests {
     RandomController randomController;
 
     @Test
+    @Order(1)
     @Tag("conditionCoverage")
-    @DisplayName("Get Random Direction (mock A1) Test")
+    @DisplayName("[ConditionCoverage] - Get Random Direction (mock A1) Test")
     void RandomControllerConstructorNull() {
         assertThrowsExactly(NullPointerException.class,
             ()-> randomController = new RandomController(null),
             "Cannot create a RandomController from a null RandomGenerator");
     }
 
-    /* To test property the RandomController class, we need to use mocks to check the expected value
+    /* To test property the RandomController class, we need to use mocks to check the expected coordinates
      * We are going to test with 10 values (the diagonal of the board) */
 
     @Test
+    @Order(2)
     @Tag("mock")
-    @DisplayName("Get random coordinate (mock A1) Test")
+    @DisplayName("[MockObject] - Get random coordinate (mock A1) Test")
     void RandomCoordinateTestA1() {
         RandomGenerator randomGeneratorMockA1 = new RandomGeneratorMockA1();
         randomController = new RandomController(randomGeneratorMockA1);
@@ -35,8 +36,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(3)
     @Tag("mock")
-    @DisplayName("Get random coordinate (mock B2) Test")
+    @DisplayName("[MockObject] - Get random coordinate (mock B2) Test")
     void RandomCoordinateTestB2() {
         RandomGenerator randomGeneratorMockB2 = new RandomGeneratorMockB2();
         randomController = new RandomController(randomGeneratorMockB2);
@@ -46,8 +48,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(4)
     @Tag("mock")
-    @DisplayName("Get random coordinate (mock C3) Test")
+    @DisplayName("[MockObject] - Get random coordinate (mock C3) Test")
     void RandomCoordinateTestC3() {
         RandomGenerator randomGeneratorMockC3 = new RandomGeneratorMockC3();
         randomController = new RandomController(randomGeneratorMockC3);
@@ -57,8 +60,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(5)
     @Tag("mock")
-    @DisplayName("Get random coordinate (mock D4) Test")
+    @DisplayName("[MockObject] - Get random coordinate (mock D4) Test")
     void RandomCoordinateTestD4() {
         RandomGenerator randomGeneratorMockD4 = new RandomGeneratorMockD4();
         randomController = new RandomController(randomGeneratorMockD4);
@@ -68,8 +72,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(6)
     @Tag("mock")
-    @DisplayName("Get random coordinate (mock E5) Test")
+    @DisplayName("[MockObject] - Get random coordinate (mock E5) Test")
     void RandomCoordinateTestE5() {
         RandomGenerator randomGeneratorMockE5 = new RandomGeneratorMockE5();
         randomController = new RandomController(randomGeneratorMockE5);
@@ -79,8 +84,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(7)
     @Tag("mock")
-    @DisplayName("Get random coordinate (mock F6) Test")
+    @DisplayName("[MockObject] - Get random coordinate (mock F6) Test")
     void RandomCoordinateTestF6() {
         RandomGenerator randomGeneratorMockF6 = new RandomGeneratorMockF6();
         randomController = new RandomController(randomGeneratorMockF6);
@@ -90,8 +96,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(8)
     @Tag("mock")
-    @DisplayName("Get random coordinate (mock G7) Test")
+    @DisplayName("[MockObject] - Get random coordinate (mock G7) Test")
     void RandomCoordinateTestG7() {
         RandomGenerator randomGeneratorMockG7 = new RandomGeneratorMockG7();
         randomController = new RandomController(randomGeneratorMockG7);
@@ -101,8 +108,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(9)
     @Tag("mock")
-    @DisplayName("Get random coordinate (mock H8) Test")
+    @DisplayName("[MockObject] - Get random coordinate (mock H8) Test")
     void RandomCoordinateTestH8() {
         RandomGenerator randomGeneratorMockH8 = new RandomGeneratorMockH8();
         randomController = new RandomController(randomGeneratorMockH8);
@@ -112,8 +120,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(10)
     @Tag("mock")
-    @DisplayName("Get random coordinate (mock I9) Test")
+    @DisplayName("[MockObject] - Get random coordinate (mock I9) Test")
     void RandomCoordinateTestI9() {
         RandomGenerator randomGeneratorMockI9 = new RandomGeneratorMockI9();
         randomController = new RandomController(randomGeneratorMockI9);
@@ -123,8 +132,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(11)
     @Tag("mock")
-    @DisplayName("Get random coordinate (mock J10) Test")
+    @DisplayName("[MockObject] - Get random coordinate (mock J10) Test")
     void RandomCoordinateTestJ10() {
         RandomGenerator randomGeneratorMockJ10 = new RandomGeneratorMockJ10();
         randomController = new RandomController(randomGeneratorMockJ10);
@@ -133,9 +143,13 @@ public class RandomControllerTests {
         assertEquals(new Coordinate ('J',10), randomController.RandomCoordinate());
     }
 
+    /* To test property the RandomController class, we need to use mocks to check the expected direction
+     * We are going to test with 10 values (the diagonal of the board) */
+
     @Test
+    @Order(12)
     @Tag("mock")
-    @DisplayName("Get random direction (mock A1) Test")
+    @DisplayName("[MockObject] - Get random direction (mock A1) Test")
     void GetRandomDirectionA1Test() {
         RandomGenerator randomGeneratorDirectionA1 = new RandomGeneratorMockA1();
         randomController = new RandomController(randomGeneratorDirectionA1);
@@ -145,8 +159,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(13)
     @Tag("mock")
-    @DisplayName("Get random direction (mock B2) Test")
+    @DisplayName("[MockObject] - Get random direction (mock B2) Test")
     void GetRandomDirectionB2Test() {
         RandomGenerator randomGeneratorDirectionB2 = new RandomGeneratorMockB2();
         randomController = new RandomController(randomGeneratorDirectionB2);
@@ -156,8 +171,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(14)
     @Tag("mock")
-    @DisplayName("Get random direction (mock C3) Test")
+    @DisplayName("[MockObject] - Get random direction (mock C3) Test")
     void GetRandomDirectionC3Test() {
         RandomGenerator randomGeneratorDirectionC3 = new RandomGeneratorMockC3();
         randomController = new RandomController(randomGeneratorDirectionC3);
@@ -167,8 +183,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(15)
     @Tag("mock")
-    @DisplayName("Get random direction (mock D4) Test")
+    @DisplayName("[MockObject] - Get random direction (mock D4) Test")
     void GetRandomDirectionD4Test() {
         RandomGenerator randomGeneratorDirectionD4 = new RandomGeneratorMockD4();
         randomController = new RandomController(randomGeneratorDirectionD4);
@@ -178,8 +195,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(16)
     @Tag("mock")
-    @DisplayName("Get random direction (mock E5) Test")
+    @DisplayName("[MockObject] - Get random direction (mock E5) Test")
     void GetRandomDirectionE5Test() {
         RandomGenerator randomGeneratorDirectionE5 = new RandomGeneratorMockE5();
         randomController = new RandomController(randomGeneratorDirectionE5);
@@ -189,8 +207,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(17)
     @Tag("mock")
-    @DisplayName("Get random direction (mock F6) Test")
+    @DisplayName("[MockObject] - Get random direction (mock F6) Test")
     void GetRandomDirectionF6Test() {
         RandomGenerator randomGeneratorDirectionF6 = new RandomGeneratorMockF6();
         randomController = new RandomController(randomGeneratorDirectionF6);
@@ -200,8 +219,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(18)
     @Tag("mock")
-    @DisplayName("Get random direction (mock G7) Test")
+    @DisplayName("[MockObject] - Get random direction (mock G7) Test")
     void GetRandomDirectionG7Test() {
         RandomGenerator randomGeneratorDirectionG7 = new RandomGeneratorMockG7();
         randomController = new RandomController(randomGeneratorDirectionG7);
@@ -211,8 +231,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(19)
     @Tag("mock")
-    @DisplayName("Get random direction (mock H8) Test")
+    @DisplayName("[MockObject] - Get random direction (mock H8) Test")
     void GetRandomDirectionH8Test() {
         RandomGenerator randomGeneratorDirectionH8 = new RandomGeneratorMockH8();
         randomController = new RandomController(randomGeneratorDirectionH8);
@@ -222,8 +243,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(20)
     @Tag("mock")
-    @DisplayName("Get random direction (mock I9) Test")
+    @DisplayName("[MockObject] - Get random direction (mock I9) Test")
     void GetRandomDirectionI9Test() {
         RandomGenerator randomGeneratorDirectionI9 = new RandomGeneratorMockI9();
         randomController = new RandomController(randomGeneratorDirectionI9);
@@ -233,8 +255,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(21)
     @Tag("mock")
-    @DisplayName("Get random direction (mock J10) Test")
+    @DisplayName("[MockObject] - Get random direction (mock J10) Test")
     void GetRandomDirectionJ10Test() {
         RandomGenerator randomGeneratorDirectionJ10 = new RandomGeneratorMockJ10();
         randomController = new RandomController(randomGeneratorDirectionJ10);
@@ -243,9 +266,15 @@ public class RandomControllerTests {
         assertEquals(Direction.North ,dir);
     }
 
+    /* For the game controller we will need random mocks to simulate a real scenarios
+     + for this purpose we have created two kind of mocks with a knowing
+     * coordinates and directions to place the ships
+     */
+
     @Test
+    @Order(22)
     @Tag("mock")
-    @DisplayName("Random coordinates (GameMock) for a real Game Test")
+    @DisplayName("[MockObject] - Random coordinates (GameMock) for a real Game Test")
     void RandomCoordinatesMockTest() {
         RandomGenerator randomGeneratorForGame = new RandomGeneratorGameMock();
         randomController = new RandomController(randomGeneratorForGame);
@@ -262,8 +291,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(23)
     @Tag("mock")
-    @DisplayName("Random direction (GameMock) for a real Game Test")
+    @DisplayName("[MockObject] - Random directions (GameMock) for a real Game Test")
     void RandomDirectionMockTest() {
         RandomGenerator randomGeneratorForGame = new RandomGeneratorGameMock();
         randomController = new RandomController(randomGeneratorForGame);
@@ -280,8 +310,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(24)
     @Tag("mock")
-    @DisplayName("Random coordinates (ExtremeGameMock) for a real game Test")
+    @DisplayName("[MockObject] - Random coordinates (ExtremeGameMock) for a real game Test")
     void RandomCoordinatesExtremeGameMockTest() {
         RandomGenerator randomGeneratorForExtremeGame = new RandomGeneratorExtremeGameMock();
         randomController = new RandomController(randomGeneratorForExtremeGame);
@@ -298,8 +329,9 @@ public class RandomControllerTests {
     }
 
     @Test
+    @Order(25)
     @Tag("mock")
-    @DisplayName("Random direction (ExtremeGameMock) for a real game Test")
+    @DisplayName("[MockObject] - Random directions (ExtremeGameMock) for a real game Test")
     void RandomDirectionExtremeGameMockTest() {
         RandomGenerator randomGeneratorForExtremeGame = new RandomGeneratorExtremeGameMock();
         randomController = new RandomController(randomGeneratorForExtremeGame);

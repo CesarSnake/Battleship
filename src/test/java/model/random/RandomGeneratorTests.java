@@ -2,15 +2,13 @@ package model.random;
 
 import model.Coordinate;
 import model.Direction;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RandomGeneratorTests {
     RandomGenerator randomGenerator;
     RandomGenerator randomGeneratorMockA1;
@@ -41,9 +39,13 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(1)
     @Tag("partitionEquivalence")
-    @DisplayName("Get Random Coordinate Test")
+    @DisplayName("[PartitionEquivalence] - Get Random Coordinate Test")
     void GetRandomCoordinateTest () {
+        // We are going to check that the coordinates provided are valid
+        // as we will not know the exact values, but we know the valid ranges
+
         // As a board has 100 cells, lets check several tries
         for (int i = 0; i < 1000; i++) {
             Coordinate cd = randomGenerator.GetRandomCoordinate();
@@ -62,15 +64,19 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(2)
     @Tag("partitionEquivalence")
-    @DisplayName("Get Random Direction Test")
+    @DisplayName("[PartitionEquivalence] - Get Random Direction Test")
     void GetRandomDirectionTest() {
+        // We are going to check that the directions provided are valid
+        // as we will not know the exact values, but we know the valid ranges
+
         // There are 4 directions
         for (int i = 0; i < 1000; i++) {
             Direction dir = randomGenerator.GetRandomDirection();
             assertNotNull(dir);
             assertTrue(Arrays.stream(Direction.values()).anyMatch(direction ->
-                dir.toString() == direction.toString()));
+                dir.toString().equals(direction.toString())));
         }
     }
 
@@ -78,8 +84,9 @@ public class RandomGeneratorTests {
      * we are going to try one mock per column (A-J) */
 
     @Test
+    @Order(3)
     @Tag("mock")
-    @DisplayName("Get Random Coordinate (mock A1) Test")
+    @DisplayName("[Mock] - Get Random Coordinate (mock A1) Test")
     void GetRandomCoordinateA1Test() {
         Coordinate cd = randomGeneratorMockA1.GetRandomCoordinate();
         assertEquals(new Coordinate('A',1), cd);
@@ -89,8 +96,9 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(4)
     @Tag("mock")
-    @DisplayName("Get Random Coordinate (mock B2) Test")
+    @DisplayName("[Mock] - Get Random Coordinate (mock B2) Test")
     void GetRandomCoordinateB2Test() {
         Coordinate cd = randomGeneratorMockB2.GetRandomCoordinate();
         assertEquals(new Coordinate('B',2), cd);
@@ -100,8 +108,9 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(5)
     @Tag("mock")
-    @DisplayName("Get Random Coordinate (mock C3) Test")
+    @DisplayName("[Mock] - Get Random Coordinate (mock C3) Test")
     void GetRandomCoordinateC3Test() {
         Coordinate cd = randomGeneratorMockC3.GetRandomCoordinate();
         assertEquals(new Coordinate('C',3), cd);
@@ -111,8 +120,9 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(6)
     @Tag("mock")
-    @DisplayName("Get Random Coordinate (mock D4) Test")
+    @DisplayName("[Mock] - Get Random Coordinate (mock D4) Test")
     void GetRandomCoordinateD4Test() {
         Coordinate cd = randomGeneratorMockD4.GetRandomCoordinate();
         assertEquals(new Coordinate('D',4), cd);
@@ -122,8 +132,9 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(7)
     @Tag("mock")
-    @DisplayName("Get Random Coordinate (mock E5) Test")
+    @DisplayName("[Mock] - Get Random Coordinate (mock E5) Test")
     void GetRandomCoordinateE5Test() {
         Coordinate cd = randomGeneratorMockE5.GetRandomCoordinate();
         assertEquals(new Coordinate('E',5), cd);
@@ -133,8 +144,9 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(8)
     @Tag("mock")
-    @DisplayName("Get Random Coordinate (mock F6) Test")
+    @DisplayName("[Mock] - Get Random Coordinate (mock F6) Test")
     void GetRandomCoordinateF6Test() {
         Coordinate cd = randomGeneratorMockF6.GetRandomCoordinate();
         assertEquals(new Coordinate('F',6), cd);
@@ -144,8 +156,9 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(9)
     @Tag("mock")
-    @DisplayName("Get Random Coordinate (mock G7) Test")
+    @DisplayName("[Mock] - Get Random Coordinate (mock G7) Test")
     void GetRandomCoordinateG7Test() {
         Coordinate cd = randomGeneratorMockG7.GetRandomCoordinate();
         assertEquals(new Coordinate('G',7), cd);
@@ -155,8 +168,9 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(10)
     @Tag("mock")
-    @DisplayName("Get Random Coordinate (mock H8) Test")
+    @DisplayName("[Mock] - Get Random Coordinate (mock H8) Test")
     void GetRandomCoordinateH8Test() {
         Coordinate cd = randomGeneratorMockH8.GetRandomCoordinate();
         assertEquals(new Coordinate('H',8), cd);
@@ -166,8 +180,9 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(11)
     @Tag("mock")
-    @DisplayName("Get Random Coordinate (mock I9) Test")
+    @DisplayName("[Mock] - Get Random Coordinate (mock I9) Test")
     void GetRandomCoordinateI9Test() {
         Coordinate cd = randomGeneratorMockI9.GetRandomCoordinate();
         assertEquals(new Coordinate('I',9), cd);
@@ -177,8 +192,9 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(12)
     @Tag("mock")
-    @DisplayName("Get Random Coordinate (mock J10) Test")
+    @DisplayName("[Mock] - Get Random Coordinate (mock J10) Test")
     void GetRandomCoordinateJ10Test() {
         Coordinate cd = randomGeneratorMockJ10.GetRandomCoordinate();
         assertEquals(new Coordinate('J',10), cd);
@@ -188,80 +204,90 @@ public class RandomGeneratorTests {
     }
 
     @Test
+    @Order(13)
     @Tag("mock")
-    @DisplayName("Get Random Direction (mock A1) Test")
+    @DisplayName("[Mock] - Get Random Direction (mock A1) Test")
     void GetRandomDirectionA1Test() {
         Direction dir = randomGeneratorMockA1.GetRandomDirection();
         assertEquals(Direction.North ,dir);
     }
 
     @Test
+    @Order(14)
     @Tag("mock")
-    @DisplayName("Get Random Direction (mock B2) Test")
+    @DisplayName("[Mock] - Get Random Direction (mock B2) Test")
     void GetRandomDirectionB2Test() {
         Direction dir = randomGeneratorMockB2.GetRandomDirection();
         assertEquals(Direction.North ,dir);
     }
 
     @Test
+    @Order(15)
     @Tag("mock")
-    @DisplayName("Get Random Direction (mock C3) Test")
+    @DisplayName("[Mock] - Get Random Direction (mock C3) Test")
     void GetRandomDirectionC3Test() {
         Direction dir = randomGeneratorMockC3.GetRandomDirection();
         assertEquals(Direction.East ,dir);
     }
 
     @Test
+    @Order(16)
     @Tag("mock")
-    @DisplayName("Get Random Direction (mock D4) Test")
+    @DisplayName("[Mock] - Get Random Direction (mock D4) Test")
     void GetRandomDirectionD4Test() {
         Direction dir = randomGeneratorMockD4.GetRandomDirection();
         assertEquals(Direction.East ,dir);
     }
 
     @Test
+    @Order(17)
     @Tag("mock")
-    @DisplayName("Get Random Direction (mock E5) Test")
+    @DisplayName("[Mock] - Get Random Direction (mock E5) Test")
     void GetRandomDirectionE5Test() {
         Direction dir = randomGeneratorMockE5.GetRandomDirection();
         assertEquals(Direction.South ,dir);
     }
 
     @Test
+    @Order(18)
     @Tag("mock")
-    @DisplayName("Get Random Direction (mock F6) Test")
+    @DisplayName("[Mock] - Get Random Direction (mock F6) Test")
     void GetRandomDirectionF6Test() {
         Direction dir = randomGeneratorMockF6.GetRandomDirection();
         assertEquals(Direction.South ,dir);
     }
 
     @Test
+    @Order(19)
     @Tag("mock")
-    @DisplayName("Get Random Direction (mock G7) Test")
+    @DisplayName("[Mock] - Get Random Direction (mock G7) Test")
     void GetRandomDirectionG7Test() {
         Direction dir = randomGeneratorMockG7.GetRandomDirection();
         assertEquals(Direction.South ,dir);
     }
 
     @Test
+    @Order(20)
     @Tag("mock")
-    @DisplayName("Get Random Direction (mock H8) Test")
+    @DisplayName("[Mock] - Get Random Direction (mock H8) Test")
     void GetRandomDirectionH8Test() {
         Direction dir = randomGeneratorMockH8.GetRandomDirection();
         assertEquals(Direction.West ,dir);
     }
 
     @Test
+    @Order(21)
     @Tag("mock")
-    @DisplayName("Get Random Direction (mock I9) Test")
+    @DisplayName("[Mock] - Get Random Direction (mock I9) Test")
     void GetRandomDirectionI9Test() {
         Direction dir = randomGeneratorMockI9.GetRandomDirection();
         assertEquals(Direction.West ,dir);
     }
 
     @Test
+    @Order(22)
     @Tag("mock")
-    @DisplayName("Get Random Direction (mock J10) Test")
+    @DisplayName("[Mock] - Get Random Direction (mock J10) Test")
     void GetRandomDirectionJ10Test() {
         Direction dir = randomGeneratorMockJ10.GetRandomDirection();
         assertEquals(Direction.North ,dir);

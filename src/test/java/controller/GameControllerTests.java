@@ -5,14 +5,12 @@ import model.random.RandomController;
 import model.random.RandomGenerator;
 import model.random.RandomGeneratorExtremeGameMock;
 import model.random.RandomGeneratorGameMock;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import utils.TestUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class GameControllerTests {
     GameController gameController;
 
@@ -22,25 +20,28 @@ public class GameControllerTests {
     }
 
     @Test
+    @Order(1)
     @Tag("unitTest")
-    @DisplayName("How to play Test")
+    @DisplayName("[UnitTest] - How to play Test")
     void HowToPlayTest() {
         String rules = TestUtils.GetOutputFromFile("rules.out");
         assertEquals(rules, gameController.HowToPlay());
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("Has Finish (not played) Test")
+    @Order(2)
+    @Tag("conditionCoverage")
+    @DisplayName("[ConditionCoverage] - Has Finish (not played) Test")
     void HasFinishTest() {
         assertFalse(gameController.HasFinish());
     }
 
     // each time that NewGame is called, we are doing a nester loop testing
     @Test
+    @Order(3)
     @Tag("unitTest")
     @Tag("loopTesting")
-    @DisplayName("New Game (not played) Test")
+    @DisplayName("[LoopTesting] - New Game (not played) Test")
     void NewGameTest() {
         assertEquals(TestUtils.GetOutputFromFile("gameNewGame.out"), gameController.NewGame());
         assertFalse(gameController.HasFinish());
@@ -48,8 +49,9 @@ public class GameControllerTests {
 
 
     @Test
+    @Order(4)
     @Tag("conditionCoverage")
-    @DisplayName("Attack coordinate (game not created) Test")
+    @DisplayName("[ConditionCoverage] - Attack coordinate (game not created) Test")
     void AttackCoordinateGameNotCreated() {
         assertThrowsExactly(NullPointerException.class,
             ()-> gameController.AttackCoordinate(new Coordinate('A',1)),
@@ -57,8 +59,9 @@ public class GameControllerTests {
     }
 
     @Test
+    @Order(5)
     @Tag("conditionCoverage")
-    @DisplayName("Attack coordinate (game not created) null parameter Test")
+    @DisplayName("[ConditionCoverage] - Attack coordinate (game not created) null parameter Test")
     void AttackCoordinateNullGameNotCreated() {
         assertThrowsExactly(NullPointerException.class,
             ()-> gameController.AttackCoordinate(null),
@@ -66,8 +69,9 @@ public class GameControllerTests {
     }
 
     @Test
+    @Order(6)
     @Tag("conditionCoverage")
-    @DisplayName("Attack coordinate null parameter Test")
+    @DisplayName("[ConditionCoverage] - Attack coordinate null parameter Test")
     void AttackCoordinateNullTest() {
         gameController.NewGame();
         assertThrowsExactly(NullPointerException.class,
@@ -76,10 +80,13 @@ public class GameControllerTests {
     }
 
     // Attack invalid Coordinates
+    // We need to use mocks to know where are the ships
     @Test
+    @Order(7)
     @Tag("partitionEquivalence")
-    @DisplayName("Attack coordinates watter twice Test")
+    @DisplayName("[PartitionEquivalence] - Attack coordinates watter twice Test")
     void AttackCoordinateWatterAlreadyAttackedTest() {
+        // We are going to hit the same water cells twice and check the error displayed and turn are correct
         RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
 
@@ -112,9 +119,11 @@ public class GameControllerTests {
     }
 
     @Test
+    @Order(8)
     @Tag("partitionEquivalence")
-    @DisplayName("Attack coordinates hit twice Test")
+    @DisplayName("[PartitionEquivalence] - Attack coordinates hit twice Test")
     void AttackCoordinateHitAlreadyAttackedTest() {
+        // We are going to hit the same hit cells twice and check the error displayed and turn are correct
         RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
 
@@ -148,9 +157,11 @@ public class GameControllerTests {
     }
 
     @Test
+    @Order(9)
     @Tag("partitionEquivalence")
-    @DisplayName("Attack Coordinates destroyed twice Test")
+    @DisplayName("[PartitionEquivalence] - Attack Coordinates destroyed twice Test")
     void AttackCoordinateDestroyedAlreadyAttackedTest() {
+        // We are going to hit the same destroyed cells twice and check the error displayed and turn are correct
         RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
 
@@ -183,7 +194,8 @@ public class GameControllerTests {
         }
     }
 
-    // Real game scenarios for GameController (simulates the interaction with the view)
+    // We are going to generate 2 different games scenarios
+    // to simulate the interaction with the view
 
     // Simulated game:
     // # 1 2 3 4 5 6 7 8 9 10
@@ -198,11 +210,13 @@ public class GameControllerTests {
     // I · X · · · · · · · ·
     // J · X · · · · · · · ·
     @Test
+    @Order(10)
     @Tag("mock")
     @Tag("acceptanceTest")
-    @DisplayName("Real Game (normal) Test")
+    @Tag("pairwise") // we are checking specific cells, not all the board
+    @DisplayName("[MockObject][PairWise][Acceptance] -  Real Game (normal) Test")
     void GameTest() {
-        // we are going to simulate a game using the mock RandomCoordinatesMockTest
+        // we are going to simulate a game using the mock RandomGeneratorGameMock
         // we need it as the real game generate random coordinates to place the ships
         RandomGenerator randomGeneratorMock = new RandomGeneratorGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
@@ -321,10 +335,15 @@ public class GameControllerTests {
     // I X · X X · X X X · ·
     // J X X X X · X X X X X
     @Test
+    @Order(11)
     @Tag("mock")
     @Tag("acceptanceTest")
-    @DisplayName("Real Game (extreme) Test")
+    @DisplayName("[Mock][Acceptance] - Real Game (extreme) Test")
     void GameExtremeTest() {
+        // we are going to simulate a game using the mock RandomGeneratorExtremeGameMock
+        // we need it as the real game generate random coordinates to place the ships
+        // This test will attack all the coordinate in game twice to check real scenarios
+        // one the check the board update and the second to check the correct error message
         RandomGenerator randomGeneratorMock = new RandomGeneratorExtremeGameMock();
         RandomController randomControllerMock = new RandomController(randomGeneratorMock);
 
