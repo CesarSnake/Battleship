@@ -9,6 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ShipTests {
     Ship emptyShip;
     Ship shipC2C6HitMock;
@@ -18,7 +19,6 @@ public class ShipTests {
     @BeforeAll
     void Setup() {
         emptyShip = new ShipEmptyMock();
-
     }
 
     @BeforeEach
@@ -28,12 +28,15 @@ public class ShipTests {
         shipG4G6Mock = new ShipG4G6Mock();
     }
 
-    /* The class ship acts as parent class for the different types of ships, it has not constructor
-     * we need to use mocks to test the class */
+    /*
+     * The class ship acts as parent class for the different types of ships, it has not constructor
+     * we need to use mocks to test the class
+     */
 
     @Test
+    @Order(1)
     @Tag("unitTest")
-    @DisplayName("Invalid ship Test")
+    @DisplayName("[UnitTest] - Invalid ship Test")
     void InvalidShipTest() {
         assertNotNull(emptyShip);
         assertNull(emptyShip.Coordinates());
@@ -49,8 +52,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(2)
     @Tag("conditionCoverage")
-    @DisplayName("Hit coordinate null parameter Test")
+    @DisplayName("[ConditionCoverage] - Hit coordinate null parameter Test")
     void HitNullCoordinateTest() {
         assertThrowsExactly(NullPointerException.class,
             () -> shipC2C6HitMock.Hit(null),
@@ -58,8 +62,10 @@ public class ShipTests {
     }
 
     @Test
+    @Order(3)
+    @Tag("mock")
     @Tag("partitionEquivalence")
-    @DisplayName("Hit ship with a hit Test")
+    @DisplayName("[PartitionEquivalence][Mock] - Hit ship that has one hit Test")
     void ShipC2C6withHitTest() {
         Ship shipMock = shipC2C6HitMock;
         // coordinate already hit
@@ -112,10 +118,13 @@ public class ShipTests {
     }
 
     @Test
+    @Order(4)
     @Tag("partitionEquivalence")
-    @DisplayName("Hit using ship Mock length 4 Test")
+    @Tag("mock")
+    @DisplayName("[PartitionEquivalence][Mock] - Hit (Mock length 4) Test")
     void ShipB8E8Test() {
         Ship shipMock = shipB8E8Mock;
+
         for (char i = 'B'; i <= 'E'; i++) {
             assertTrue(shipMock.Coordinates().contains(new Coordinate(i, 8)));
         }
@@ -144,11 +153,12 @@ public class ShipTests {
     }
 
     @Test
+    @Order(5)
     @Tag("partitionEquivalence")
-    @DisplayName("Hit using ship mock length 2 Test")
+    @Tag("mock")
+    @DisplayName("[PartitionEquivalence][Mock] - Hit (mock length 2) Test")
     void ShipG4G6Test() {
         Ship shipMock = shipG4G6Mock;
-        // Horizontal ship surrounded with "Water"
 
         for (int i = 4; i <= 6; i++) {
             assertTrue(shipMock.Coordinates().contains(new Coordinate('G', i)));
@@ -178,11 +188,14 @@ public class ShipTests {
     }
 
     @Test
+    @Order(6)
     @Tag("partitionEquivalence")
-    @DisplayName("Hit invalid coorddinates attacked on a Horizontal ship Test")
+    @Tag("mock")
+    @DisplayName("[PartitionEquivalence][Mock] - Hit using invalid coordinates on a Horizontal ship Test")
     void InvalidCoordinatesHorizontalShipAttackTest() {
-        // test horizontal ship sunk
+        // test a horizontal ship sunk
         Ship shipHorizontal = shipG4G6Mock;
+        assertFalse(shipHorizontal.IsSunk());
 
         // Sink ship
         shipHorizontal.Hit(new Coordinate('G',4));
@@ -208,11 +221,14 @@ public class ShipTests {
     }
 
     @Test
+    @Order(7)
     @Tag("partitionEquivalence")
-    @DisplayName("Hit invalid coordinates attacked on a Vertical ship Test")
+    @Tag("mock")
+    @DisplayName("[PartitionEquivalence][Mock] - Hit using invalid coordinates on a Vertical ship Test")
     void InvalidCoordinatesVerticalShipAttackTest() {
         // test horizontal ship sunk
         Ship shipVertical = shipB8E8Mock;
+        assertFalse(shipVertical.IsSunk());
 
         // Sink ship
         shipVertical.Hit(new Coordinate('B',8));
@@ -239,10 +255,12 @@ public class ShipTests {
     }
 
     @Test
+    @Order(8)
     @Tag("mock")
-    @DisplayName("Carrier mock Test")
+    @DisplayName("[Mock] - Carrier mock Test")
     void CarrierMockTest() {
         Carrier carrierMock = new CarrierMock(null, null);
+
         for (int i = 1; i <= 5; i++) {
             assertTrue(carrierMock.Coordinates().contains(new Coordinate('C', i)));
         }
@@ -261,8 +279,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(9)
     @Tag("mock")
-    @DisplayName("Battleship mock Test")
+    @DisplayName("[Mock] - Battleship mock Test")
     void BattleShipMockTest() {
         Battleship battleShipMock = new BattleshipMock(null, null);
 
@@ -284,8 +303,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(10)
     @Tag("mock")
-    @DisplayName("Cruiser mock Test")
+    @DisplayName("[Mock] - Cruiser mock Test")
     void CruiserMockTest() {
         Cruiser cruiserMock = new CruiserMock(null, null);
 
@@ -307,8 +327,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(11)
     @Tag("mock")
-    @DisplayName("Destroyer mock Test")
+    @DisplayName("[Mock] - Destroyer mock Test")
     void DestroyerMockTest() {
         Destroyer destroyerMock = new DestroyerMock(null, null);
 
@@ -330,8 +351,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(12)
     @Tag("mock")
-    @DisplayName("Submarine mock Test")
+    @DisplayName("[Mock] - Submarine mock Test")
     void SubmarineMockTest() {
         Submarine submarineMock = new SubmarineMock(null, null);
 
@@ -349,8 +371,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(13)
     @Tag("decisionCoverage")
-    @DisplayName("Generate coordinates null parameters Test")
+    @DisplayName("[DecisionCoverage] - GenerateCoordinates using null parameters Test")
     void GenerateCoordinatesNullTest() {
         assertThrowsExactly(NullPointerException.class,
             ()-> new Ship().GenerateCoordinates(null, null, -1),
@@ -366,8 +389,9 @@ public class ShipTests {
 }
 
     @Test
+    @Order(14)
     @Tag("limit")
-    @DisplayName("Generate coordinates to North on the frontier Test")
+    @DisplayName("[Limit] - Generate coordinates to North on the frontier Test")
     void GenerateCoordinatesExceptionNorthTest() {
         // North
         for (int i = 1; i <= 10; i++) {
@@ -380,8 +404,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(15)
     @Tag("limit")
-    @DisplayName("Generate coordinates to East on the frontier Test")
+    @DisplayName("[Limit] - Generate coordinates to East on the frontier Test")
     void GenerateCoordinatesExceptionEastTest() {
         // East
         for (char i = 'A'; i <= 'J'; i++) {
@@ -394,8 +419,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(16)
     @Tag("limit")
-    @DisplayName("Generate coordinates to South on the frontier Test")
+    @DisplayName("[Limit] - Generate coordinates to South on the frontier Test")
     void GenerateCoordinatesExceptionSouthTest() {
         // Shout
         for (int i = 1; i <= 10; i++) {
@@ -408,8 +434,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(17)
     @Tag("limit")
-    @DisplayName("Generate coordinates to West on the frontier Test")
+    @DisplayName("[Limit] - Generate coordinates to West on the frontier Test")
     void GenerateCoordinatesExceptionWestTest() {
         // West
         for (char i = 'A'; i <='J' ; i++) {
@@ -422,8 +449,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(18)
     @Tag("partitionEquivalence")
-    @DisplayName("Generate coordinates to North Test")
+    @DisplayName("[PartitionEquivalence] - Generate coordinates to North Test")
     void GenerateCoordinatesNorthTest() {
         int increase = 3;
         for (int i = 1; i <= 10; i++) {
@@ -437,8 +465,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(19)
     @Tag("partitionEquivalence")
-    @DisplayName("Generate coordinates to East Test")
+    @DisplayName("[PartitionEquivalence] - Generate coordinates to East Test")
     void GenerateCoordinatesEastTest() {
         int increase = 3;
         for (char i = 'A'; i <= 'J'; i++) {
@@ -452,8 +481,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(20)
     @Tag("partitionEquivalence")
-    @DisplayName("Generate coordinates to South Test")
+    @DisplayName("[PartitionEquivalence] - Generate coordinates to South Test")
     void GenerateCoordinatesSouthTest() {
         int increase = 3;
         for (int i = 1; i <= 10; i++) {
@@ -467,8 +497,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(21)
     @Tag("partitionEquivalence")
-    @DisplayName("Generate coordinates to West Test")
+    @DisplayName("[PartitionEquivalence] - Generate coordinates to West Test")
     void GenerateCoordinatesWestTest() {
         int increase = 3;
         for (char i = 'A'; i <= 'J'; i++) {
@@ -482,8 +513,9 @@ public class ShipTests {
     }
 
     @Test
+    @Order(22)
     @Tag("unitTest")
-    @DisplayName("toString Test")
+    @DisplayName("[unitTest] - toString Test")
     void ToString() {
         //shipB8E8Mock
 

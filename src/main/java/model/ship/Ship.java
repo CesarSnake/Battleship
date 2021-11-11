@@ -28,6 +28,7 @@ public class Ship {
     }
 
     public void Hit(Coordinate coordinate) {
+        // A Ship only can be hit on the coordinates that is placed
         if (coordinate == null) {
             throw new NullPointerException("Cannot hit the ship because 'coordinate' is null");
         }
@@ -52,6 +53,8 @@ public class Ship {
 
     @Override
     public String toString() {
+        // this method returns the hits of the ship in order
+        // the name of the ship is not provided until the ship is sunk
         ArrayList<String> stringList = new ArrayList<>();
 
         // ship type
@@ -80,6 +83,11 @@ public class Ship {
     }
 
     protected List<Coordinate> GenerateCoordinates(Coordinate coordinate, Direction direction, int increase) {
+        // The ship needs a coordinate and a direction to know witch coordinates will use,
+        // but depending on the size of the ship, it could not be placed due an invalid origin coordinate,
+        // this method returns the list of valid coordinates for the length and the direction of the ship,
+        // if the origin coordinate received is invalid for the direction and the length of the ship it throws an exception
+
         if (coordinate == null || direction == null) {
             throw new NullPointerException(
                 "Cannot create a GenerateCoordinates because 'coordinate' or 'direction' is null");

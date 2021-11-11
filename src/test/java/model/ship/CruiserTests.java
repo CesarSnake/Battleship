@@ -2,17 +2,17 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CruiserTests {
     // Cruiser fills 3 cells
     @Test
+    @Order(1)
     @Tag("decisionCoverage")
-    @DisplayName("Constructor null parameters Test")
+    @DisplayName("[DecisionCoverage] - Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
             () -> new Cruiser(new Coordinate('E', 6), null),
@@ -23,9 +23,15 @@ public class CruiserTests {
             "Cannot create a Cruiser because 'coordinate' or 'direction' is null");
     }
 
+    /*
+     * We are going to check all the coordinates that the Cruiser cannot be placed
+     * and all the valid ones that can be placed
+     */
+
     @Test
+    @Order(2)
     @Tag("limit")
-    @DisplayName("Create cruiser invalid coordinates direction North Test")
+    @DisplayName("[Limit] - Create cruiser invalid coordinates direction North Test")
     void SetCruiserInvalidDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -44,8 +50,9 @@ public class CruiserTests {
     }
 
     @Test
+    @Order(3)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Cruiser valid coordinates direction North Test")
+    @DisplayName("[PartitionedEquivalence] - Create Cruiser valid coordinates direction North Test")
     void SetCruiserDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -66,8 +73,9 @@ public class CruiserTests {
     }
 
     @Test
+    @Order(4)
     @Tag("limit")
-    @DisplayName("Create Cruiser invalid coordinates direction South Test")
+    @DisplayName("[Limit] - Create Cruiser invalid coordinates direction South Test")
     void SetCruiserInvalidDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -86,8 +94,9 @@ public class CruiserTests {
     }
 
     @Test
+    @Order(5)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Cruiser valid coordinates direction South Test")
+    @DisplayName("[PartitionedEquivalence] - Create Cruiser valid coordinates direction South Test")
     void SetCruiserDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -107,8 +116,9 @@ public class CruiserTests {
     }
 
     @Test
+    @Order(6)
     @Tag("limit")
-    @DisplayName("Create Cruiser invalid coordinates direction East Test")
+    @DisplayName("[Limit] - Create Cruiser invalid coordinates direction East Test")
     void SetCruiserInvalidDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -127,8 +137,9 @@ public class CruiserTests {
     }
 
     @Test
+    @Order(7)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Cruiser valid coordinates direction East Test")
+    @DisplayName("[PartitionedEquivalence] - Create Cruiser valid coordinates direction East Test")
     void SetCruiserDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -148,8 +159,9 @@ public class CruiserTests {
     }
 
     @Test
+    @Order(8)
     @Tag("limit")
-    @DisplayName("Create Cruiser invalid coordinates direction West Test")
+    @DisplayName("[Limit] - Create Cruiser invalid coordinates direction West Test")
     void SetCruiserInvalidDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -168,8 +180,9 @@ public class CruiserTests {
     }
 
     @Test
+    @Order(9)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Cruiser valid coordinates direction West Test")
+    @DisplayName("[PartitionedEquivalence] - Create Cruiser valid coordinates direction West Test")
     void SetCruiserDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -189,8 +202,9 @@ public class CruiserTests {
     }
 
     @Test
+    @Order(10)
     @Tag("partitionedEquivalence")
-    @DisplayName("Sink Cruiser Test")
+    @DisplayName("[PartitionedEquivalence] - Sink Cruiser Test")
     void SinkCruiserTest() {
         Cruiser cruiser = new Cruiser(new Coordinate('C', 1), Direction.East);
 
@@ -210,9 +224,16 @@ public class CruiserTests {
         assertTrue(cruiser.IsSunk());
     }
 
+    /*
+     * To check all the possible values of toString() method we should place the ship on all the possible
+     * coordinates and check each time it is hit and sunk, instead of that,
+     * we are going to use Pairwise testing and check one per direction
+     */
+
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction North) Test")
+    @Order(11)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction North) Test")
     void CruiserNorthToString() {
         Cruiser cruiser = new Cruiser(new Coordinate('G', 2), Direction.North);
 
@@ -229,8 +250,9 @@ public class CruiserTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction East) Test")
+    @Order(12)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction East) Test")
     void CruiserEastToString() {
         Cruiser cruiser = new Cruiser(new Coordinate('F', 2), Direction.East);
 
@@ -247,8 +269,9 @@ public class CruiserTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction South) Test")
+    @Order(13)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction South) Test")
     void CruiserSouthToString() {
         Cruiser cruiser = new Cruiser(new Coordinate('B', 7), Direction.South);
 
@@ -265,8 +288,9 @@ public class CruiserTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction West) Test")
+    @Order(14)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction West) Test")
     void CruiserWestToString() {
         Cruiser cruiser = new Cruiser(new Coordinate('G', 7), Direction.West);
 

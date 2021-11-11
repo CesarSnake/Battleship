@@ -57,6 +57,7 @@ public class GameController {
         board = new Board();
         turn = 0;
 
+        ShipFactory shipyard = new ShipFactory();
         for (ShipType shipType: ShipType.values()) {
             boolean shipNotAdded = true;
 
@@ -72,7 +73,7 @@ public class GameController {
                  * also board.AddShip launches the same exception if any coordinates of the ship is filled
                  */
                 try {
-                    Ship ship = ShipFactory.CreateShip(shipType, shipCoordinate, shipDirection);
+                    Ship ship = shipyard.CreateShip(shipType, shipCoordinate, shipDirection);
                     shipNotAdded = !board.AddShip(ship);
                 } catch (ExceptionInInitializerError ignored) { }
             }

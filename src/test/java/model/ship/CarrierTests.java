@@ -2,17 +2,17 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CarrierTests {
     // Carrier fills 5 cells
     @Test
+    @Order(1)
     @Tag("decisionCoverage")
-    @DisplayName("Constructor null parameters Test")
+    @DisplayName("[DecisionCoverage] - Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
             () -> new Carrier(new Coordinate('E', 4), null),
@@ -23,9 +23,15 @@ public class CarrierTests {
             "Cannot create a Carrier because 'coordinate' or 'direction' is null");
     }
 
+    /*
+     * We are going to check all the coordinates that the Carrier cannot be placed
+     * and all the valid ones that can be placed
+     */
+
     @Test
+    @Order(2)
     @Tag("limit")
-    @DisplayName("Create Carrier invalid coordinates direction North Test")
+    @DisplayName("[Limit] - Create Carrier invalid coordinates direction North Test")
     void SetCarrierInvalidDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -44,8 +50,9 @@ public class CarrierTests {
     }
 
     @Test
+    @Order(3)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Carrier valid coordinates direction North Test")
+    @DisplayName("[PartitionedEquivalence] - Create Carrier valid coordinates direction North Test")
     void SetCarrierDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -66,8 +73,9 @@ public class CarrierTests {
     }
 
     @Test
+    @Order(4)
     @Tag("limit")
-    @DisplayName("Create Carrier invalid coordinates direction South Test")
+    @DisplayName("[Limit] - Create Carrier invalid coordinates direction South Test")
     void SetCarrierInvalidDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -86,8 +94,9 @@ public class CarrierTests {
     }
 
     @Test
+    @Order(5)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Carrier valid coordinates direction South Test")
+    @DisplayName("[PartitionedEquivalence] - Create Carrier valid coordinates direction South Test")
     void SetCarrierDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -107,8 +116,9 @@ public class CarrierTests {
     }
 
     @Test
+    @Order(6)
     @Tag("limit")
-    @DisplayName("Create Carrier invalid coordinates direction East Test")
+    @DisplayName("[Limit] - Create Carrier invalid coordinates direction East Test")
     void SetCarrierInvalidDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -127,8 +137,9 @@ public class CarrierTests {
     }
 
     @Test
+    @Order(7)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Carrier valid coordinates direction East Test")
+    @DisplayName("[PartitionedEquivalence] - Create Carrier valid coordinates direction East Test")
     void SetCarrierDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -148,8 +159,9 @@ public class CarrierTests {
     }
 
     @Test
+    @Order(8)
     @Tag("limit")
-    @DisplayName("Create Carrier invalid coordinates direction West Test")
+    @DisplayName("[Limit] - Create Carrier invalid coordinates direction West Test")
     void SetCarrierInvalidDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -168,8 +180,9 @@ public class CarrierTests {
     }
 
     @Test
+    @Order(9)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Carrier valid coordinates direction West Test")
+    @DisplayName("[PartitionedEquivalence] - Create Carrier valid coordinates direction West Test")
     void SetCarrierDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -189,8 +202,9 @@ public class CarrierTests {
     }
 
     @Test
+    @Order(10)
     @Tag("partitionedEquivalence")
-    @DisplayName("Sink Cruiser Test")
+    @DisplayName("[PartitionedEquivalence] - Sink Cruiser Test")
     void SinkCarrierTest() {
         Carrier carrier = new Carrier(new Coordinate('A', 1), Direction.East);
 
@@ -210,9 +224,16 @@ public class CarrierTests {
         assertTrue(carrier.IsSunk());
     }
 
+    /*
+     * To check all the possible values of toString() method we should place the ship on all the possible
+     * coordinates and check each time it is hit and sunk, instead of that,
+     * we are going to use Pairwise testing and check one per direction
+     */
+
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction North) Test")
+    @Order(11)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction North) Test")
     void CarrierNorthToString() {
         Carrier carrier = new Carrier(new Coordinate('G', 2), Direction.North);
 
@@ -235,8 +256,9 @@ public class CarrierTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction East) Test")
+    @Order(12)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction East) Test")
     void CarrierEastToString() {
         Carrier carrier = new Carrier(new Coordinate('F', 2), Direction.East);
 
@@ -259,8 +281,9 @@ public class CarrierTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction South) Test")
+    @Order(13)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction South) Test")
     void CarrierSouthToString() {
         Carrier carrier = new Carrier(new Coordinate('B', 7), Direction.South);
 
@@ -283,8 +306,9 @@ public class CarrierTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction West) Test")
+    @Order(14)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction West) Test")
     void CarrierWestToString() {
         Carrier carrier = new Carrier(new Coordinate('G', 7), Direction.West);
 

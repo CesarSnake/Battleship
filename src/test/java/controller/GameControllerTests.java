@@ -214,7 +214,7 @@ public class GameControllerTests {
     @Tag("mock")
     @Tag("acceptanceTest")
     @Tag("pairwise") // we are checking specific cells, not all the board
-    @DisplayName("[MockObject][PairWise][Acceptance] -  Real Game (normal) Test")
+    @DisplayName("[MockObject][Pairwise][Acceptance] -  Real Game (normal) Test")
     void GameTest() {
         // we are going to simulate a game using the mock RandomGeneratorGameMock
         // we need it as the real game generate random coordinates to place the ships

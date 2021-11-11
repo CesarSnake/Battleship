@@ -4,7 +4,7 @@ import model.Coordinate;
 import model.Direction;
 
 public class ShipFactory {
-    public static Ship CreateShip(ShipType shipType, Coordinate coordinate, Direction direction) {
+    public Ship CreateShip(ShipType shipType, Coordinate coordinate, Direction direction) {
         if (shipType == null || coordinate == null || direction == null) {
             throw new NullPointerException(
                 "Cannot create a ship because 'shipType' or 'coordinate' or 'direction' is null");

@@ -2,17 +2,17 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DestroyerTests {
     // Destroyer fills 2 cells
     @Test
+    @Order(1)
     @Tag("decisionCoverage")
-    @DisplayName("Constructor null parameters Test")
+    @DisplayName("[DecisionCoverage] - Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
             () -> new Destroyer(new Coordinate('E', 5), null),
@@ -23,9 +23,15 @@ public class DestroyerTests {
             "Cannot create a Destroyer because 'coordinate' or 'direction' is null");
     }
 
+    /*
+     * We are going to check all the coordinates that the Destroyer cannot be placed
+     * and all the valid ones that can be placed
+     */
+
     @Test
+    @Order(2)
     @Tag("limit")
-    @DisplayName("Create Destroyer invalid coordinates direction North Test")
+    @DisplayName("[Limit] - Create Destroyer invalid coordinates direction North Test")
     void SetDestroyerInvalidDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -42,8 +48,9 @@ public class DestroyerTests {
     }
 
     @Test
+    @Order(3)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Destroyer valid coordinates direction North Test")
+    @DisplayName("[PartitionedEquivalence] - Create Destroyer valid coordinates direction North Test")
     void SetDestroyerDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -64,8 +71,9 @@ public class DestroyerTests {
     }
 
     @Test
+    @Order(4)
     @Tag("limit")
-    @DisplayName("Create Destroyer invalid coordinates direction South Test")
+    @DisplayName("[Limit] - Create Destroyer invalid coordinates direction South Test")
     void SetDestroyerInvalidDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -82,8 +90,9 @@ public class DestroyerTests {
     }
 
     @Test
+    @Order(5)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Destroyer valid coordinates direction South Test")
+    @DisplayName("[PartitionedEquivalence] - Create Destroyer valid coordinates direction South Test")
     void SetDestroyerDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -103,8 +112,9 @@ public class DestroyerTests {
     }
 
     @Test
+    @Order(6)
     @Tag("limit")
-    @DisplayName("Create Destroyer invalid coordinates direction East Test")
+    @DisplayName("[Limit] - Create Destroyer invalid coordinates direction East Test")
     void SetDestroyerInvalidDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -121,8 +131,9 @@ public class DestroyerTests {
     }
 
     @Test
+    @Order(7)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Destroyer valid coordinates direction East Test")
+    @DisplayName("[PartitionedEquivalence] - Create Destroyer valid coordinates direction East Test")
     void SetDestroyerDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -142,8 +153,9 @@ public class DestroyerTests {
     }
 
     @Test
+    @Order(8)
     @Tag("limit")
-    @DisplayName("Create Destroyer invalid coordinates direction West Test")
+    @DisplayName("[Limit] - Create Destroyer invalid coordinates direction West Test")
     void SetDestroyerInvalidDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -160,8 +172,9 @@ public class DestroyerTests {
     }
 
     @Test
+    @Order(9)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Destroyer valid coordinates direction West Test")
+    @DisplayName("[PartitionedEquivalence] - Create Destroyer valid coordinates direction West Test")
     void SetDestroyerDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -181,8 +194,9 @@ public class DestroyerTests {
     }
 
     @Test
+    @Order(10)
     @Tag("partitionedEquivalence")
-    @DisplayName("Sink destroyer Test")
+    @DisplayName("[PartitionedEquivalence] - Sink destroyer Test")
     void SinkDestroyerTest() {
         Destroyer destroyer = new Destroyer(new Coordinate('D', 1), Direction.East);
 
@@ -202,9 +216,16 @@ public class DestroyerTests {
         assertTrue(destroyer.IsSunk());
     }
 
+    /*
+     * To check all the possible values of toString() method we should place the ship on all the possible
+     * coordinates and check each time it is hit and sunk, instead of that,
+     * we are going to use Pairwise testing and check one per direction
+     */
+
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction North) Test")
+    @Order(11)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction North) Test")
     void DestroyerNorthToString() {
         Destroyer destroyer = new Destroyer(new Coordinate('G', 2), Direction.North);
 
@@ -218,8 +239,9 @@ public class DestroyerTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction East) Test")
+    @Order(12)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction East) Test")
     void DestroyerEastToString() {
         Destroyer destroyer = new Destroyer(new Coordinate('F', 2), Direction.East);
 
@@ -233,8 +255,9 @@ public class DestroyerTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction South) Test")
+    @Order(13)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction South) Test")
     void DestroyerSouthToString() {
         Destroyer destroyer = new Destroyer(new Coordinate('B', 7), Direction.South);
 
@@ -248,8 +271,9 @@ public class DestroyerTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction West) Test")
+    @Order(14)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction West) Test")
     void DestroyerWestToString() {
         Destroyer destroyer = new Destroyer(new Coordinate('G', 7), Direction.West);
 

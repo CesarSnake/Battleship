@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ShipTypeTests{
     ShipType shipCarrier;
     ShipType shipBattleship;
@@ -23,8 +24,9 @@ public class ShipTypeTests{
 
 
     @Test
+    @Order(1)
     @Tag("unitTest")
-    @DisplayName("Ship carrier Test")
+    @DisplayName("[UnitTest] - Ship carrier Test")
     void ShipCarrierTest() {
         assertEquals(ShipType.Carrier, shipCarrier);
         assertEquals("Carrier", shipCarrier.toString());
@@ -32,8 +34,9 @@ public class ShipTypeTests{
     }
 
     @Test
+    @Order(2)
     @Tag("unitTest")
-    @DisplayName("Ship battleship Test")
+    @DisplayName("[UnitTest] - Ship battleship Test")
     void ShipBattleshipTest() {
         assertEquals(ShipType.Battleship, shipBattleship);
         assertEquals("Battleship", shipBattleship.toString());
@@ -41,8 +44,9 @@ public class ShipTypeTests{
     }
 
     @Test
+    @Order(3)
     @Tag("unitTest")
-    @DisplayName("Ship cruiser Test")
+    @DisplayName("[UnitTest] - Ship cruiser Test")
     void ShipCruiserTest() {
         assertEquals(ShipType.Cruiser, shipCruiser);
         assertEquals("Cruiser", shipCruiser.toString());
@@ -50,8 +54,9 @@ public class ShipTypeTests{
     }
 
     @Test
+    @Order(4)
     @Tag("unitTest")
-    @DisplayName("Ship destroyer Test")
+    @DisplayName("[UnitTest] - Ship destroyer Test")
     void ShipDestroyerTest() {
         assertEquals(ShipType.Destroyer, shipDestroyer);
         assertEquals("Destroyer", shipDestroyer.toString());
@@ -59,8 +64,9 @@ public class ShipTypeTests{
     }
 
     @Test
+    @Order(5)
     @Tag("unitTest")
-    @DisplayName("Ship submarine Test")
+    @DisplayName("[UnitTest] - Ship submarine Test")
     void ShipSubmarineTest() {
         assertEquals(ShipType.Submarine, shipSubmarine);
         assertEquals("Submarine", shipSubmarine.toString());

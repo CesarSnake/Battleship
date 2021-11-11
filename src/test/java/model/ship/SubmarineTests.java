@@ -2,17 +2,17 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SubmarineTests {
     // Submarine fills 1 cell, can be placed elsewhere
     @Test
+    @Order(1)
     @Tag("decisionCoverage")
-    @DisplayName("Constructor null parameters Test")
+    @DisplayName("[DecisionCoverage] - Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
             () -> new Submarine(null, Direction.South),
@@ -23,9 +23,14 @@ public class SubmarineTests {
             "Cannot create a Submarine because 'coordinate' or 'direction' is null");
     }
 
+    /*
+     * As the Submarine only fill one Cell, it can be placed anywhere
+     */
+
     @Test
+    @Order(2)
     @Tag("partitionEquivalence")
-    @DisplayName("Set direction North Test")
+    @DisplayName("[PartitionedEquivalence] - Set direction North Test")
     void SetSubmarineDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -46,8 +51,9 @@ public class SubmarineTests {
     }
 
     @Test
+    @Order(3)
     @Tag("partitionEquivalence")
-    @DisplayName("Set direction South Test")
+    @DisplayName("[PartitionedEquivalence] - Set direction South Test")
     void SetSubmarineDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -67,8 +73,9 @@ public class SubmarineTests {
     }
 
     @Test
+    @Order(4)
     @Tag("partitionEquivalence")
-    @DisplayName("Set direction East Test")
+    @DisplayName("[PartitionedEquivalence] - Set direction East Test")
     void SetSubmarineDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -88,8 +95,9 @@ public class SubmarineTests {
     }
 
     @Test
+    @Order(5)
     @Tag("partitionEquivalence")
-    @DisplayName("Set direction West Test")
+    @DisplayName("[PartitionedEquivalence] - Set direction West Test")
     void SetSubmarineDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -109,8 +117,9 @@ public class SubmarineTests {
     }
 
     @Test
+    @Order(6)
     @Tag("partitionEquivalence")
-    @DisplayName("Sink submarine Test")
+    @DisplayName("[PartitionedEquivalence] - Sink submarine Test")
     void SinkSubmarineTest() {
         Submarine submarine = new Submarine(new Coordinate('H', 1), Direction.East);
 
@@ -122,9 +131,16 @@ public class SubmarineTests {
         assertTrue(submarine.Hits().contains(c));
     }
 
+    /*
+     * To check all the possible values of toString() method we should place the ship on all the possible
+     * coordinates and check each time it is hit and sunk, instead of that,
+     * we are going to use Pairwise testing and check one per direction
+     */
+
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction North) Test")
+    @Order(7)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction North) Test")
     void SubmarineNorthToString() {
         Submarine submarine = new Submarine(new Coordinate('E', 2), Direction.North);
         assertEquals("Ship not sunk, hits: []", submarine.toString());
@@ -134,8 +150,9 @@ public class SubmarineTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction East) Test")
+    @Order(8)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction East) Test")
     void SubmarineEastToString() {
         Submarine submarine = new Submarine(new Coordinate('F', 2), Direction.East);
         assertEquals("Ship not sunk, hits: []", submarine.toString());
@@ -145,8 +162,9 @@ public class SubmarineTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction South) Test")
+    @Order(9)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction South) Test")
     void SubmarineSouthToString() {
         Submarine submarine = new Submarine(new Coordinate('B', 7), Direction.South);
         assertEquals("Ship not sunk, hits: []", submarine.toString());
@@ -156,8 +174,9 @@ public class SubmarineTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction West) Test")
+    @Order(10)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction West) Test")
     void SubmarineWestToString() {
         Submarine submarine = new Submarine(new Coordinate('G', 7), Direction.West);
         assertEquals("Ship not sunk, hits: []", submarine.toString());

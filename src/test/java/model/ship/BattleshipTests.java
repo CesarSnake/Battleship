@@ -2,17 +2,17 @@ package model.ship;
 
 import model.Coordinate;
 import model.Direction;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BattleshipTests {
     // Battleship fills 4 cells
     @Test
+    @Order(1)
     @Tag("decisionCoverage")
-    @DisplayName("Constructor null parameters Test")
+    @DisplayName("[DecisionCoverage] Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
             () -> new Battleship(new Coordinate('E', 3), null),
@@ -23,9 +23,15 @@ public class BattleshipTests {
             "Cannot create a Battleship because 'coordinate' or 'direction' is null");
     }
 
+    /*
+     * We are going to check all the coordinates that the Battleship cannot be placed
+     * and all the valid ones that can be placed
+     */
+
     @Test
+    @Order(2)
     @Tag("limit")
-    @DisplayName("Create Battleship invalid coordinates direction North Test")
+    @DisplayName("[Limit] - Create Battleship invalid coordinates direction North Test")
     void SetBattleshipInvalidDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -44,8 +50,9 @@ public class BattleshipTests {
     }
 
     @Test
+    @Order(3)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Battleship valid coordinates direction North Test")
+    @DisplayName("[PartitionedEquivalence] - Create Battleship valid coordinates direction North Test")
     void SetBattleshipDirectionNorthTest() {
         Direction dir = Direction.North;
 
@@ -66,8 +73,9 @@ public class BattleshipTests {
     }
 
     @Test
+    @Order(4)
     @Tag("limit")
-    @DisplayName("Create Battleship invalid coordinates direction South Test")
+    @DisplayName("[Limit] - Create Battleship invalid coordinates direction South Test")
     void SetBattleshipInvalidDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -86,8 +94,9 @@ public class BattleshipTests {
     }
 
     @Test
+    @Order(5)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Battleship valid coordinates direction South Test")
+    @DisplayName("[PartitionedEquivalence] - Create Battleship valid coordinates direction South Test")
     void SetBattleshipDirectionSouthTest() {
         Direction dir = Direction.South;
 
@@ -107,8 +116,9 @@ public class BattleshipTests {
     }
 
     @Test
+    @Order(6)
     @Tag("limit")
-    @DisplayName("Create Battleship invalid coordinates direction East Test")
+    @DisplayName("[Limit] - Create Battleship invalid coordinates direction East Test")
     void SetBattleshipInvalidDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -127,8 +137,9 @@ public class BattleshipTests {
     }
 
     @Test
+    @Order(7)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Battleship valid coordinates direction East Test")
+    @DisplayName("[PartitionedEquivalence] - Create Battleship valid coordinates direction East Test")
     void SetBattleshipDirectionEastTest() {
         Direction dir = Direction.East;
 
@@ -148,8 +159,9 @@ public class BattleshipTests {
     }
 
     @Test
+    @Order(8)
     @Tag("limit")
-    @DisplayName("Create Battleship invalid coordinates direction West Test")
+    @DisplayName("[Limit] - Create Battleship invalid coordinates direction West Test")
     void SetBattleshipInvalidDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -168,8 +180,9 @@ public class BattleshipTests {
     }
 
     @Test
+    @Order(9)
     @Tag("partitionedEquivalence")
-    @DisplayName("Create Battleship valid coordinates direction West Test")
+    @DisplayName("[PartitionedEquivalence] - Create Battleship valid coordinates direction West Test")
     void SetBattleshipDirectionWestTest() {
         Direction dir = Direction.West;
 
@@ -189,8 +202,9 @@ public class BattleshipTests {
     }
 
     @Test
+    @Order(10)
     @Tag("partitionedEquivalence")
-    @DisplayName("Sink Battleship Test")
+    @DisplayName("[PartitionedEquivalence] - Sink Battleship Test")
     void SinkBattleshipTest() {
         Battleship battleship = new Battleship(new Coordinate('B', 1), Direction.East);
 
@@ -210,9 +224,16 @@ public class BattleshipTests {
         assertTrue(battleship.IsSunk());
     }
 
+    /*
+     * To check all the possible values of toString() method we should place the ship on all the possible
+     * coordinates and check each time it is hit and sunk, instead of that,
+     * we are going to use Pairwise testing and check one per direction
+     */
+
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction North) Test")
+    @Order(11)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction North) Test")
     void BattleshipNorthToString() {
         Battleship battleship = new Battleship(new Coordinate('G', 2), Direction.North);
 
@@ -232,8 +253,9 @@ public class BattleshipTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction East) Test")
+    @Order(12)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction East) Test")
     void BattleshipEastToString() {
         Battleship battleship = new Battleship(new Coordinate('F', 2), Direction.East);
 
@@ -253,8 +275,9 @@ public class BattleshipTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction South) Test")
+    @Order(13)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction South) Test")
     void BattleshipSouthToString() {
         Battleship battleship = new Battleship(new Coordinate('B', 7), Direction.South);
 
@@ -274,8 +297,9 @@ public class BattleshipTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (direction West) Test")
+    @Order(14)
+    @Tag("pairwise")
+    @DisplayName("[Pairwise] - toString (direction West) Test")
     void BattleshipWestToString() {
         Battleship battleship = new Battleship(new Coordinate('G', 7), Direction.West);
 
