@@ -299,7 +299,7 @@ public class ShipTests {
         assertTrue(battleShipMock.IsSunk());
 
         assertEquals(Ship.class, battleShipMock.getClass().getSuperclass().getSuperclass()); // instanceof Ship
-        assertEquals(Carrier.class, battleShipMock.getClass().getSuperclass()); // instance of Battleship
+        assertEquals(Battleship.class, battleShipMock.getClass().getSuperclass()); // instance of Battleship
     }
 
     @Test
@@ -323,7 +323,7 @@ public class ShipTests {
         assertTrue(cruiserMock.IsSunk());
 
         assertEquals(Ship.class, cruiserMock.getClass().getSuperclass().getSuperclass()); // instanceof Ship
-        assertEquals(Carrier.class, cruiserMock.getClass().getSuperclass()); // instance of Cruiser
+        assertEquals(Cruiser.class, cruiserMock.getClass().getSuperclass()); // instance of Cruiser
     }
 
     @Test
@@ -347,7 +347,7 @@ public class ShipTests {
         assertTrue(destroyerMock.IsSunk());
 
         assertEquals(Ship.class, destroyerMock.getClass().getSuperclass().getSuperclass()); // instanceof Ship
-        assertEquals(Carrier.class, destroyerMock.getClass().getSuperclass()); // instance of Destroyer
+        assertEquals(Destroyer.class, destroyerMock.getClass().getSuperclass()); // instance of Destroyer
     }
 
     @Test
@@ -367,7 +367,7 @@ public class ShipTests {
         assertTrue(submarineMock.IsSunk());
 
         assertEquals(Ship.class, submarineMock.getClass().getSuperclass().getSuperclass()); // instanceof Ship
-        assertEquals(Carrier.class, submarineMock.getClass().getSuperclass()); // instance of Submarine
+        assertEquals(Submarine.class, submarineMock.getClass().getSuperclass()); // instance of Submarine
     }
 
     @Test

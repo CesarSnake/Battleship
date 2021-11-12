@@ -170,7 +170,7 @@ public class BoardTests {
     @Test
     @Tag("loopTesting")
     @Order(12)
-    @DisplayName("Add ship Test")
+    @DisplayName("[LoopTesting] - Add ship Test")
     void AddShipTest() {
         assertEquals(0, board.Ships().size());
         Carrier carrier = new Carrier(new Coordinate('A',1), Direction.East);

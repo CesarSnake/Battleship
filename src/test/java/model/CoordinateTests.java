@@ -225,11 +225,19 @@ public class CoordinateTests {
     void EqualsTest() {
         Coordinate F5 = new Coordinate('F',5);
         Coordinate H9 = new Coordinate('H',9);
+        boolean result;
 
-        assertNotNull(c);
-        assertEquals(c, c);
-        assertEquals(F5, c);
-        assertNotEquals(H9, c);
+        result = c.equals(null);
+        assertFalse(result);
+
+        result = c.equals(new Object());
+        assertFalse(result);
+
+        result = c.equals(H9);
+        assertFalse(result);
+
+        result = c.equals(F5);
+        assertTrue(result);
     }
 
     @Test
