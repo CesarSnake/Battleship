@@ -259,7 +259,7 @@ public class ShipTests {
     @Tag("mock")
     @DisplayName("[Mock] - Carrier mock Test")
     void CarrierMockTest() {
-        Carrier carrierMock = new CarrierMock(null, null);
+        Carrier carrierMock = new CarrierMock();
 
         for (int i = 1; i <= 5; i++) {
             assertTrue(carrierMock.Coordinates().contains(new Coordinate('C', i)));
@@ -274,8 +274,8 @@ public class ShipTests {
         }
         assertTrue(carrierMock.IsSunk());
 
-        assertTrue(carrierMock instanceof Ship);
-        assertTrue(carrierMock instanceof Carrier);
+        assertEquals(Ship.class, carrierMock.getClass().getSuperclass().getSuperclass()); // instanceof Ship
+        assertEquals(Carrier.class, carrierMock.getClass().getSuperclass()); // instanceof Carrier
     }
 
     @Test
@@ -283,7 +283,7 @@ public class ShipTests {
     @Tag("mock")
     @DisplayName("[Mock] - Battleship mock Test")
     void BattleShipMockTest() {
-        Battleship battleShipMock = new BattleshipMock(null, null);
+        Battleship battleShipMock = new BattleshipMock();
 
         for (int i = 5; i <= 8; i++) {
             assertTrue(battleShipMock.Coordinates().contains(new Coordinate('B', i)));
@@ -298,8 +298,8 @@ public class ShipTests {
         }
         assertTrue(battleShipMock.IsSunk());
 
-        assertTrue(battleShipMock instanceof Ship);
-        assertTrue(battleShipMock instanceof Battleship);
+        assertEquals(Ship.class, battleShipMock.getClass().getSuperclass().getSuperclass()); // instanceof Ship
+        assertEquals(Carrier.class, battleShipMock.getClass().getSuperclass()); // instance of Battleship
     }
 
     @Test
@@ -307,7 +307,7 @@ public class ShipTests {
     @Tag("mock")
     @DisplayName("[Mock] - Cruiser mock Test")
     void CruiserMockTest() {
-        Cruiser cruiserMock = new CruiserMock(null, null);
+        Cruiser cruiserMock = new CruiserMock();
 
         for (int i = 8; i<= 10; i++) {
             assertTrue(cruiserMock.Coordinates().contains(new Coordinate('C', i)));
@@ -322,8 +322,8 @@ public class ShipTests {
         }
         assertTrue(cruiserMock.IsSunk());
 
-        assertTrue(cruiserMock instanceof Ship);
-        assertTrue(cruiserMock instanceof Cruiser);
+        assertEquals(Ship.class, cruiserMock.getClass().getSuperclass().getSuperclass()); // instanceof Ship
+        assertEquals(Carrier.class, cruiserMock.getClass().getSuperclass()); // instance of Cruiser
     }
 
     @Test
@@ -331,7 +331,7 @@ public class ShipTests {
     @Tag("mock")
     @DisplayName("[Mock] - Destroyer mock Test")
     void DestroyerMockTest() {
-        Destroyer destroyerMock = new DestroyerMock(null, null);
+        Destroyer destroyerMock = new DestroyerMock();
 
         for (int i = 1; i <= 2; i++) {
             assertTrue(destroyerMock.Coordinates().contains(new Coordinate('D', i)));
@@ -346,8 +346,8 @@ public class ShipTests {
         }
         assertTrue(destroyerMock.IsSunk());
 
-        assertTrue(destroyerMock instanceof Ship);
-        assertTrue(destroyerMock instanceof Destroyer);
+        assertEquals(Ship.class, destroyerMock.getClass().getSuperclass().getSuperclass()); // instanceof Ship
+        assertEquals(Carrier.class, destroyerMock.getClass().getSuperclass()); // instance of Destroyer
     }
 
     @Test
@@ -355,7 +355,7 @@ public class ShipTests {
     @Tag("mock")
     @DisplayName("[Mock] - Submarine mock Test")
     void SubmarineMockTest() {
-        Submarine submarineMock = new SubmarineMock(null, null);
+        Submarine submarineMock = new SubmarineMock();
 
         assertTrue(submarineMock.Coordinates().contains(new Coordinate('H', 8)));
         assertEquals(1, submarineMock.Length());
@@ -366,14 +366,14 @@ public class ShipTests {
         submarineMock.Hit(new Coordinate('H', 8));
         assertTrue(submarineMock.IsSunk());
 
-        assertTrue(submarineMock instanceof Ship);
-        assertTrue(submarineMock instanceof Submarine);
+        assertEquals(Ship.class, submarineMock.getClass().getSuperclass().getSuperclass()); // instanceof Ship
+        assertEquals(Carrier.class, submarineMock.getClass().getSuperclass()); // instance of Submarine
     }
 
     @Test
     @Order(13)
-    @Tag("decisionCoverage")
-    @DisplayName("[DecisionCoverage] - GenerateCoordinates using null parameters Test")
+    @Tag("conditionCoverage")
+    @DisplayName("[conditionCoverage] - GenerateCoordinates using null parameters Test")
     void GenerateCoordinatesNullTest() {
         assertThrowsExactly(NullPointerException.class,
             ()-> new Ship().GenerateCoordinates(null, null, -1),
@@ -518,7 +518,6 @@ public class ShipTests {
     @DisplayName("[unitTest] - toString Test")
     void ToString() {
         //shipB8E8Mock
-
         assertEquals("Ship not sunk, hits: []", shipB8E8Mock.toString());
 
         shipB8E8Mock.Hit(new Coordinate('E',8));

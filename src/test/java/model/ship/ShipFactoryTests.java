@@ -18,8 +18,7 @@ public class ShipFactoryTests {
     @Test
     @Order(1)
     @Tag("conditionCoverage")
-    @Tag("decisionCoverage")
-    @DisplayName("[ConditionCoverage][DecisionCoverage] - Create ship null parameters Test")
+    @DisplayName("[ConditionCoverage] - Create ship null parameters Test")
     void CreateShipNullTest() {
         assertThrowsExactly(NullPointerException.class,
             ()-> shipFactory.CreateShip(null, null, null),

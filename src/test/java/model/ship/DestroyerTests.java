@@ -11,8 +11,8 @@ public class DestroyerTests {
     // Destroyer fills 2 cells
     @Test
     @Order(1)
-    @Tag("decisionCoverage")
-    @DisplayName("[DecisionCoverage] - Constructor null parameters Test")
+    @Tag("conditionCoverage")
+    @DisplayName("[ConditionCoverage] - Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
             () -> new Destroyer(new Coordinate('E', 5), null),

@@ -3,8 +3,6 @@ package model.random;
 import model.Coordinate;
 import model.Direction;
 
-import java.util.List;
-
 class RandomGeneratorMockA1 extends RandomGenerator {
     @Override
     public Coordinate GetRandomCoordinate() {

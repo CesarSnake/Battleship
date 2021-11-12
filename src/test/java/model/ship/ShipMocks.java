@@ -63,10 +63,8 @@ class ShipG4G6Mock extends Ship {
 }
 
 class CarrierMock extends Carrier {
-    CarrierMock(Coordinate cd, Direction d) {
-        // As we are using a mock to testing, it doesn't matter the value of cd and d
-
-        // Also, we will not use the values from the parent class constructor
+    CarrierMock() {
+        // As we are using a mock to testing, we will not use the values from the parent class constructor
         super(new Coordinate('E', 1), Direction.North);
 
         coordinates = List.of(
@@ -81,10 +79,8 @@ class CarrierMock extends Carrier {
     }
 }
 class BattleshipMock extends Battleship {
-    BattleshipMock(Coordinate cd, Direction d) {
-        // As we are using a mock to testing, it doesn't matter the value of cd and d
-
-        // Also, we will not use the values from the parent class constructor
+    BattleshipMock() {
+        // As we are using a mock to testing, we will not use the values from the parent class constructor
         super(new Coordinate('H', 1), Direction.North);
 
         coordinates = List.of(
@@ -98,10 +94,8 @@ class BattleshipMock extends Battleship {
     }
 }
 class CruiserMock extends Cruiser {
-    CruiserMock(Coordinate cd, Direction d) {
-        // As we are using a mock to testing, it doesn't matter the value of cd and d
-
-        // Also, we will not use the values from the parent class constructor
+    CruiserMock() {
+        // As we are using a mock to testing, we will not use the values from the parent class constructor
         super(new Coordinate('G', 1), Direction.North);
 
         coordinates = List.of(
@@ -114,10 +108,8 @@ class CruiserMock extends Cruiser {
     }
 }
 class DestroyerMock extends Destroyer {
-    DestroyerMock(Coordinate cd, Direction d) {
-        // As we are using a mock to testing, it doesn't matter the value of cd and d
-
-        // Also, we will not use the values from the parent class constructor
+    DestroyerMock() {
+        // As we are using a mock to testing, we will not use the values from the parent class constructor
         super(new Coordinate('J', 1), Direction.North);
 
         coordinates = List.of(
@@ -129,10 +121,8 @@ class DestroyerMock extends Destroyer {
     }
 }
 class SubmarineMock extends Submarine {
-    SubmarineMock(Coordinate cd, Direction d) {
-        // As we are using a mock to testing, it doesn't matter the value of cd and d
-
-        // Also, we will not use the values from the parent class constructor
+    SubmarineMock() {
+        // As we are using a mock to testing, we will not use the values from the parent class constructor
         super(new Coordinate('F', 1), Direction.North);
 
         coordinates = List.of(

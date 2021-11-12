@@ -41,7 +41,7 @@ public class Board {
 
     public boolean AddShip(Ship ship) {
         /* Add a ship to the board, it must be only one ship per shipType, they cannot be duplicated,
-         * the ships added must be withoout hits */
+         * the ships added must be without hits */
         if (ship == null) {
             throw new NullPointerException("Cannot add null ship");
         }

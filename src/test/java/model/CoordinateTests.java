@@ -223,16 +223,13 @@ public class CoordinateTests {
     @Tag("unitTest")
     @DisplayName("[UnitTest] - equals Test")
     void EqualsTest() {
-        Coordinate f5 = new Coordinate('F',5);
+        Coordinate F5 = new Coordinate('F',5);
         Coordinate H9 = new Coordinate('H',9);
 
-        assertFalse(c.equals(null));
-        assertFalse(c.equals(new String()));
-        assertFalse(c.equals("F5"));
-
-        assertFalse(c.equals(H9));
-        assertTrue(c.equals(c));
-        assertTrue(c.equals(f5));
+        assertNotNull(c);
+        assertEquals(c, c);
+        assertEquals(F5, c);
+        assertNotEquals(H9, c);
     }
 
     @Test

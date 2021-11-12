@@ -11,8 +11,8 @@ public class CarrierTests {
     // Carrier fills 5 cells
     @Test
     @Order(1)
-    @Tag("decisionCoverage")
-    @DisplayName("[DecisionCoverage] - Constructor null parameters Test")
+    @Tag("conditionCoverage")
+    @DisplayName("[ConditionCoverage] - Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
             () -> new Carrier(new Coordinate('E', 4), null),

@@ -11,8 +11,8 @@ public class CruiserTests {
     // Cruiser fills 3 cells
     @Test
     @Order(1)
-    @Tag("decisionCoverage")
-    @DisplayName("[DecisionCoverage] - Constructor null parameters Test")
+    @Tag("conditionCoverage")
+    @DisplayName("[ConditionCoverage] - Constructor null parameters Test")
     void ConstructorNullTest() {
         assertThrowsExactly(NullPointerException.class,
             () -> new Cruiser(new Coordinate('E', 6), null),
