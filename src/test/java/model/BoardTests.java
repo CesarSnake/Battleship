@@ -2,16 +2,14 @@ package model;
 
 import model.ship.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import utils.TestUtils;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BoardTests {
     Board board;
     Coordinate i2;
@@ -45,60 +43,68 @@ public class BoardTests {
     }
 
     @Test
+    @Order(1)
     @Tag("unitTest")
-    @DisplayName("Hide symbol Test")
+    @DisplayName("[UnitTest] - Hide symbol Test")
     void HideSymbolTest() {
         assertEquals('·', board.HIDE_SYMBOL);
     }
 
     @Test
+    @Order(2)
     @Tag("unitTest")
-    @DisplayName("Water symbol Test")
+    @DisplayName("[UnitTest] - Water symbol Test")
     void WaterSymbolTest() {
         assertEquals('~', board.WATER_SYMBOL);
     }
 
     @Test
+    @Order(3)
     @Tag("unitTest")
-    @DisplayName("Hit symbol Test")
+    @DisplayName("[UnitTest] - Hit symbol Test")
     void HitSymbolTest() {
         assertEquals('/', board.HIT_SYMBOL);
     }
 
     @Test
+    @Order(4)
     @Tag("unitTest")
-    @DisplayName("Destroyed symbol Test")
+    @DisplayName("[UnitTest] - Destroyed symbol Test")
     void DestroyedSymbolTest() {
         assertEquals('X', board.DESTROYED_SYMBOL);
     }
 
     @Test
+    @Order(5)
     @Tag("unitTest")
-    @DisplayName("Board size Test")
+    @DisplayName("[UnitTest] - Board size Test")
     void BoardSizeTest() {
         // the board is 10x10 (A-J, 1-10)
         assertEquals(10, board.BOARD_SIZE);
     }
 
     @Test
+    @Order(6)
     @Tag("unitTest")
-    @DisplayName("Coordinates used list Test")
+    @DisplayName("[UnitTest] - Coordinates used list Test")
     void CoordinatesUsedTest() {
         assertNotNull(board.CoordinatesUsed());
         assertEquals(0, board.CoordinatesUsed().size());
     }
 
     @Test
+    @Order(7)
     @Tag("unitTest")
-    @DisplayName("Ships list Test")
+    @DisplayName("[UnitTest] - Ships list Test")
     void ShipsTest() {
         assertNotNull(board.Ships());
         assertEquals(0, board.Ships().size());
     }
 
     @Test
+    @Order(8)
     @Tag("conditionCoverage")
-    @DisplayName("Add null ship parameter Test")
+    @DisplayName("[ConditionCoverage] - Add null ship parameter Test")
     void AddNullShipTest() {
         assertThrowsExactly(
             NullPointerException.class,
@@ -107,8 +113,9 @@ public class BoardTests {
     }
 
     @Test
+    @Order(9)
     @Tag("conditionCoverage")
-    @DisplayName("Add the same ship twice Test")
+    @DisplayName("[ConditionCoverage] - Add the same ship twice Test")
     void AddSameShipTest() {
         Carrier carrierA = new Carrier(new Coordinate('A',1), Direction.East);
         Carrier carrierB = new Carrier(new Coordinate('J',10), Direction.West);
@@ -129,8 +136,9 @@ public class BoardTests {
     }
 
     @Test
+    @Order(10)
     @Tag("conditionCoverage")
-    @DisplayName("Add a ship with hits Test")
+    @DisplayName("[ConditionCoverage] - Add a ship with hits Test")
     void AddHitShipTest() {
         Carrier carrier = new Carrier(new Coordinate('A',1), Direction.East);
 
@@ -145,8 +153,9 @@ public class BoardTests {
     }
 
     @Test
+    @Order(11)
     @Tag("conditionCoverage")
-    @DisplayName("Add a ship in the same place than other ship Test")
+    @DisplayName("[ConditionCoverage] - Add a ship in the same place than other ship Test")
     void AddShipSamePlaceOtherTest() {
         Carrier carrier = new Carrier(new Coordinate('A',1), Direction.East);
         Cruiser cruiser = new Cruiser(new Coordinate('A', 3), Direction.South);
@@ -159,7 +168,8 @@ public class BoardTests {
     }
 
     @Test
-    @Tag("unitTest")
+    @Tag("loopTesting")
+    @Order(12)
     @DisplayName("Add ship Test")
     void AddShipTest() {
         assertEquals(0, board.Ships().size());
@@ -170,9 +180,30 @@ public class BoardTests {
         assertTrue(board.Ships().contains(carrier));
     }
 
+    /*
+     * All the previous tests are a PathCoverage of the method AddShip
+     */
     @Test
+    @Tag("pathCoverage")
+    @Order(13)
+    @DisplayName("[PathCoverage] - Path Coverage AddShip Test")
+    void PathCoverageAddShip() {
+        AddNullShipTest();
+
+        board = new Board();
+        AddSameShipTest();
+
+        board = new Board();
+        AddHitShipTest();
+
+        board = new Board();
+        AddShipTest();
+    }
+
+    @Test
+    @Order(14)
     @Tag("conditionCoverage")
-    @DisplayName("Get Cell null coordinate parameter Test")
+    @DisplayName("[ConditionCoverage] - Get Cell null coordinate parameter Test")
     void GetCellNullTest() {
         assertThrowsExactly(
             NullPointerException.class,
@@ -181,9 +212,9 @@ public class BoardTests {
     }
 
     @Test
+    @Order(15)
     @Tag("partitionEquivalence")
-    @Tag("loopTesting")
-    @DisplayName("Get Cell Test")
+    @DisplayName("[PartitionEquivalence] - Get Cell Test")
     void GetCellTest() {
         // the board must contain all the playable cells
         for (char i = 'A'; i <= 'J'; i++) {
@@ -201,8 +232,9 @@ public class BoardTests {
     }
 
     @Test
+    @Order(16)
     @Tag("partitionEquivalence")
-    @DisplayName("Get shell filled by ship Test")
+    @DisplayName("[PartitionEquivalence] - Get shell filled by ship Test")
     void GetCellWithShipTest() {
         Carrier carrier = new Carrier(new Coordinate('A',1), Direction.East);
 
@@ -219,8 +251,9 @@ public class BoardTests {
     }
 
     @Test
+    @Order(17)
     @Tag("conditionCoverage")
-    @DisplayName("Hit cell null coordinate parameter Test")
+    @DisplayName("[ConditionCoverage] - Hit cell null coordinate parameter Test")
     void HitCellNullCoordinateTest() {
         assertThrowsExactly(
             NullPointerException.class,
@@ -229,8 +262,9 @@ public class BoardTests {
     }
 
     @Test
+    @Order(18)
     @Tag("partitionEquivalence")
-    @DisplayName("Hit cell hide Test")
+    @DisplayName("[PartitionEquivalence] - Hit cell hide Test")
     void HitCellHideTest() {
         // all cells in an empty board are hide and get water after the hit
         for (char i = 'A'; i <= 'J'; i++) {
@@ -245,8 +279,9 @@ public class BoardTests {
     }
 
     @Test
+    @Order(19)
     @Tag("partitionEquivalence")
-    @DisplayName("Hit cell watter Test")
+    @DisplayName("[PartitionEquivalence] - Hit cell watter Test")
     void HitCellWaterTest() {
         // a cell cannot be hit twice
         for (char i = 'A'; i <= 'J'; i++) {
@@ -266,8 +301,9 @@ public class BoardTests {
     }
 
     @Test
+    @Order(20)
     @Tag("partitionEquivalence")
-    @DisplayName("Hit cell hit Test")
+    @DisplayName("[PartitionEquivalence] - Hit cell hit Test")
     void HitCellHitTest() {
         Carrier carrier = new Carrier(new Coordinate('F',3), Direction.East);
         board.AddShip(carrier);
@@ -297,9 +333,9 @@ public class BoardTests {
     }
 
     @Test
-
+    @Order(21)
     @Tag("partitionEquivalence")
-    @DisplayName("Hit cell destroyed Test")
+    @DisplayName("[PartitionEquivalence] - Hit cell destroyed Test")
     void HitCellDestroyedTest() {
         Carrier carrier = new Carrier(new Coordinate('F',3), Direction.East);
         board.AddShip(carrier);
@@ -338,8 +374,9 @@ public class BoardTests {
     }
 
     @Test
+    @Order(22)
     @Tag("partitionEquivalence")
-    @DisplayName("Destroy a ship Test")
+    @DisplayName("[PartitionEquivalence] - Destroy a ship Test")
     void DestroyShipTest() {
         Carrier carrier = new Carrier(new Coordinate('F',3), Direction.East);
         board.AddShip(carrier);
@@ -364,27 +401,33 @@ public class BoardTests {
         }
     }
 
-    // toString() Tests
-    
+    /*
+     * toString() Tests
+     * each time we call toString method, we are doing a loop testing
+     */
+
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (empty board) Test")
+    @Order(23)
+    @Tag("loopTesting")
+    @DisplayName("[LoopTesting] - toString (empty board) Test")
     void ToStringEmptyBoardTest() {
         assertEquals(emptyBoard, board.toString());
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (ship not discovered) Test")
+    @Order(24)
+    @Tag("loopTesting")
+    @DisplayName("[LoopTesting] - toString (ship not discovered) Test")
     void ToStringShipNotDiscoveredTest() {
         assertTrue(board.AddShip(new Carrier(new Coordinate('E', 5), Direction.South)));
         assertEquals(emptyBoard, board.toString());
     }
 
-
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (ship hit) Test")
+    @Order(25)
+    @Tag("loopTesting")
+    @Tag("pairwise") // we are checking specific cells, not all the board
+    @DisplayName("[LoopTesting][Pairwise] - toString (ship hit) Test")
     void ToStringShipHitTest() {
         assertEquals(emptyBoard, board.toString());
 
@@ -401,8 +444,10 @@ public class BoardTests {
     }
 
     @Test
-    @Tag("unitTest")
-    @DisplayName("toString (ship destroyed) Test")
+    @Order(26)
+    @Tag("loopTesting")
+    @Tag("pairwise") // we are checking specific cells, not all the board
+    @DisplayName("[LoopTesting][Pairwise] - toString (ship destroyed) Test")
     void ToStringShipDestroyedTest() {
         assertEquals(emptyBoard, board.toString());
 
@@ -413,10 +458,17 @@ public class BoardTests {
         assertEquals(TestUtils.GetOutputFromFile("boardTestShipDestroyed.out"), board.toString());
     }
 
+    /*
+     * We are going to simulate different scenarios
+     * to simulate the interaction with the Board
+     */
+
     // Board with all the ships hide
     @Test
+    @Order(27)
+    @Tag("partitionEquivalence")
     @Tag("acceptanceTest")
-    @DisplayName("Complete board with ships hide")
+    @DisplayName("[PartitionEquivalence][Acceptance] - Complete board with ships hide")
     void CompleteBoardHideTest() {
         assertTrue(board.AddShip(carrier));
         assertEquals(1, board.Ships().size());
@@ -442,8 +494,10 @@ public class BoardTests {
     }
 
     @Test
+    @Order(28)
+    @Tag("partitionEquivalence")
     @Tag("acceptanceTest")
-    @DisplayName("Complete board water cells discovered")
+    @DisplayName("[PartitionEquivalence][Acceptance] - Complete board water cells discovered")
     void CompleteBoardWaterDiscoveredTest() {
         assertTrue(board.AddShip(carrier));
         assertEquals(1, board.Ships().size());
@@ -483,8 +537,10 @@ public class BoardTests {
     }
 
     @Test
+    @Order(29)
+    @Tag("partitionEquivalence")
     @Tag("acceptanceTest")
-    @DisplayName("Complete board all ships hit")
+    @DisplayName("[PartitionEquivalence][Acceptance] - Complete board all ships hit")
     void CompleteBoardShipsHitsTest() {
         assertTrue(board.AddShip(carrier));
         assertEquals(1, board.Ships().size());
@@ -529,8 +585,10 @@ public class BoardTests {
     }
 
     @Test
+    @Order(30)
+    @Tag("partitionEquivalence")
     @Tag("acceptanceTest")
-    @DisplayName("Complete board all ships destroyed")
+    @DisplayName("[PartitionEquivalence][Acceptance] - Complete board all ships destroyed")
     void CompleteBoardShipsDestroyedTest() {
         assertTrue(board.AddShip(carrier));
         assertEquals(1, board.Ships().size());

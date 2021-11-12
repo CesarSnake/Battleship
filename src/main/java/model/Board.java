@@ -40,6 +40,8 @@ public class Board {
     }
 
     public boolean AddShip(Ship ship) {
+        /* Add a ship to the board, it must be only one ship per shipType, they cannot be duplicated,
+         * the ships added must be withoout hits */
         if (ship == null) {
             throw new NullPointerException("Cannot add null ship");
         }
@@ -100,6 +102,7 @@ public class Board {
             throw new NullPointerException("Cannot hit a cell with a null coordinate");
         }
 
+        // Check if the cell was already attacked
         if (CoordinatesUsed().contains(coordinate)) {
             throw new UnsupportedOperationException(
                 String.join(" ", "Coordinate:", coordinate.toString(), "already hit"));

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CellStatusTests {
     CellStatus hide;
     CellStatus Water;
@@ -20,8 +21,9 @@ public class CellStatusTests {
     }
 
     @Test
+    @Order(1)
     @Tag("unitTest")
-    @DisplayName("Status Hide Test")
+    @DisplayName("[UnitTest] - Status Hide Test")
     void StatusHideTest() {
         assertEquals(CellStatus.Hide, hide);
         assertEquals("Hide", hide.toString());
@@ -29,8 +31,9 @@ public class CellStatusTests {
     }
 
     @Test
+    @Order(2)
     @Tag("unitTest")
-    @DisplayName("Status Water Test")
+    @DisplayName("[UnitTest] - Status Water Test")
     void StatusWaterTest() {
         assertEquals(CellStatus.Water, Water);
         assertEquals("Water", Water.toString());
@@ -38,8 +41,9 @@ public class CellStatusTests {
     }
 
     @Test
+    @Order(3)
     @Tag("unitTest")
-    @DisplayName("Status Hit Test")
+    @DisplayName("[UnitTest] - Status Hit Test")
     void StatusHitTest() {
         assertEquals(CellStatus.Hit, hit);
         assertEquals("Hit", hit.toString());
@@ -48,8 +52,9 @@ public class CellStatusTests {
     }
 
     @Test
+    @Order(4)
     @Tag("unitTest")
-    @DisplayName("Status Destroyed Test")
+    @DisplayName("[UnitTest] - Status Destroyed Test")
     void StatusDestroyedTest() {
         assertEquals(CellStatus.Destroyed, destroyed);
         assertEquals("Destroyed", destroyed.toString());

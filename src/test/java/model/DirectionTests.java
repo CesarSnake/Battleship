@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DirectionTests {
     Direction north;
     Direction south;
@@ -21,8 +22,9 @@ public class DirectionTests {
 
 
     @Test
+    @Order(1)
     @Tag("unitTest")
-    @DisplayName("Direction North Test")
+    @DisplayName("[UnitTest] - Direction North Test")
     void DirectionNorthTest() {
         assertEquals(Direction.North, north);
         assertEquals("North", north.toString());
@@ -30,8 +32,9 @@ public class DirectionTests {
     }
 
     @Test
+    @Order(2)
     @Tag("unitTest")
-    @DisplayName("Direction South Test")
+    @DisplayName("[UnitTest] - Direction South Test")
     void DirectionSouthTest() {
         assertEquals(Direction.South, south);
         assertEquals("South", south.toString());
@@ -39,8 +42,9 @@ public class DirectionTests {
     }
 
     @Test
+    @Order(3)
     @Tag("unitTest")
-    @DisplayName("Direction East Test")
+    @DisplayName("[UnitTest] - Direction East Test")
     void DirectionEastTest() {
         assertEquals(Direction.East, east);
         assertEquals("East", east.toString());
@@ -48,8 +52,9 @@ public class DirectionTests {
     }
 
     @Test
+    @Order(4)
     @Tag("unitTest")
-    @DisplayName("Direction West Test")
+    @DisplayName("[UnitTest] - Direction West Test")
     void DirectionWestTest() {
         assertEquals(Direction.West, west);
         assertEquals("West", west.toString());

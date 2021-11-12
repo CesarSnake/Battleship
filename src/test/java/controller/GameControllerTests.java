@@ -194,8 +194,10 @@ public class GameControllerTests {
         }
     }
 
-    // We are going to generate 2 different games scenarios
-    // to simulate the interaction with the view
+    /*
+     * We are going to generate 2 different games scenarios
+     * to simulate the interaction with the view
+     */
 
     // Simulated game:
     // # 1 2 3 4 5 6 7 8 9 10

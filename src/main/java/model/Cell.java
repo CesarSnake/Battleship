@@ -34,6 +34,8 @@ public class Cell {
     }
 
     public void SetShip(Ship ship) {
+        // the ship can only be placed on a free cells
+
         if (ship == null) {
             throw new NullPointerException("Cannot set a null ship");
         }
@@ -61,6 +63,8 @@ public class Cell {
     }
 
     public CellStatus Hit() {
+        // When a cell is hit, we must check his status and return the new status if it can change
+
         // Was already hit
         if (status == CellStatus.Water) {
             throw new UnsupportedOperationException(
