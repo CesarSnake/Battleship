@@ -1,41 +1,41 @@
 # Battleship single player
 
-## Guerra de vaixells
+## Battleship
 
-Joc simple de guerra de vaixells on es genera un tauler per consola i s'ha d'esbrinar en quina posició estan els vaixells en el mínim nombre de torns.
-Una vegada el tauler està generat, l'usuari hi ha d'introduir coordenada i el joc visualitzara si ha donat a un vaixell, passarà torn i ha de continuar buscant fins a enfonsar tots els vaixells del tauler.
-El tauler és una graella de 10x10 amb els números (1-10) a la primera fila i lletres (A-J) a la primera columna per a identificar les caselles, sent A1 la casella a la cantonada superior esquerra i J10 la casella a la cantonada inferior dreta.
+Classic battle ship game, it generates a console board and the player must discover where the ships are placed, trying to use the minimal number of turns.
+Once the board is generates, the user must to introduce a coordinate and the game will display if the player has shot a ship, will pass the next turn and the game continues till all the ships would be destroyed.
+The board is a 10x10 matrix using the numbers (1-10) for rows and the letters (A-J) for columns in order to identify the cells, being A1 the first cell on the top left corner and J10 the cell on the bottom right corner.
 
-### Objectiu del joc
-Afonar els 5 vaixells que hi ha en el tauler.
-- **Portaavions**: ocupa 5 caselles
-- **Blindat**: ocupa 4 caselles
-- **Creuer**: ocupa 3 caselles
-- **Destructors**: ocupa 2 caselles
-- **Submarins**: ocupa 1 casella
+### Game objective
+Destroy the 6 ships placed on the board.
+- **Carrier**: fill 5 cells
+- **Battleship**: fill 4 cells
+- **Cruiser**: fill 3 cells
+- **Destroyer**: fill 2 cells
+- **Submarine**: fill 1 cell
 
-### Simbologia per pantalla:
+### Symbols:
 ```
-· Casella oculta
-+ Aigua
-/ Vaixell tocat
-X Vaixell enfonsat
+· Unknow cell
++ Water
+/ Hit ship
+X Destroyed ship
 ```
-### Condició de victòria
-El joc finalitza una vegada el jugador a trobat tots els vaixells.
-El joc mostrarà la seua puntuació d'acord amb els torns que han transcorregut fins a arribar a la victòria.
+### Victory condition
+The game finishes once the player has found all the ships.
+The game will display the player's score acording to the number of turns.
 
-### Condició de derrota
-Al ser d'un jugador sol, no hi haurà condició de derrota.
+### Losing condition
+As there is only one player game, there is not losing condition :D
 
 
 
-## Disseny
+## Design
 
-El joc a l'iniciar-se ha de mostrar un menú principal amb les opcions:
-- Start Game: inicia el joc.
-- How to play: mostra una pantalla amb les regles del joc
-- Exit Game: tanca el programa.
+When the game begins, it will display the main menu with the options:
+- Start Game: will start the game.
+- How to play: will display the game rules.
+- Exit Game: will close the program.
 
 ```
 -------------------------
@@ -47,24 +47,24 @@ BattleShip single player
 ```
 
 ### Start Game:
-El joc ha de crear un taulell de 10x10 e introduir **aleatòriament** els 5 tipus de vaixells diferents:
-- **Portaavions** de 5 caselles
-- **Blindat** de 4 caselles
-- **Creuer** de 3 caselles
-- **Destructors** de 2 caselles
-- **Submarins** de 1 casella
+The game creates a 10x10 board and introduces **randomly** the 5 kind of ships:
+- **Carrier** of 5 cells
+- **Battleship** of 4 cells
+- **Cruiser** of 3 cells
+- **Destroyer** of 2 cells
+- **Submarine** of 1 cell
 
-En la pantalla de joc, apareixerà el torn actual i el taulell amb totes les caselles ocultes amb el símbol '·', baix del taulell apareixerà el missatge "Attack to coordinate".
-L'usuari haurà d'introduir coordenada i polsar enter.
-El joc incrementara torn i mostrara de nou el taulell modificant la coordenada introduïda acorde a l'atac del jugador.
-La coordenada introduïda modificara la casella amb el símbol:
+On the game screen, will appears the current turn and the board with all the cells hidden displaying the symbol '·', on the bottom of the board will apper the message "Attack to coordinate".
+The user should introduce the coordinate and press enter.
+The game will increase the turn and will display again the board updated acording to the user's attack.
+The given coordinate will modify the cell with the symbol:
 ```
-~ Si la casella és aigua (no hi ha cap vaixell).
-/ Si ha tocat un vaixell (coordenada amb una part d'un vaixell).
-X Si el vaixell ha sigut tocat i enfonsat (coordenada amb una part d'un vaixell amb les altres parts tocades, aquestes es modificaran també amb aquest símbol)
+~ If the cell is water (no ship).
+/ If a ship has been hit (cell with a ship part).
+X If the ship has been hit and destroyed (cell with a ship part who has all the other parts hit, this ones will be replaced with this symbol also).
 ```
 
-El joc acaba quan el jugador enfonsa tots els vaixells, el programa mostrara una pantalla amb el missatge "You won in XX turns".
+The game finishes once the player destrois all the ships, the program will display the message "You won in XX turns".
 
 #### Game Screen:
 ```
@@ -84,18 +84,18 @@ Atack to coordinate:
 ```
 
 ### How to play
-El joc mostrarà la següent pantalla:
+The game will display the next screen:
 ```
 Rules:
 The objective of the game is discover where are the ships.
-You must atack the ships and sink all of them to win.
+You must atack the ships and destroy all of them to win.
 To attack a ship you must insert a coordinate and press enter.
 
 Symbols:
 · unknown, place not discovered.
 ~ water, you miss your shot.
-/ hit, you hit one ship but it is not sink
-X sink, you sink the ship.
+/ hit, you hit one ship but it is not destroyed
+X destroyed, you destroyed the ship.
 
 Ships in the game:
 Carrier, which has 5 holes
@@ -109,42 +109,42 @@ Press any key to back main menu
 
 
 
-## Funcionalitats
-- El programa ha de mostrar el menú en iniciar-se.
-- L'usuari podrà elegir iniciar el joc, mostrar regles o eixir del joc.
-- El joc sempre mostrara el torn, l'estat actual del taulell i esperarà que l'usuari introduïsca coordenada.
-- A l'introduir coordenada, incrementarà torn, actualitzarà el taulell i esperarà següent coordenada. Si la coordenada introduïda és incorrecta el programa llançarà una excepció i preguntara de nou.
-- El joc finalitza quan el jugador introduïsca totes les coordenades on hi ha un vaixell.
+## Functionality
+- The program mush display the main menu when is launched.
+- The user will choose start the game, display the rules or close the game.
+- The game always will display the turn, the actual board state and will wait a coordinate introduced by the user.
+- When a coordinte is introduced, the turn will be increased, the board will be updated and the game will wait for the next coordinate. If the coordinate introduced is incorrect, the program will launch an exceptrion and will ask again.
+- The game will finish when the player will introduce all the coordinate where a ship is placed.
 
 ### Classes
 
 #### Coordinates
-- La Coordenada estarà formada per una lletra majúscula de l'A fins a la J i un número de l'1 al 10.
-- Altre tipus de símbol, llançarà una excepció.
+- The coordinate is a capital letter (from A to J) and a number (from 1 to 10).
+- Other kind of symbol will launch an exception.
 
 #### Ship & sons (Carrier, Battleship, Cruiser, Destroyer, Submarine)
-- Ship actua com a classe pare per als tipus de vaixells del joc, per si mateixa es buida i no jugable al taulell
-- Un vaixell pot rebre tants atacs com tantes coordenades ocupe, si rep un atac en una coordenada lliure, aquesta passa a ser atacada.
-- Si un vaixell rep un altre atac a una coordenada que ja ha sigut atacada, llançarà una excepció.
-- El vaixell és enfonsat quan totes les coordenades reben un atac.
+- The ship acts as parent class for the other ships, but it is empty and not playable on the board.
+- The ship can be attack on the cells that is filled, if it get an attack on a coordinate this one changes to hit.
+- If a ship is attacked again on a coordinate already hit, it will launch an exeption.
+- The ship is destroyed when all the coordinates has been hit.
 
 #### ShipFactory
-- És una classe que retorna el tipus de vaixell desitjat.
+- It is a class that returns the kind of ship that we request.
 
 #### Cell
-- La casella estarà formada per una coordenada i un estat (aigua, tocat o enfonsat).
-- Cada vaixell del joc estarà associat a X caselles, per tanta cada casella podra tant ser associada, com retornar a quin vaixell és associada.
+- The cell is a coordinate and a state (water, hit or destroyed).
+- Each ship of the game will be placed to X cells, the cell can be empty or return the ship that is placed.
 
 #### Board
-- El taulell estarà format per 100 caselles en una graella de 10 x 10, sent A-J les columnes i 1-10 cada fila.
-- El taulell només acceptara un vaixell de cada tipus, no podran haver-hi vaixells iguals.
-- El taulell rebrà ordres d'atac a una casella i actualitzarà el seu estat modificant.
-- Cada casella del taulell mostrara un símbol, els símbols són actualitzats després de cada atac del jugador.
+- The board is form by 100 cells in a 10 x 10 matrix, being A-J the columns and 1-10 the rows.
+- The board only places an each kind of ship, it cannot be a ship twice.
+- The board will get an attack on a cell and will be updated.
+- Each cell in the board will display a symbol, the symbols are updated after each attack of the player.
 
 #### Game Controller
- - El controlador només rebrà ordres (enviades per la vista) i retornara el missatge sol·licitat
+- The controller only will get the commands (sent by the view) and will return the requested message.
 
 #### View
- - Mostrara un menú amb les opcions disponibles
- - Preguntara l'accioó del jugador i l'enviará al controlador.
- - Mostrara les respostes proporcionades per al controlador.
+- Will display a menu with all the available options.
+- Will ask to the player the action to do and it will be sent to the controller.
+- Will display the messages received by the controller.
